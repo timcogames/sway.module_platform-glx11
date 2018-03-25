@@ -1,10 +1,10 @@
 # sway.module_glx11 [![Discord](https://discordapp.com/api/guilds/402238411639095297/widget.png)](https://discord.gg/vCMcgwQ)
 
-[![BCH compliance](https://bettercodehub.com/edge/badge/timcogames/sway.module_glx11?branch=master)](https://bettercodehub.com/)
-[![Documentation](https://codedocs.xyz/timcogames/sway.module_glx11.svg)](https://codedocs.xyz/timcogames/sway.module_glx11/)
+[![BCH compliance](https://bettercodehub.com/edge/badge/timcogames/sway.module_platform-glx11?branch=master)](https://bettercodehub.com/)
+[![Documentation](https://codedocs.xyz/timcogames/sway.module_platform-glx11.svg)](https://codedocs.xyz/timcogames/sway.module_platform-glx11/)
 
 ```console
-git clone --recursive https://github.com/timcogames/sway.module_glx11.git
+git clone --recursive https://github.com/timcogames/sway.module_platform-glx11.git
 ```
 
 ```console

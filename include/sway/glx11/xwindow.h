@@ -26,6 +26,9 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)
 
+typedef boost::function<void (const XEvent & )> EventCallbackFunc_t;
+typedef std::map<s32_t, EventCallbackFunc_t> EventCallbackFuncMap_t;
+
 class XScreenConnection;
 class XWindow : public WindowEventListener, private boost::noncopyable {
 public:
@@ -47,6 +50,18 @@ public:
 	 *    Уничтожает главное окно приложения.
 	 */
 	~XWindow();
+
+	/*!
+	 * \brief
+	 *    Добавляет привязку функции к оконному событию.
+	 *
+	 * \param[in] type
+	 *    Тип события.
+	 * 
+	 * \param[in] callback
+	 *    Функция вызываемая при возникновении события.
+	 */
+	void addEventBinding(s32_t type, EventCallbackFunc_t callback);
 
 	/*!
 	 * \brief
@@ -218,8 +233,6 @@ private:
 	boost::shared_ptr<XScreenConnection> _connection; /*!< Экранное соедининение с сервером. */
 	Window _window; /*!< Идентификатор окна. */
 	Atom _wmatom[kAtom_WMLast], _netatom[kAtom_NetLast];
-	typedef boost::function<void (const XEvent & )> EventCallbackFunc_t;
-	typedef std::map<s32_t, EventCallbackFunc_t> EventCallbackFuncMap_t;
 	EventCallbackFuncMap_t _eventCallbacks;
 };
 

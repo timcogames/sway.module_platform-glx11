@@ -30,36 +30,39 @@ void XWindow::_initializeAtoms() {
 
 void XWindow::_initializeEventBindings() {
 	_eventCallbacks.clear();
-	_eventCallbacks[CreateNotify] = boost::bind(&XWindow::handleCreateNotifyEvent, this, _1);
-	_eventCallbacks[ConfigureNotify] = boost::bind(&XWindow::handleConfigureNotifyEvent, this, _1);
-	_eventCallbacks[Expose] = boost::bind(&XWindow::handleExposeEvent, this, _1);
-	_eventCallbacks[FocusIn] = boost::bind(&XWindow::handleFocusInEvent, this, _1);
-	_eventCallbacks[FocusOut] = boost::bind(&XWindow::handleFocusOutEvent, this, _1);
+
+	addEventBinding(CreateNotify, boost::bind(&XWindow::handleCreateNotifyEvent, this, _1));
+	addEventBinding(ConfigureNotify, boost::bind(&XWindow::handleConfigureNotifyEvent, this, _1));
+	addEventBinding(Expose, boost::bind(&XWindow::handleExposeEvent, this, _1));
+	addEventBinding(FocusIn, boost::bind(&XWindow::handleFocusInEvent, this, _1));
+	addEventBinding(FocusOut, boost::bind(&XWindow::handleFocusOutEvent, this, _1));
+}
+
+void XWindow::addEventBinding(s32_t type, EventCallbackFunc_t callback) {
+	_eventCallbacks[type] = callback;
 }
 
 void XWindow::createDummy(XVisualInfo * visualInfo, const WindowInitialParams & params) {
-	Colormap cmap = XCreateColormap(_connection->getDisplay(), _connection->getRootWindow(), visualInfo->visual, AllocNone);
-
 	XSetWindowAttributes attrs;
-	attrs.background_pixmap = None;
-	attrs.border_pixel = 0;
-	attrs.colormap = cmap;
+	attrs.background_pixel = attrs.border_pixel = BlackPixel(_connection->getDisplay(), _connection->getScreenNumber());
+	attrs.colormap = XCreateColormap(_connection->getDisplay(), _connection->getRootWindow(), visualInfo->visual, AllocNone);
 	attrs.event_mask = 0;
 	attrs.event_mask |= EnterWindowMask | LeaveWindowMask;
 	attrs.event_mask |= StructureNotifyMask;
 	attrs.event_mask |= ExposureMask;
 	attrs.event_mask |= FocusChangeMask;
 
-	int mask = CWBorderPixel | CWColormap | CWBackPixmap | CWEventMask;
+	int mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
 	_window = XCreateWindow(_connection->getDisplay(), _connection->getRootWindow(), 0, 0, 
 		params.sizes[kWindowSize].getW(), params.sizes[kWindowSize].getH(), 0, visualInfo->depth, InputOutput, visualInfo->visual, mask, &attrs);
 	if (_window == None)
 		throw std::runtime_error("Couldn't create the window.");
 
-	XFreeColormap(_connection->getDisplay(), cmap);
-
-	XSelectInput(_connection->getDisplay(), _connection->getRootWindow(), SubstructureNotifyMask);
+	XSelectInput(_connection->getDisplay(), _window, SubstructureNotifyMask
+		| ButtonPressMask | ButtonReleaseMask | PointerMotionMask
+		| KeyPressMask | KeyReleaseMask | KeymapStateMask);
+	
 	XSetWMProtocols(_connection->getDisplay(), _window, &_wmatom[kAtom_WMDeleteWindow], 1);
 }
 
