@@ -18,19 +18,6 @@ static s32_t fbAttributes[] = {
 	0
 };
 
-#ifdef __cplusplus
-	extern "C" {
-#endif
-
-Canvas * createSurface(const WindowInitialParams & params) {
-	auto connection = boost::make_shared<XScreenConnection>();
-	return new Canvas(connection, params);
-}
-
-#ifdef __cplusplus
-	}
-#endif
-
 Canvas::Canvas(boost::shared_ptr<XScreenConnection> connection, const WindowInitialParams & params) : XWindow(connection) {
 	s32_t numConfigs;
 	GLXFBConfig * configs, config;

@@ -69,16 +69,6 @@ private:
 	boost::shared_ptr<GlxContext> _context; /*!< Контекст поверхности холста. */
 };
 
-#ifdef __cplusplus
-	extern "C" {
-#endif
-
-extern Canvas * createSurface(const WindowInitialParams & params);
-
-#ifdef __cplusplus
-	}
-#endif
-
 NAMESPACE_END(glx11)
 NAMESPACE_END(sway)
 
