@@ -34,7 +34,7 @@ matrix:
       - |
         cmake .. \
         -DCMAKE_CXX_COMPILER=g++-5 \
-        -DCMAKE_BUILD_TYPE=Release
+        -DCMAKE_BUILD_TYPE=Debug
       - cmake --build .
 
   #
@@ -63,8 +63,35 @@ matrix:
         cmake .. \
         -DCMAKE_C_COMPILER=clang-3.8 \
         -DCMAKE_CXX_COMPILER=clang++-3.8 \
-        -DCMAKE_BUILD_TYPE=Release
+        -DCMAKE_BUILD_TYPE=Debug
       - cmake --build .
+
+  #
+  # Codecov
+  #
+  - os: linux
+    env:
+      - TASK="Codecov"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+          - sourceline: ppa:kzemek/boost
+        packages:
+          - gcc-5
+          - g++-5
+          - libboost1.58-dev
+          - libboost-filesystem1.58-dev
+          - libboost-system1.58-dev
+          - libboost-thread1.58-dev
+          - libboost-test1.58-dev
+    script:
+      - |
+        cmake .. \
+        -DCMAKE_CXX_COMPILER=g++-5 \
+        -DCMAKE_BUILD_TYPE=Debug
+      - cmake --build .
+      - bash <(curl -s https://codecov.io/bash)
 
 notifications:
   email: false
