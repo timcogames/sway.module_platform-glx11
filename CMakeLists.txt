@@ -1,15 +1,21 @@
 # Проверяем версию CMake
 cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
 
-# Устанавливаем имя проекта
-set(MODULE_PLATFORM_GLX11_PROJECT_NAME module_platform_glx11)
-project(${MODULE_PLATFORM_GLX11_PROJECT_NAME})
+# Мета-информация о проекте
+set(META_PROJECT_NAME module_platform_glx11)
+set(META_LIB_NAME lib${META_PROJECT_NAME})
+set(META_VERSION_MAJOR 0)
+set(META_VERSION_MINOR 2)
+set(META_VERSION_PATCH 3)
+set(META_VERSION ${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH})
 
-# Устанавливаем версию библиотеки
-set(MODULE_PLATFORM_GLX11_VERSION_MAJOR 0)
-set(MODULE_PLATFORM_GLX11_VERSION_MINOR 1)
-set(MODULE_PLATFORM_GLX11_VERSION_PATCH 0)
-set(MODULE_PLATFORM_GLX11_VERSION_STRING ${MODULE_PLATFORM_GLX11_VERSION_MAJOR}.${MODULE_PLATFORM_GLX11_VERSION_MINOR}.${MODULE_PLATFORM_GLX11_VERSION_PATCH})
+# Опции сборки
+option(BUILD_SHARED "Build shared library" OFF)
+
+project(${META_PROJECT_NAME} C CXX)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Определяем каталог вывода по умолчанию
 if(CMAKE_BUILD_TYPE MATCHES Debug)
@@ -22,27 +28,42 @@ endif()
 
 set(MODULE_PLATFORM_GLX11_DIR ${CMAKE_CURRENT_LIST_DIR})
 
+# Добавляем пути для поиска хедеров
 include_directories(${MODULE_PLATFORM_GLX11_DIR}/include)
 include_directories(${MODULE_PLATFORM_GLX11_DIR}/modules/sway.module_core/include)
 include_directories(${MODULE_PLATFORM_GLX11_DIR}/modules/sway.module_math/include)
 
+# Получаем пути ко всем хедерам и исходникам библиотеки
 file(GLOB_RECURSE MODULE_PLATFORM_GLX11_HEADERS ${MODULE_PLATFORM_GLX11_DIR}/include/*.*)
 file(GLOB_RECURSE MODULE_PLATFORM_GLX11_SOURCE ${MODULE_PLATFORM_GLX11_DIR}/src/*.*)
 
 find_package(OpenGL REQUIRED)
 find_package(X11 REQUIRED)
 
-set(Boost_USE_STATIC_LIBS OFF)
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
+set(Boost_USE_STATIC_LIBS ON)
+set(BOOST_COMPONENTS system filesystem thread)
+find_package(Boost 1.58 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
+if(NOT Boost_FOUND)
+	message(FATAL_ERROR "Fatal error: Boost (version >= 1.58) required.")
+else()
+	message(STATUS "Boost includes: ${Boost_INCLUDE_DIRS}")
+	message(STATUS "Boost libs: ${Boost_LIBRARIES}")
 
-find_package(Boost 1.58.0 COMPONENTS system filesystem thread)
-if (Boost_FOUND)
+	include_directories(${Boost_INCLUDE_DIRS})
 endif()
 
-add_library(${MODULE_PLATFORM_GLX11_PROJECT_NAME} SHARED ${MODULE_PLATFORM_GLX11_SOURCE})
+if(BUILD_SHARED)
+	# Добавляем в проект цель для сборки статической библиотеки
+	add_library(${META_LIB_NAME} SHARED ${MODULE_PLATFORM_GLX11_SOURCE})
+	set_target_properties(${META_LIB_NAME} PROPERTIES OUTPUT_NAME ${META_PROJECT_NAME})
+	set_target_properties(${META_LIB_NAME} PROPERTIES PREFIX "")
+	set_target_properties(${META_LIB_NAME} PROPERTIES SUFFIX ".so.${META_VERSION}")
+else()
+	# Добавляем в проект цель для сборки динамической библиотеки
+	add_library(${META_LIB_NAME} STATIC ${MODULE_PLATFORM_GLX11_SOURCE})
+	set_target_properties(${META_LIB_NAME} PROPERTIES OUTPUT_NAME ${META_PROJECT_NAME})
+	set_target_properties(${META_LIB_NAME} PROPERTIES PREFIX "")
+	set_target_properties(${META_LIB_NAME} PROPERTIES SUFFIX ".a.${META_VERSION}")
+endif()
 
-target_link_libraries(${MODULE_PLATFORM_GLX11_PROJECT_NAME} GL X11 Boost::system Boost::filesystem Boost::thread)
-
-set_target_properties(${MODULE_PLATFORM_GLX11_PROJECT_NAME} PROPERTIES SUFFIX ".so.${MODULE_PLATFORM_GLX11_VERSION_STRING}")
-set_target_properties(${MODULE_PLATFORM_GLX11_PROJECT_NAME} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+target_link_libraries(${META_PROJECT_NAME} X11 Boost::system Boost::filesystem Boost::thread)
