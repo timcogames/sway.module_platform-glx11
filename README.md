@@ -1,5 +1,6 @@
 # sway.module_platform-glx11 [![Discord](https://discordapp.com/api/guilds/402238411639095297/widget.png)](https://discord.gg/vCMcgwQ)
 
+[![Build Status](https://travis-ci.com/timcogames/sway.module_platform-glx11.svg?branch=master)](https://travis-ci.com/timcogames/sway.module_platform-glx11)
 [![BCH compliance](https://bettercodehub.com/edge/badge/timcogames/sway.module_platform-glx11?branch=master)](https://bettercodehub.com/)
 [![Documentation](https://codedocs.xyz/timcogames/sway.module_platform-glx11.svg)](https://codedocs.xyz/timcogames/sway.module_platform-glx11/)
 
@@ -25,7 +26,7 @@ cmake -DCMAKE_BUILD_TYPE=Release ../
 
 Опция сборки | Описание | По умолчанию
 :---|:---|:---:
-`ENABLE_TESTS` | Сборка библиотеки общего пользования | `OFF`
+`BUILD_SHARED` | Сборка библиотеки общего пользования | `OFF`
 
 Запускаем сборку
 

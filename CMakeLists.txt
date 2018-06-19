@@ -6,7 +6,7 @@ set(META_PROJECT_NAME module_platform_glx11)
 set(META_LIB_NAME lib${META_PROJECT_NAME})
 set(META_VERSION_MAJOR 0)
 set(META_VERSION_MINOR 2)
-set(META_VERSION_PATCH 4)
+set(META_VERSION_PATCH 5)
 set(META_VERSION ${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH})
 
 # Опции сборки
@@ -66,4 +66,4 @@ else()
 	set_target_properties(${META_LIB_NAME} PROPERTIES SUFFIX ".a.${META_VERSION}")
 endif()
 
-target_link_libraries(${META_PROJECT_NAME} X11 Boost::system Boost::filesystem Boost::thread)
+target_link_libraries(${META_LIB_NAME} X11 Boost::system Boost::filesystem Boost::thread)
