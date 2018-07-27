@@ -5,7 +5,7 @@
 #include <sway/glx11/xscreenconnection.h>
 #include <sway/glx11/windoweventlistener.h>
 #include <sway/glx11/windowinitialparams.h>
-#include <sway/glx11/windowmode.h>
+#include <sway/glx11/windowmodes.h>
 #include <sway/core.h>
 #include <sway/math.h>
 

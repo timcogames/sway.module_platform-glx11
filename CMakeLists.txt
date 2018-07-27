@@ -5,8 +5,8 @@ cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
 set(META_PROJECT_NAME module_platform_glx11)
 set(META_LIB_NAME lib${META_PROJECT_NAME})
 set(META_VERSION_MAJOR 0)
-set(META_VERSION_MINOR 2)
-set(META_VERSION_PATCH 6)
+set(META_VERSION_MINOR 3)
+set(META_VERSION_PATCH 8)
 set(META_VERSION ${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH})
 
 # Опции сборки
@@ -53,13 +53,13 @@ else()
 endif()
 
 if(BUILD_SHARED)
-	# Добавляем в проект цель для сборки статической библиотеки
+	# Добавляем в проект цель для сборки динамической библиотеки
 	add_library(${META_LIB_NAME} SHARED ${MODULE_PLATFORM_GLX11_SOURCE})
 	set_target_properties(${META_LIB_NAME} PROPERTIES OUTPUT_NAME ${META_PROJECT_NAME})
 	set_target_properties(${META_LIB_NAME} PROPERTIES PREFIX "")
 	set_target_properties(${META_LIB_NAME} PROPERTIES SUFFIX ".so.${META_VERSION}")
 else()
-	# Добавляем в проект цель для сборки динамической библиотеки
+	# Добавляем в проект цель для сборки статической библиотеки
 	add_library(${META_LIB_NAME} STATIC ${MODULE_PLATFORM_GLX11_SOURCE})
 	set_target_properties(${META_LIB_NAME} PROPERTIES OUTPUT_NAME ${META_PROJECT_NAME})
 	set_target_properties(${META_LIB_NAME} PROPERTIES PREFIX "")

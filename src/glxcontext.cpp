@@ -11,7 +11,6 @@ NAMESPACE_BEGIN(glx11)
 GlxContext::GlxContext(boost::shared_ptr<XScreenConnection> connection, XWindow * window)
 	: _connection(connection)
 	, _drawable(window->getWindowHandle()) {
-
 	// Empty
 }
 
@@ -25,7 +24,7 @@ GlxContext::~GlxContext() {
 void GlxContext::createLegacy(GLXFBConfig fbconfig) {
 	_context = glXCreateNewContext(_connection->getDisplay(), fbconfig, GLX_RGBA_TYPE, 0, True);
 	if (!_context)
-		throw std::runtime_error("Couldn't create GLX context.");
+		throw Exception("Couldn't create GLX context.");
 
 	if (!glXIsDirect(_connection->getDisplay(), _context))
 		printf("Unable to create direct rendering context.\n");

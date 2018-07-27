@@ -31,8 +31,8 @@ Canvas::Canvas(boost::shared_ptr<XScreenConnection> connection, const WindowInit
 	setSizeHints(params.sizes, params.resizable);
 	setTitle(boost::str(boost::format("Sway // %1%") % params.title).c_str());
 	setPosition(
-		params.fullscreen ? 0 : (connection->getDisplaySize().getW() - params.sizes[kWindowSize].getW()) / 2,
-		params.fullscreen ? 0 : (connection->getDisplaySize().getH() - params.sizes[kWindowSize].getH()) / 2);
+		params.fullscreen ? 0 : (connection->getDisplaySize().getW() - params.sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getW()) / 2,
+		params.fullscreen ? 0 : (connection->getDisplaySize().getH() - params.sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getH()) / 2);
 
 	_context = boost::make_shared<GlxContext>(connection, (XWindow *) this);
 	_context->createLegacy(config);

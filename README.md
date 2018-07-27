@@ -1,4 +1,4 @@
-# sway.module_platform-glx11 [![Discord](https://discordapp.com/api/guilds/402238411639095297/widget.png)](https://discord.gg/vCMcgwQ)
+# sway.module_platform-glx11
 
 [![Build Status](https://travis-ci.com/timcogames/sway.module_platform-glx11.svg?branch=master)](https://travis-ci.com/timcogames/sway.module_platform-glx11)
 [![codecov](https://codecov.io/gh/timcogames/sway.module_platform-glx11/branch/master/graph/badge.svg)](https://codecov.io/gh/timcogames/sway.module_platform-glx11)

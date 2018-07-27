@@ -54,8 +54,8 @@ void XWindow::createDummy(XVisualInfo * visualInfo, const WindowInitialParams & 
 
 	int mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
-	_window = XCreateWindow(_connection->getDisplay(), _connection->getRootWindow(), 0, 0, 
-		params.sizes[kWindowSize].getW(), params.sizes[kWindowSize].getH(), 0, visualInfo->depth, InputOutput, visualInfo->visual, mask, &attrs);
+	_window = XCreateWindow(_connection->getDisplay(), _connection->getRootWindow(), 0, 0, params.sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getW(), 
+		params.sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getH(), 0, visualInfo->depth, InputOutput, visualInfo->visual, mask, &attrs);
 	if (_window == None)
 		throw std::runtime_error("Couldn't create the window.");
 
@@ -124,31 +124,31 @@ math::size2i_t XWindow::getSize() const {
 
 void XWindow::_setMinSize(XSizeHints * hints, const math::size2i_t * sizes, bool resizable) {
 	if (resizable) {
-		if (sizes[kWindowSize_Min].getW() != DONT_CARE && sizes[kWindowSize_Min].getH() != DONT_CARE) {
-			hints->min_width = sizes[kWindowSize_Min].getW();
-			hints->min_height = sizes[kWindowSize_Min].getH();
+		if (sizes[core::detail::toUnderlying(WindowSize_t::kMin)].getW() != DONT_CARE && sizes[core::detail::toUnderlying(WindowSize_t::kMin)].getH() != DONT_CARE) {
+			hints->min_width = sizes[core::detail::toUnderlying(WindowSize_t::kMin)].getW();
+			hints->min_height = sizes[core::detail::toUnderlying(WindowSize_t::kMin)].getH();
 		} else {
 			hints->flags = hints->flags & ~PMinSize;
 			printf("Could not set minimum window size\n");
 		}
 	} else {
-		hints->min_width = sizes[kWindowSize].getW();
-		hints->min_height = sizes[kWindowSize].getH();
+		hints->min_width = sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getW();
+		hints->min_height = sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getH();
 	}
 }
 
 void XWindow::_setMaxSize(XSizeHints * hints, const math::size2i_t * sizes, bool resizable) {
 	if (resizable) {
-		if (sizes[kWindowSize_Max].getW() != DONT_CARE && sizes[kWindowSize_Max].getH() != DONT_CARE) {
-			hints->max_width = sizes[kWindowSize_Max].getW();
-			hints->max_height = sizes[kWindowSize_Max].getH();
+		if (sizes[core::detail::toUnderlying(WindowSize_t::kMax)].getW() != DONT_CARE && sizes[core::detail::toUnderlying(WindowSize_t::kMax)].getH() != DONT_CARE) {
+			hints->max_width = sizes[core::detail::toUnderlying(WindowSize_t::kMax)].getW();
+			hints->max_height = sizes[core::detail::toUnderlying(WindowSize_t::kMax)].getH();
 		} else {
 			hints->flags = hints->flags & ~PMaxSize;
 			printf("Could not set maximum window size\n");
 		}
 	} else {
-		hints->max_width = sizes[kWindowSize].getW();
-		hints->max_height = sizes[kWindowSize].getH();
+		hints->max_width = sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getW();
+		hints->max_height = sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getH();
 	}
 }
 
@@ -194,7 +194,7 @@ void XWindow::setFullscreen(bool fullscreen) {
 	event.xclient.window = _window;
 	event.xclient.message_type = _netatom[kAtom_NetWMState];
 	event.xclient.format = 32;
-	event.xclient.data.l[0] = fullscreen ? kWindowMode_Fullscreen : kWindowMode_Windowed;
+	event.xclient.data.l[0] = core::detail::toUnderlying(fullscreen ? WindowMode_t::kFullscreen : WindowMode_t::kWindowed);
 	event.xclient.data.l[1] = _netatom[kAtom_NetWMStateFullscreen];
 	event.xclient.data.l[2] = 0;
 

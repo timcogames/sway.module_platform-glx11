@@ -6,7 +6,7 @@ NAMESPACE_BEGIN(glx11)
 XScreenConnection::XScreenConnection() {
 	_display = XOpenDisplay(NULL);
 	if (_display == NULL)
-		throw std::runtime_error("Couldn't connect to X server.");
+		throw Exception("Couldn't connect to X server.");
 
 	_screen = DefaultScreen(_display);
 }
