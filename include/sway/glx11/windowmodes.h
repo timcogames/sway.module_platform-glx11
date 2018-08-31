@@ -2,6 +2,7 @@
 #define SWAY_GLX11_WINDOWMODES_H
 
 #include <sway/namespacemacros.h>
+#include <sway/types.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)

@@ -1,13 +1,7 @@
 #ifndef SWAY_GLX11_XSCREENCONNECTION_H
 #define SWAY_GLX11_XSCREENCONNECTION_H
 
-#include <sway/math.h>
-
-#include <boost/noncopyable.hpp> // boost::noncopyable
-#include <boost/shared_ptr.hpp> // boost::shared_ptr
-
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
+#include <sway/glx11/prereqs.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)

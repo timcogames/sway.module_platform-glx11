@@ -1,5 +1,4 @@
 #include <sway/glx11/canvas.h>
-#include <boost/format.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)
@@ -18,7 +17,7 @@ static s32_t fbAttributes[] = {
 	0
 };
 
-Canvas::Canvas(boost::shared_ptr<XScreenConnection> connection, const WindowInitialParams & params) : XWindow(connection) {
+Canvas::Canvas(XScreenConnectionRef_t connection, const WindowInitialInfo & windowInfo) : XWindow(connection) {
 	s32_t numConfigs;
 	GLXFBConfig * configs, config;
 	configs = glXChooseFBConfig(connection->getDisplay(), connection->getScreenNumber(), fbAttributes, &numConfigs);
@@ -27,12 +26,12 @@ Canvas::Canvas(boost::shared_ptr<XScreenConnection> connection, const WindowInit
 		XFree(configs);
 	}
 	
-	createDummy(glXGetVisualFromFBConfig(connection->getDisplay(), config), params);
-	setSizeHints(params.sizes, params.resizable);
-	setTitle(boost::str(boost::format("Sway // %1%") % params.title).c_str());
+	createDummy(glXGetVisualFromFBConfig(connection->getDisplay(), config), windowInfo);
+	setSizeHints(windowInfo.size, windowInfo.resizable);
+	setTitle(boost::str(boost::format("Sway // %1%") % windowInfo.title).c_str());
 	setPosition(
-		params.fullscreen ? 0 : (connection->getDisplaySize().getW() - params.sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getW()) / 2,
-		params.fullscreen ? 0 : (connection->getDisplaySize().getH() - params.sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getH()) / 2);
+		windowInfo.fullscreen ? 0 : (connection->getDisplaySize().getW() - windowInfo.size.normal.getW()) / 2,
+		windowInfo.fullscreen ? 0 : (connection->getDisplaySize().getH() - windowInfo.size.normal.getH()) / 2);
 
 	_context = boost::make_shared<GlxContext>(connection, (XWindow *) this);
 	_context->createLegacy(config);
@@ -62,11 +61,11 @@ void Canvas::handleFocusOutEvent(const XEvent & event) {
 	// Empty
 }
 
-boost::shared_ptr<GlxContext> Canvas::getContext() {
+GlxContextRef_t Canvas::getContext() {
 	return _context;
 }
 
-GLXFBConfig Canvas::_chooseBestSuitable(boost::shared_ptr<XScreenConnection> connection, GLXFBConfig * configs, s32_t numConfigs) {
+GLXFBConfig Canvas::_chooseBestSuitable(XScreenConnectionRef_t connection, GLXFBConfig * configs, s32_t numConfigs) {
 	s32_t bestScore = DONT_CARE, bestNumSamples = DONT_CARE;
 	
 	for (s32_t i = 0; i < numConfigs; ++i) {
@@ -78,7 +77,7 @@ GLXFBConfig Canvas::_chooseBestSuitable(boost::shared_ptr<XScreenConnection> con
 	return configs[bestScore];
 }
 
-GlxVisualAttributes Canvas::_getMultisampleAttributes(boost::shared_ptr<XScreenConnection> connection, GLXFBConfig config) {
+GlxVisualAttributes Canvas::_getMultisampleAttributes(XScreenConnectionRef_t connection, GLXFBConfig config) {
 	lpcstr_t extensions = glXQueryExtensionsString(connection->getDisplay(), connection->getScreenNumber());
 	GlxVisualAttributes attrs;
 

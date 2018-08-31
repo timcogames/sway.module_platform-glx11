@@ -8,7 +8,7 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)
 
-GlxContext::GlxContext(boost::shared_ptr<XScreenConnection> connection, XWindow * window)
+GlxContext::GlxContext(XScreenConnectionRef_t connection, XWindow * window)
 	: _connection(connection)
 	, _drawable(window->getWindowHandle()) {
 	// Empty

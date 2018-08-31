@@ -1,15 +1,16 @@
-#ifndef SWAY_GLX11_WINDOWINITIALPARAMS_H
-#define SWAY_GLX11_WINDOWINITIALPARAMS_H
+#ifndef SWAY_GLX11_WINDOWINITIALINFO_H
+#define SWAY_GLX11_WINDOWINITIALINFO_H
 
-#include <sway/glx11/windowsizes.h>
-#include <sway/math.h>
+#include <sway/glx11/windowsize.h>
+#include <sway/namespacemacros.h>
+#include <sway/types.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)
 
-struct WindowInitialParams {
+struct WindowInitialInfo {
 	lpcstr_t title; /*!< Заголовок окна. */
-	math::size2i_t sizes[core::detail::toUnderlying(WindowSize_t::kLast)]; /*!< Размеры окна. */
+	WindowSize size; /*!< Размер окна. */
 	bool resizable; /*!< Возможность изменения размера. */
 	bool fullscreen; /*!< Полноэкранный / Оконный режим. */
 	bool maximized;
@@ -19,4 +20,4 @@ struct WindowInitialParams {
 NAMESPACE_END(glx11)
 NAMESPACE_END(sway)
 
-#endif // SWAY_GLX11_WINDOWINITIALPARAMS_H
+#endif // SWAY_GLX11_WINDOWINITIALINFO_H

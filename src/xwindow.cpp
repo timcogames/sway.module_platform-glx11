@@ -1,10 +1,9 @@
 #include <sway/glx11/xwindow.h>
-#include <sway/glx11/xscreenconnection.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)
 
-XWindow::XWindow(boost::shared_ptr<XScreenConnection> connection)
+XWindow::XWindow(XScreenConnectionRef_t connection)
 	: _connection(connection) {
 
 	_initializeAtoms();
@@ -42,7 +41,7 @@ void XWindow::addEventBinding(s32_t type, EventCallbackFunc_t callback) {
 	_eventCallbacks[type] = callback;
 }
 
-void XWindow::createDummy(XVisualInfo * visualInfo, const WindowInitialParams & params) {
+void XWindow::createDummy(XVisualInfo * visualInfo, const WindowInitialInfo & windowInfo) {
 	XSetWindowAttributes attrs;
 	attrs.background_pixel = attrs.border_pixel = BlackPixel(_connection->getDisplay(), _connection->getScreenNumber());
 	attrs.colormap = XCreateColormap(_connection->getDisplay(), _connection->getRootWindow(), visualInfo->visual, AllocNone);
@@ -54,8 +53,8 @@ void XWindow::createDummy(XVisualInfo * visualInfo, const WindowInitialParams & 
 
 	int mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
-	_window = XCreateWindow(_connection->getDisplay(), _connection->getRootWindow(), 0, 0, params.sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getW(), 
-		params.sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getH(), 0, visualInfo->depth, InputOutput, visualInfo->visual, mask, &attrs);
+	_window = XCreateWindow(_connection->getDisplay(), _connection->getRootWindow(), 0, 0,
+		windowInfo.size.normal.getW(), windowInfo.size.normal.getH(), 0, visualInfo->depth, InputOutput, visualInfo->visual, mask, &attrs);
 	if (_window == None)
 		throw std::runtime_error("Couldn't create the window.");
 
@@ -122,37 +121,37 @@ math::size2i_t XWindow::getSize() const {
 	return math::TSize<s32_t>(attrs.width, attrs.height);
 }
 
-void XWindow::_setMinSize(XSizeHints * hints, const math::size2i_t * sizes, bool resizable) {
+void XWindow::_setMinSize(XSizeHints * hints, const WindowSize & size, bool resizable) {
 	if (resizable) {
-		if (sizes[core::detail::toUnderlying(WindowSize_t::kMin)].getW() != DONT_CARE && sizes[core::detail::toUnderlying(WindowSize_t::kMin)].getH() != DONT_CARE) {
-			hints->min_width = sizes[core::detail::toUnderlying(WindowSize_t::kMin)].getW();
-			hints->min_height = sizes[core::detail::toUnderlying(WindowSize_t::kMin)].getH();
+		if (size.min.getW() != DONT_CARE && size.min.getH() != DONT_CARE) {
+			hints->min_width = size.min.getW();
+			hints->min_height = size.min.getH();
 		} else {
 			hints->flags = hints->flags & ~PMinSize;
 			printf("Could not set minimum window size\n");
 		}
 	} else {
-		hints->min_width = sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getW();
-		hints->min_height = sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getH();
+		hints->min_width = size.normal.getW();
+		hints->min_height = size.normal.getH();
 	}
 }
 
-void XWindow::_setMaxSize(XSizeHints * hints, const math::size2i_t * sizes, bool resizable) {
+void XWindow::_setMaxSize(XSizeHints * hints, const WindowSize & size, bool resizable) {
 	if (resizable) {
-		if (sizes[core::detail::toUnderlying(WindowSize_t::kMax)].getW() != DONT_CARE && sizes[core::detail::toUnderlying(WindowSize_t::kMax)].getH() != DONT_CARE) {
-			hints->max_width = sizes[core::detail::toUnderlying(WindowSize_t::kMax)].getW();
-			hints->max_height = sizes[core::detail::toUnderlying(WindowSize_t::kMax)].getH();
+		if (size.max.getW() != DONT_CARE && size.max.getH() != DONT_CARE) {
+			hints->max_width = size.max.getW();
+			hints->max_height = size.max.getH();
 		} else {
 			hints->flags = hints->flags & ~PMaxSize;
 			printf("Could not set maximum window size\n");
 		}
 	} else {
-		hints->max_width = sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getW();
-		hints->max_height = sizes[core::detail::toUnderlying(WindowSize_t::kOrigin)].getH();
+		hints->max_width = size.normal.getW();
+		hints->max_height = size.normal.getH();
 	}
 }
 
-void XWindow::setSizeHints(const math::size2i_t * sizes, bool resizable) {
+void XWindow::setSizeHints(const WindowSize & size, bool resizable) {
 	XSizeHints * hints = XAllocSizeHints();
 	if (!hints) {
 		fprintf(stderr, "Could not allocate memory for size hints.\n");
@@ -161,8 +160,8 @@ void XWindow::setSizeHints(const math::size2i_t * sizes, bool resizable) {
 	
 	hints->flags |= (PMinSize | PMaxSize);
 
-	_setMinSize(hints, sizes, resizable);
-	_setMaxSize(hints, sizes, resizable);
+	_setMinSize(hints, size, resizable);
+	_setMaxSize(hints, size, resizable);
 
 	XSetWMNormalHints(_connection->getDisplay(), _window, hints);
 	XFree(hints);

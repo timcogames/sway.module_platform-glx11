@@ -1,35 +1,17 @@
 #ifndef SWAY_GLX11_XWINDOW_H
 #define SWAY_GLX11_XWINDOW_H
 
+#include <sway/glx11/typedefs.h>
 #include <sway/glx11/xatom.h>
 #include <sway/glx11/xscreenconnection.h>
 #include <sway/glx11/windoweventlistener.h>
-#include <sway/glx11/windowinitialparams.h>
+#include <sway/glx11/windowinitialinfo.h>
 #include <sway/glx11/windowmodes.h>
-#include <sway/core.h>
-#include <sway/math.h>
-
-#include <boost/noncopyable.hpp> // boost::noncopyable
-#include <boost/shared_ptr.hpp> // boost::shared_ptr
-#include <boost/make_shared.hpp> // boost::make_shared
-#include <boost/function.hpp> // boost::function
-#include <boost/bind.hpp> // boost::bind
-
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-
-#include <GL/gl.h>
-#include <GL/glx.h>
-
-#include <map>
+#include <sway/glx11/prereqs.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)
 
-typedef boost::function<void (const XEvent & )> EventCallbackFunc_t;
-typedef std::map<s32_t, EventCallbackFunc_t> EventCallbackFuncMap_t;
-
-class XScreenConnection;
 class XWindow : public WindowEventListener, private boost::noncopyable {
 public:
 	/*!
@@ -41,7 +23,7 @@ public:
 	 * \param[in] connection
 	 *    Экранное соедининение с сервером.
 	 */
-	XWindow(boost::shared_ptr<XScreenConnection> connection);
+	XWindow(XScreenConnectionRef_t connection);
 
 	/*!
 	 * \brief
@@ -70,12 +52,12 @@ public:
 	 * \param[in] visualInfo
 	 *    Информация о дисплее.
 	 * 
-	 * \param[in] params
+	 * \param[in] windowInfo
 	 *    Начальные параметры окна.
 	 * 
 	 * \exception std::runtime_error Неудачное создание окна.
 	 */
-	void createDummy(XVisualInfo * visualInfo, const WindowInitialParams & params);
+	void createDummy(XVisualInfo * visualInfo, const WindowInitialInfo & windowInfo);
 
 	/*!
 	 * \brief
@@ -132,13 +114,13 @@ public:
 	 * \brief
 	 *    Устанавливает поведение при смене размера.
 	 *
-	 * \param[in] sizes
-	 *    Размеры окна (Основной / Минимальный / Максимальный).
+	 * \param[in] size
+	 *    Размер окна.
 	 * 
 	 * \param[in] resizable
 	 *    Имеется возможность изменения размера?
 	 */
-	void setSizeHints(const math::size2i_t * sizes, bool resizable);
+	void setSizeHints(const WindowSize & size, bool resizable);
 
 	/*!
 	 * \brief
@@ -206,13 +188,13 @@ private:
 	 * \param[out] hints
 	 *    Cтруктура рекомендаций.
 	 * 
-	 * \param[in] sizes
-	 *    Размеры окна (Основной / Минимальный / Максимальный).
+	 * \param[in] size
+	 *    Размер окна.
 	 * 
 	 * \param[in] resizable
 	 *    Имеется возможность изменения размера?
 	 */
-	void _setMinSize(XSizeHints * hints, const math::size2i_t * sizes, bool resizable);
+	void _setMinSize(XSizeHints * hints, const WindowSize & size, bool resizable);
 	
 	/*!
 	 * \brief
@@ -221,16 +203,16 @@ private:
 	 * \param[out] hints
 	 *    Cтруктура рекомендаций.
 	 * 
-	 * \param[in] sizes
-	 *    Размеры окна (Основной / Минимальный / Максимальный).
+	 * \param[in] size
+	 *    Размер окна.
 	 * 
 	 * \param[in] resizable
 	 *    Имеется возможность изменения размера?
 	 */
-	void _setMaxSize(XSizeHints * hints, const math::size2i_t * sizes, bool resizable);
+	void _setMaxSize(XSizeHints * hints, const WindowSize & size, bool resizable);
 
 private:
-	boost::shared_ptr<XScreenConnection> _connection; /*!< Экранное соедининение с сервером. */
+	XScreenConnectionRef_t _connection; /*!< Экранное соедининение с сервером. */
 	Window _window; /*!< Идентификатор окна. */
 	Atom _wmatom[kAtom_WMLast], _netatom[kAtom_NetLast];
 	EventCallbackFuncMap_t _eventCallbacks;

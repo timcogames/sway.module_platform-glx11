@@ -1,8 +1,7 @@
 #ifndef SWAY_GLX11_WINDOWEVENTLISTENER_H
 #define SWAY_GLX11_WINDOWEVENTLISTENER_H
 
-#include <sway/core.h>
-#include <X11/Xlib.h>
+#include <sway/glx11/prereqs.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)
