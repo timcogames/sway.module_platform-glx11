@@ -12,6 +12,9 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)
 
+typedef boost::function<void (const XEvent &)> EventCallbackFunc_t;
+typedef std::map<s32_t, EventCallbackFunc_t> EventCallbackFuncMap_t;
+
 class XWindow : public WindowEventListener, private boost::noncopyable {
 public:
 	/*!
