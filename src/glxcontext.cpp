@@ -24,7 +24,7 @@ GlxContext::~GlxContext() {
 void GlxContext::createLegacy(GLXFBConfig fbconfig) {
 	_context = glXCreateNewContext(_connection->getDisplay(), fbconfig, GLX_RGBA_TYPE, 0, True);
 	if (!_context)
-		throw Exception("Couldn't create GLX context.");
+		throw core::runtime::Exception("Couldn't create GLX context.");
 
 	if (!glXIsDirect(_connection->getDisplay(), _context))
 		printf("Unable to create direct rendering context.\n");

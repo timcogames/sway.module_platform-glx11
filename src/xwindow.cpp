@@ -61,7 +61,7 @@ void XWindow::createDummy(XVisualInfo * visualInfo, const WindowInitialInfo & wi
 	XSelectInput(_connection->getDisplay(), _window, SubstructureNotifyMask
 		| ButtonPressMask | ButtonReleaseMask | PointerMotionMask
 		| KeyPressMask | KeyReleaseMask | KeymapStateMask);
-	
+
 	XSetWMProtocols(_connection->getDisplay(), _window, &_wmatom[kAtom_WMDeleteWindow], 1);
 }
 
@@ -209,7 +209,7 @@ void XWindow::setMaximize(bool maximized) {
 	event.xclient.data.l[0] = maximized ? 1 : 0;
 	event.xclient.data.l[1] = 0;
 	event.xclient.data.l[2] = 0;
-	
+
 	int i = 1;
 	event.xclient.data.l[i++] = _netatom[kAtom_NetWMStateMaximizedVert];
 	event.xclient.data.l[i++] = _netatom[kAtom_NetWMStateMaximizedHorz];
