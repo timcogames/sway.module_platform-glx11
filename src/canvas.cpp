@@ -33,7 +33,7 @@ Canvas::Canvas(XScreenConnectionRef_t connection, const WindowInitialInfo & wind
 		windowInfo.fullscreen ? 0 : (connection->getDisplaySize().getW() - windowInfo.size.normal.getW()) / 2,
 		windowInfo.fullscreen ? 0 : (connection->getDisplaySize().getH() - windowInfo.size.normal.getH()) / 2);
 
-	_context = boost::make_shared<GlxContext>(connection, (XWindow *) this);
+	_context = std::make_shared<GlxContext>(connection, (XWindow *) this);
 	_context->createLegacy(config);
 }
 
