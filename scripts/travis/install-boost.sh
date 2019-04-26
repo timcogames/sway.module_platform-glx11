@@ -6,7 +6,7 @@ if [[ -d "$BOOST_ROOT/lib" ]] ; then
 fi
 
 BOOST_URL="https://dl.bintray.com/boostorg/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION//\./_}.tar.gz"
-BOOST_LIBS="test"
+BOOST_LIBS="filesystem thread"
 BOOST_BUILD_TYPE="architecture=x86 address-model=32_64 variant=release threading=multi link=static stage"
 mkdir -p ${BOOST_ROOT}
 pushd ${BOOST_ROOT}
