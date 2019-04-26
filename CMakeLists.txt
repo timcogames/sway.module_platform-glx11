@@ -42,8 +42,7 @@ find_package(X11 REQUIRED)
 
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_NO_SYSTEM_PATHS TRUE)
-set(BOOST_COMPONENTS system filesystem thread)
-
+set(BOOST_COMPONENTS filesystem thread)
 set(BOOST_INCLUDEDIR "${BOOST_ROOT}/")
 set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib")
 
