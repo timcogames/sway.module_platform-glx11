@@ -1,5 +1,5 @@
 # Проверяем версию CMake
-cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.14.3 FATAL_ERROR)
 
 # Мета-информация о проекте
 set(META_PROJECT_NAME module_platform_glx11)
@@ -10,7 +10,7 @@ set(META_VERSION_PATCH 12)
 set(META_VERSION ${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH})
 
 # Опции сборки
-option(BUILD_SHARED "Build shared library" OFF)
+option(MODULE_PLATFORM_GLX11_BUILD_SHARED "Build shared library" OFF)
 
 project(${META_PROJECT_NAME} C CXX)
 
@@ -41,18 +41,23 @@ find_package(OpenGL REQUIRED)
 find_package(X11 REQUIRED)
 
 set(Boost_USE_STATIC_LIBS ON)
+set(Boost_NO_SYSTEM_PATHS TRUE)
 set(BOOST_COMPONENTS system filesystem thread)
-find_package(Boost 1.58 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
-if(NOT Boost_FOUND)
-	message(FATAL_ERROR "Fatal error: Boost (version >= 1.58) required.")
-else()
-	message(STATUS "Boost includes: ${Boost_INCLUDE_DIRS}")
-	message(STATUS "Boost libs: ${Boost_LIBRARIES}")
 
-	include_directories(${Boost_INCLUDE_DIRS})
+set(BOOST_INCLUDEDIR "${BOOST_ROOT}/")
+set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib")
+
+find_package(Boost 1.69.0 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
+if(NOT Boost_FOUND)
+	message(FATAL_ERROR "Fatal error: Boost (version >= 1.69.0) required.")
+else()
+	message(STATUS "Boost includes: ${BOOST_INCLUDEDIR}")
+	message(STATUS "Boost libs: ${BOOST_LIBRARYDIR}")
+
+	include_directories(${BOOST_INCLUDEDIR})
 endif()
 
-if(BUILD_SHARED)
+if(MODULE_PLATFORM_GLX11_BUILD_SHARED)
 	# Добавляем в проект цель для сборки динамической библиотеки
 	add_library(${META_LIB_NAME} SHARED ${MODULE_PLATFORM_GLX11_SOURCE})
 	set_target_properties(${META_LIB_NAME} PROPERTIES OUTPUT_NAME ${META_PROJECT_NAME})
@@ -66,4 +71,4 @@ else()
 	set_target_properties(${META_LIB_NAME} PROPERTIES SUFFIX ".a.${META_VERSION}")
 endif()
 
-target_link_libraries(${META_LIB_NAME} X11 Boost::system Boost::filesystem Boost::thread)
+target_link_libraries(${META_LIB_NAME} X11 ${BOOST_LIBRARIES})
