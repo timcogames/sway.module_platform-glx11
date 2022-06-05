@@ -1,6 +1,6 @@
 # sway.module_platform-glx11
 
-[![Build Status][travis-svg]][travis-url] [![codecov][codecov-svg]][codecov-url] [![BCH compliance][bettercodehub-svg]][bettercodehub-url] [![Documentation][codedocs-svg]][codedocs-url] [![License][license-svg]][license-url]
+[![codecov][codecov-svg]][codecov-url] [![BCH compliance][bettercodehub-svg]][bettercodehub-url] [![Documentation][codedocs-svg]][codedocs-url] [![License][license-svg]][license-url]
 
 ### Клонирование проекта
 
@@ -19,7 +19,7 @@ mkdir build && cd ./build
 Конфигурируем проект для сборки
 
 ```console
-cmake -DBOOST_ROOT=/usr/local -DCMAKE_BUILD_TYPE=Release ../
+cmake -DCMAKE_BUILD_TYPE=Release -DCUSTOM_GTEST_ROOT_DIR=/Users/apriori85/Documents/Third-party/googletest -DMODULE_PLATFORM_GLX11_ENABLE_TESTS=ON ../
 ```
 
 Опция сборки | Тип | Описание | По умолчанию
@@ -34,8 +34,6 @@ cmake -DBOOST_ROOT=/usr/local -DCMAKE_BUILD_TYPE=Release ../
 cmake --build .
 ```
 
-[travis-svg]: https://travis-ci.com/timcogames/sway.module_platform-glx11.svg?branch=master
-[travis-url]: https://travis-ci.com/timcogames/sway.module_platform-glx11
 [codecov-svg]: https://codecov.io/gh/timcogames/sway.module_platform-glx11/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/timcogames/sway.module_platform-glx11
 [bettercodehub-svg]: https://bettercodehub.com/edge/badge/timcogames/sway.module_platform-glx11?branch=master

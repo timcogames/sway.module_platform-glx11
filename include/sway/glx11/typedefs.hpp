@@ -1,11 +1,11 @@
-#ifndef SWAY_GLX11_TYPEDEFS_H
-#define SWAY_GLX11_TYPEDEFS_H
+#ifndef SWAY_GLX11_TYPEDEFS_HPP
+#define SWAY_GLX11_TYPEDEFS_HPP
 
-#include <sway/namespacemacros.h>
-#include <sway/types.h>
+#include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 
-#include <memory> // std::shared_ptr
 #include <map>
+#include <memory>  // std::shared_ptr
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)
@@ -17,4 +17,4 @@ typedef std::shared_ptr<class Canvas> CanvasRef_t;
 NAMESPACE_END(glx11)
 NAMESPACE_END(sway)
 
-#endif // SWAY_GLX11_TYPEDEFS_H
+#endif
