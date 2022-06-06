@@ -45,10 +45,10 @@ include_directories("${MODULE_PLATFORM_GLX11_DIR}/submodules/sway.module_math/li
 file(GLOB_RECURSE MODULE_PLATFORM_GLX11_HEADERS ${MODULE_PLATFORM_GLX11_DIR}/include/*.*)
 file(GLOB_RECURSE MODULE_PLATFORM_GLX11_SOURCE ${MODULE_PLATFORM_GLX11_DIR}/src/*.*)
 
-find_package(OpenGL REQUIRED)
-find_package(X11 REQUIRED)
-
 link_directories("${GLUT_LIBRARY_DIRS}")
+
+find_package(OpenGL REQUIRED)
+find_package(X11 QUIET)
 
 if (MODULE_PLATFORM_GLX11_SHARED_LIB)
   # Добавляем в проект цель для сборки динамической библиотеки
