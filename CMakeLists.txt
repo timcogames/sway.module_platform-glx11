@@ -22,6 +22,9 @@ option(CUSTOM_GTEST_ROOT_DIR "GTest root directory" OFF)
 
 project(${META_PLATFORM_GLX11_PRJNAME} VERSION ${META_PLATFORM_GLX11_VERSION} LANGUAGES CXX)
 
+# Подмодули
+custom_add_subdirectory("libmodule_core" submodules/sway.module_core)
+
 # Определяем каталог вывода по умолчанию
 if (CMAKE_BUILD_TYPE MATCHES Debug)
   set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/dbg)
@@ -37,13 +40,13 @@ set(MODULE_PLATFORM_GLX11_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 # Добавляем пути для поиска хедеров
 include_directories("${GLUT_INCLUDE_DIRS}")
-include_directories("${MODULE_PLATFORM_GLX11_DIR}/include")
+include_directories("${MODULE_PLATFORM_GLX11_DIR}/lib/include")
 include_directories("${MODULE_PLATFORM_GLX11_DIR}/submodules/sway.module_core/lib/include")
 include_directories("${MODULE_PLATFORM_GLX11_DIR}/submodules/sway.module_math/lib/include")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
-file(GLOB_RECURSE MODULE_PLATFORM_GLX11_HEADERS ${MODULE_PLATFORM_GLX11_DIR}/include/*.*)
-file(GLOB_RECURSE MODULE_PLATFORM_GLX11_SOURCE ${MODULE_PLATFORM_GLX11_DIR}/src/*.*)
+file(GLOB_RECURSE MODULE_PLATFORM_GLX11_HEADERS ${MODULE_PLATFORM_GLX11_DIR}/lib/include/*.*)
+file(GLOB_RECURSE MODULE_PLATFORM_GLX11_SOURCE ${MODULE_PLATFORM_GLX11_DIR}/lib/src/*.*)
 
 link_directories("${GLUT_LIBRARY_DIRS}")
 
@@ -66,3 +69,5 @@ endif ()
 
 custom_enable_cxx17(${META_PLATFORM_GLX11_LIBNAME})
 target_link_libraries(${META_PLATFORM_GLX11_LIBNAME} GL X11)
+
+add_subdirectory(examples/window)

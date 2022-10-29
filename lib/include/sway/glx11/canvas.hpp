@@ -48,11 +48,10 @@ public:
   virtual void handleFocusOutEvent(const XEvent &event) override;
 
 private:
-  GLXFBConfig _chooseBestSuitable(XScreenConnectionRef_t connection, GLXFBConfig *configs, s32_t numConfigs);
+  GLXFBConfig chooseBestSuitable_(XScreenConnectionRef_t connection, GLXFBConfig *configs, s32_t numConfigs);
 
-  GlxVisualAttributes _getMultisampleAttributes(XScreenConnectionRef_t connection, GLXFBConfig config);
+  GlxVisualAttributes getMultisampleAttributes_(XScreenConnectionRef_t connection, GLXFBConfig config);
 
-private:
   GlxContextRef_t _context; /*!< Контекст поверхности холста. */
 };
 
