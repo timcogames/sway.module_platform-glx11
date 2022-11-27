@@ -1,13 +1,13 @@
 #ifndef SWAY_GLX11_CANVAS_HPP
 #define SWAY_GLX11_CANVAS_HPP
 
-#include <sway/core/keywords.hpp>
 #include <sway/glx11/glxcontext.hpp>
 #include <sway/glx11/glxvisualattributes.hpp>
 #include <sway/glx11/prereqs.hpp>
 #include <sway/glx11/typedefs.hpp>
 #include <sway/glx11/xscreenconnection.hpp>
 #include <sway/glx11/xwindow.hpp>
+#include <sway/keywords.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)
