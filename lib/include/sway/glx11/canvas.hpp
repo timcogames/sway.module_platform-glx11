@@ -1,6 +1,7 @@
 #ifndef SWAY_GLX11_CANVAS_HPP
 #define SWAY_GLX11_CANVAS_HPP
 
+#include <sway/core/keywords.hpp>
 #include <sway/glx11/glxcontext.hpp>
 #include <sway/glx11/glxvisualattributes.hpp>
 #include <sway/glx11/prereqs.hpp>
@@ -13,44 +14,43 @@ NAMESPACE_BEGIN(glx11)
 
 class Canvas : public XWindow {
 public:
-  /*!
-   * \brief
-   *    Конструктор класса.
+  /**
+   * @brief Конструктор класса.
+   * Выполняет инициализацию нового экземпляра класса.
    *
-   *    Выполняет инициализацию нового экземпляра класса.
+   * @param[in] connection Экранное соедининение с сервером.
+   * @param[in] windowInfo Начальные параметры окна.
    *
-   * \param[in] connection
-   *    Экранное соедининение с сервером.
-   *
-   * \param[in] windowInfo
-   *    Начальные параметры окна.
    */
   Canvas(XScreenConnectionRef_t connection, const WindowInitialInfo &windowInfo);
 
-  /*!
-   * \brief
-   *    Деструктор класса.
+  /**
+   * @brief Деструктор класса.
+   * Освобождает захваченные ресурсы.
    *
-   *    Освобождает захваченные ресурсы.
    */
   ~Canvas();
 
-  /*!
-   * \brief
-   *    Получает контекст.
+  /**
+   * @brief Получает контекст.
+   *
    */
-  GlxContextRef_t getContext();
+  auto getContext() -> GlxContextRef_t;
 
-  virtual void handleCreateNotifyEvent(const XEvent &event) override;
-  virtual void handleConfigureNotifyEvent(const XEvent &event) override;
-  virtual void handleExposeEvent(const XEvent &event) override;
-  virtual void handleFocusInEvent(const XEvent &event) override;
-  virtual void handleFocusOutEvent(const XEvent &event) override;
+  MTHD_OVERRIDE(void handleCreateNotifyEvent(const XEvent &event));
+
+  MTHD_OVERRIDE(void handleConfigureNotifyEvent(const XEvent &event));
+
+  MTHD_OVERRIDE(void handleExposeEvent(const XEvent &event));
+
+  MTHD_OVERRIDE(void handleFocusInEvent(const XEvent &event));
+
+  MTHD_OVERRIDE(void handleFocusOutEvent(const XEvent &event));
 
 private:
-  GLXFBConfig chooseBestSuitable_(XScreenConnectionRef_t connection, GLXFBConfig *configs, s32_t numConfigs);
+  auto chooseBestSuitable_(XScreenConnectionRef_t connection, GLXFBConfig *configs, s32_t numConfigs) -> GLXFBConfig;
 
-  GlxVisualAttributes getMultisampleAttributes_(XScreenConnectionRef_t connection, GLXFBConfig config);
+  auto getMultisampleAttributes_(XScreenConnectionRef_t connection, GLXFBConfig config) -> GlxVisualAttributes;
 
   GlxContextRef_t _context; /*!< Контекст поверхности холста. */
 };

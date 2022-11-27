@@ -1,0 +1,12 @@
+{
+  "configurations": [
+    {
+      "name": "Mac",
+      "includePath": [
+        "${workspaceFolder}/lib/include",
+        "${workspaceFolder}/submodules/sway.module_core/lib/include"
+      ]
+    }
+  ],
+  "version": 4
+}

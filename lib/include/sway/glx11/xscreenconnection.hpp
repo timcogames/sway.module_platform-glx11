@@ -28,25 +28,25 @@ public:
    * \brief
    *    Получает указатель на структуру дисплея.
    */
-  Display *getDisplay() const;
+  auto getDisplay() const -> Display *;
 
   /*!
    * \brief
    *    Получает номер экрана.
    */
-  s32_t getScreenNumber() const;
+  auto getScreenNumber() const -> s32_t;
 
   /*!
    * \brief
    *    Получает корневое окно.
    */
-  Window getRootWindow() const;
+  auto getRootWindow() const -> Window;
 
   /*!
    * \brief
    *    Получает размер дисплея.
    */
-  math::size2i_t getDisplaySize() const;
+  auto getDisplaySize() const -> math::size2i_t;
 
 private:
   Display *_display; /*!< Указатель на структуру дисплея. */

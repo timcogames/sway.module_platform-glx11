@@ -93,7 +93,7 @@ public:
    * \brief
    *    Получает позицию окна.
    */
-  math::point2i_t getPosition() const;
+  auto getPosition() const -> math::point2i_t;
 
   /*!
    * \brief
@@ -111,7 +111,7 @@ public:
    * \brief
    *    Получает размер окна.
    */
-  math::size2i_t getSize() const;
+  auto getSize() const -> math::size2i_t;
 
   /*!
    * \brief
@@ -177,7 +177,7 @@ public:
    * \brief
    *    Получает идентификатор окна.
    */
-  Window getWindowHandle();
+  auto getWindowHandle() -> Window;
 
 private:
   void _initializeAtoms();

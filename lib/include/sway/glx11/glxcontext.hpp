@@ -9,61 +9,54 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)
 
-/*!
- * \brief
- *    Контекст поверхности холста.
+/**
+ * @brief Контекст поверхности холста.
+ *
  */
 class GlxContext {
 public:
-  /*!
-   * \brief
-   *    Конструктор класса.
+  /**
+   * @brief Конструктор класса.
+   * Выполняет инициализацию нового экземпляра класса.
    *
-   *    Выполняет инициализацию нового экземпляра класса.
+   * @param[in] connection Экранное соедининение с сервером.
+   * @param[in] window Окно графического интерфейса.
    *
-   * \param[in] connection
-   *    Экранное соедининение с сервером.
-   *
-   * \param[in] window
-   *    Окно графического интерфейса.
    */
   GlxContext(XScreenConnectionRef_t connection, XWindow *window);
 
-  /*!
-   * \brief
-   *    Деструктор класса.
+  /**
+   * @brief Деструктор класса.
+   * Уничтожает контекст визуализации.
    *
-   *    Уничтожает контекст визуализации.
    */
   ~GlxContext();
 
-  /*!
-   * \brief
-   *    Создает контекст визуализации.
+  /**
+   * @brief Создает контекст визуализации.
+   *
    */
   void createLegacy(GLXFBConfig fbconfig);
 
-  /*!
-   * \brief
-   *    Прикрепляет контекст к окну.
+  /**
+   * @brief Прикрепляет контекст к окну.
    *
-   * \sa
-   *    doneCurrent()
+   * @sa doneCurrent()
+   *
    */
   bool makeCurrent();
 
-  /*!
-   * \brief
-   *    Освобождаем контекст.
+  /**
+   * @brief Освобождаем контекст.
    *
-   * \sa
-   *    makeCurrent()
+   * @sa makeCurrent()
+   *
    */
   bool doneCurrent();
 
-  /*!
-   * \brief
-   *    Обмен буферов.
+  /**
+   * @brief Обмен буферов.
+   *
    */
   void present();
 
