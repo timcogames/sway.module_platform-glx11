@@ -17,4 +17,4 @@ typedef std::shared_ptr<class Canvas> CanvasRef_t;
 NAMESPACE_END(glx11)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_GLX11_TYPEDEFS_HPP

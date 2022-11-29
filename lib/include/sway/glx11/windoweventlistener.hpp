@@ -32,4 +32,4 @@ protected:
 NAMESPACE_END(glx11)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_GLX11_WINDOWEVENTLISTENER_HPP

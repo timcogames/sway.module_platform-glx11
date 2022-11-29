@@ -20,4 +20,4 @@ struct WindowInitialInfo {
 NAMESPACE_END(glx11)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_GLX11_WINDOWINITIALINFO_HPP

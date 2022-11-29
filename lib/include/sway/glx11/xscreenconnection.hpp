@@ -8,43 +8,41 @@ NAMESPACE_BEGIN(glx11)
 
 class XScreenConnection {
 public:
-  /*!
-   * \brief
-   *    Конструктор класса.
+  /**
+   * @brief Конструктор класса.
+   * Выполняет инициализацию нового экземпляра класса.
    *
-   *    Выполняет инициализацию нового экземпляра класса.
    */
   XScreenConnection();
 
-  /*!
-   * \brief
-   *    Деструктор класса.
+  /**
+   * @brief Деструктор класса.
+   * Освобождает захваченные ресурсы.
    *
-   *    Освобождает захваченные ресурсы.
    */
   ~XScreenConnection();
 
-  /*!
-   * \brief
-   *    Получает указатель на структуру дисплея.
+  /**
+   * @brief Получает указатель на структуру дисплея.
+   *
    */
   auto getDisplay() const -> Display *;
 
-  /*!
-   * \brief
-   *    Получает номер экрана.
+  /**
+   * @brief Получает номер экрана.
+   *
    */
   auto getScreenNumber() const -> s32_t;
 
-  /*!
-   * \brief
-   *    Получает корневое окно.
+  /**
+   * @brief Получает корневое окно.
+   *
    */
   auto getRootWindow() const -> Window;
 
-  /*!
-   * \brief
-   *    Получает размер дисплея.
+  /**
+   * @brief Получает размер дисплея.
+   *
    */
   auto getDisplaySize() const -> math::size2i_t;
 
@@ -56,4 +54,4 @@ private:
 NAMESPACE_END(glx11)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_GLX11_XSCREENCONNECTION_HPP

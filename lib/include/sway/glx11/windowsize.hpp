@@ -16,4 +16,4 @@ struct WindowSize {
 NAMESPACE_END(glx11)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_GLX11_WINDOWSIZE_HPP

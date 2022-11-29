@@ -15,4 +15,4 @@ struct GlxVisualAttributes {
 NAMESPACE_END(glx11)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_GLX11_GLXVISUALATTRIBUTES_HPP

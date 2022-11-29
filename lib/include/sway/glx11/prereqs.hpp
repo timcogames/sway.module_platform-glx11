@@ -10,4 +10,4 @@
 #include <X11/Xutil.h>
 #include <memory>  // std::shared_ptr, std::make_shared
 
-#endif
+#endif  // SWAY_GLX11_PREREQS_HPP

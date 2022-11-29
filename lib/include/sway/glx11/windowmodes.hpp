@@ -7,9 +7,9 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)
 
-/*!
- * \brief
- *    Перечисление режимов окна.
+/**
+ * @brief Перечисление режимов окна.
+ *
  */
 enum class WindowMode_t : s32_t {
   kWindowed, /*!< Оконный режим. */
@@ -19,4 +19,4 @@ enum class WindowMode_t : s32_t {
 NAMESPACE_END(glx11)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_GLX11_WINDOWMODES_HPP

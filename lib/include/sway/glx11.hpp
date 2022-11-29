@@ -5,4 +5,4 @@
 #include <sway/glx11/windowinitialinfo.hpp>
 #include <sway/glx11/xscreenconnection.hpp>
 
-#endif
+#endif  // SWAY_GLX11_HPP

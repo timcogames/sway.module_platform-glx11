@@ -58,4 +58,4 @@ private:
 NAMESPACE_END(glx11)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_GLX11_CANVAS_HPP

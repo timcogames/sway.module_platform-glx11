@@ -19,4 +19,4 @@ enum {
 NAMESPACE_END(glx11)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_GLX11_XATOM_HPP
