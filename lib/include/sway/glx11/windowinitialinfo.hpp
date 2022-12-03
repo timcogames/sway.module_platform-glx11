@@ -9,10 +9,10 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)
 
 struct WindowInitialInfo {
-  lpcstr_t title; /*!< Заголовок окна. */
-  WindowSize size; /*!< Размер окна. */
-  bool resizable; /*!< Возможность изменения размера. */
-  bool fullscreen; /*!< Полноэкранный / Оконный режим. */
+  lpcstr_t title;  // Заголовок окна.
+  WindowSize size;  // Размер окна.
+  bool resizable;  // Возможность изменения размера.
+  bool fullscreen;  // Полноэкранный / Оконный режим.
   bool maximized;
   bool vsync;
 };

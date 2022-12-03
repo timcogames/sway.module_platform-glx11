@@ -16,24 +16,19 @@ class Canvas : public XWindow {
 public:
   /**
    * @brief Конструктор класса.
-   * Выполняет инициализацию нового экземпляра класса.
-   *
+   *        Выполняет инициализацию нового экземпляра класса.
    * @param[in] connection Экранное соедининение с сервером.
    * @param[in] windowInfo Начальные параметры окна.
-   *
    */
   Canvas(XScreenConnectionRef_t connection, const WindowInitialInfo &windowInfo);
 
   /**
-   * @brief Деструктор класса.
-   * Освобождает захваченные ресурсы.
-   *
+   * @brief Деструктор класса. Освобождает захваченные ресурсы.
    */
   ~Canvas();
 
   /**
    * @brief Получает контекст.
-   *
    */
   auto getContext() -> GlxContextRef_t;
 
@@ -52,7 +47,7 @@ private:
 
   auto getMultisampleAttributes_(XScreenConnectionRef_t connection, GLXFBConfig config) -> GlxVisualAttributes;
 
-  GlxContextRef_t _context; /*!< Контекст поверхности холста. */
+  GlxContextRef_t _context;  // Контекст поверхности холста.
 };
 
 NAMESPACE_END(glx11)
