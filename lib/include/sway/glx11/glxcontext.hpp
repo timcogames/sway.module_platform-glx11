@@ -17,6 +17,7 @@ public:
   /**
    * @brief Конструктор класса.
    *        Выполняет инициализацию нового экземпляра класса.
+   *
    * @param[in] connection Экранное соедининение с сервером.
    * @param[in] window Окно графического интерфейса.
    */
@@ -34,12 +35,14 @@ public:
 
   /**
    * @brief Прикрепляет контекст к окну.
+   *
    * @sa doneCurrent()
    */
   bool makeCurrent();
 
   /**
    * @brief Освобождаем контекст.
+   *
    * @sa makeCurrent()
    */
   bool doneCurrent();

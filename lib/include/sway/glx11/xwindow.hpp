@@ -20,6 +20,7 @@ public:
   /**
    * @brief Конструктор класса.
    *        Выполняет инициализацию нового экземпляра класса.
+   *
    * @param[in] connection Экранное соедининение с сервером.
    */
   XWindow(XScreenConnectionRef_t connection);
@@ -31,6 +32,7 @@ public:
 
   /**
    * @brief Добавляет привязку функции к оконному событию.
+   *
    * @param[in] type Тип события.
    * @param[in] callback Функция вызываемая при возникновении события.
    */
@@ -38,6 +40,7 @@ public:
 
   /**
    * @brief Создает главное окно приложения.
+   *
    * @param[in] visualInfo Информация о дисплее.
    * @param[in] windowInfo Начальные параметры окна.
    * @exception std::runtime_error Неудачное создание окна.
@@ -51,12 +54,14 @@ public:
 
   /**
    * @brief Устанавливает заголовок окна.
+   *
    * @param[in] title Заголовок окна.
    */
   void setTitle(lpcstr_t title);
 
   /**
    * @brief Устанавливает позицию окна.
+   *
    * @param[in] x Координата позиции окна по оси X.
    * @param[in] y Координата позиции окна по оси Y.
    */
@@ -69,6 +74,7 @@ public:
 
   /**
    * @brief Устанавливает размер окна.
+   *
    * @param[in] w Ширина окна.
    * @param[in] h Высота окна.
    */
@@ -81,6 +87,7 @@ public:
 
   /**
    * @brief Устанавливает поведение при смене размера.
+   *
    * @param[in] size Размер окна.
    * @param[in] resizable Имеется возможность изменения размера?
    */
@@ -88,6 +95,7 @@ public:
 
   /**
    * @brief Показывает окно.
+   *
    * @sa hide(),
    *     visible()
    */
@@ -95,6 +103,7 @@ public:
 
   /**
    * @brief Скрывает окно.
+   *
    * @sa show(),
    *     visible()
    *
@@ -103,6 +112,7 @@ public:
 
   /**
    * @brief Получает значение видимости окна.
+   *
    * @sa show(),
    *     hide()
    *
@@ -111,12 +121,14 @@ public:
 
   /**
    * @brief Переключает в полноэкранный / оконный режим.
+   *
    * @param[in] fullscreen Включить полноэкранный режим?
    */
   void setFullscreen(bool fullscreen);
 
   /**
    * @brief Устанавливает максимальный размер окна.
+   *
    * @param[in] maximized Растянуть окно до максимальных размеров?
    */
   void setMaximize(bool maximized);
@@ -124,7 +136,7 @@ public:
   /**
    * @brief Получает идентификатор окна.
    */
-  auto getWindowHandle() -> Window;
+  auto getWindowHandle() -> Window { return _window; }
 
 private:
   void _initializeAtoms();
@@ -133,6 +145,7 @@ private:
 
   /**
    * @brief Устанавливает минимальный размер.
+   *
    * @param[out] hints Cтруктура рекомендаций.
    * @param[in] size Размер окна.
    * @param[in] resizable Имеется возможность изменения размера?
@@ -141,6 +154,7 @@ private:
 
   /**
    * @brief Устанавливает максимальный размер.
+   *
    * @param[out] hints Cтруктура рекомендаций.
    * @param[in] size Размер окна.
    * @param[in] resizable Имеется возможность изменения размера?

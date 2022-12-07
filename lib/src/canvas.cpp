@@ -52,9 +52,8 @@ void Canvas::handleFocusOutEvent(const XEvent &event) {
   // Empty
 }
 
-GlxContextRef_t Canvas::getContext() { return _context; }
-
-GLXFBConfig Canvas::chooseBestSuitable_(XScreenConnectionRef_t connection, GLXFBConfig *configs, s32_t numConfigs) {
+auto Canvas::chooseBestSuitable_(XScreenConnectionRef_t connection, GLXFBConfig *configs, s32_t numConfigs)
+    -> GLXFBConfig {
   s32_t bestScore = DONT_CARE, bestNumSamples = DONT_CARE;
 
   for (s32_t i = 0; i < numConfigs; ++i) {
@@ -68,7 +67,7 @@ GLXFBConfig Canvas::chooseBestSuitable_(XScreenConnectionRef_t connection, GLXFB
   return configs[bestScore];
 }
 
-GlxVisualAttributes Canvas::getMultisampleAttributes_(XScreenConnectionRef_t connection, GLXFBConfig config) {
+auto Canvas::getMultisampleAttributes_(XScreenConnectionRef_t connection, GLXFBConfig config) -> GlxVisualAttributes {
   lpcstr_t extensions = glXQueryExtensionsString(connection->getDisplay(), connection->getScreenNumber());
   GlxVisualAttributes attrs;
 

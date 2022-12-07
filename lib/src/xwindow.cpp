@@ -67,7 +67,7 @@ void XWindow::createDummy(XVisualInfo *visualInfo, const WindowInitialInfo &wind
   XSetWMProtocols(_connection->getDisplay(), _window, &_wmatom[kAtom_WMDeleteWindow], 1);
 }
 
-bool XWindow::eventLoop(bool keepgoing) {
+auto XWindow::eventLoop(bool keepgoing) -> bool {
   XEvent event = {};
   XNextEvent(_connection->getDisplay(), &event);
 
@@ -107,7 +107,7 @@ void XWindow::setPosition(s32_t x, s32_t y) {
   XFlush(_connection->getDisplay());
 }
 
-math::point2i_t XWindow::getPosition() const {
+auto XWindow::getPosition() const -> math::point2i_t {
   Window dummy;
   s32_t xpos, ypos;
   XTranslateCoordinates(_connection->getDisplay(), _window, _connection->getRootWindow(), 0, 0, &xpos, &ypos, &dummy);
@@ -119,7 +119,7 @@ void XWindow::setSize(s32_t w, s32_t h) {
   XFlush(_connection->getDisplay());
 }
 
-math::size2i_t XWindow::getSize() const {
+auto XWindow::getSize() const -> math::size2i_t {
   XWindowAttributes attrs;
   XGetWindowAttributes(_connection->getDisplay(), _window, &attrs);
   return math::TSize<s32_t>(attrs.width, attrs.height);
@@ -183,7 +183,7 @@ void XWindow::hide() {
   XFlush(_connection->getDisplay());
 }
 
-bool XWindow::visible() const {
+auto XWindow::visible() const -> bool {
   XWindowAttributes attrs;
   XGetWindowAttributes(_connection->getDisplay(), _window, &attrs);
   return (attrs.map_state == IsViewable);
@@ -222,8 +222,6 @@ void XWindow::setMaximize(bool maximized) {
 
   XSendEvent(_connection->getDisplay(), _connection->getRootWindow(), False, SubstructureRedirectMask, &event);
 }
-
-Window XWindow::getWindowHandle() { return _window; }
 
 NAMESPACE_END(glx11)
 NAMESPACE_END(sway)

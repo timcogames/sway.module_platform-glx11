@@ -32,7 +32,7 @@ void GlxContext::createLegacy(GLXFBConfig fbconfig) {
   }
 }
 
-bool GlxContext::makeCurrent() {
+auto GlxContext::makeCurrent() -> bool {
   if (glXGetCurrentContext() != _context) {
     return glXMakeCurrent(_connection->getDisplay(), _drawable, _context);
   }
@@ -40,7 +40,7 @@ bool GlxContext::makeCurrent() {
   return false;
 }
 
-bool GlxContext::doneCurrent() { return glXMakeCurrent(_connection->getDisplay(), None, NULL); }
+auto GlxContext::doneCurrent() -> bool { return glXMakeCurrent(_connection->getDisplay(), None, NULL); }
 
 void GlxContext::present() { glXSwapBuffers(_connection->getDisplay(), _drawable); }
 

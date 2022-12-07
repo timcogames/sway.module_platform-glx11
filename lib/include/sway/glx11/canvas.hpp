@@ -17,6 +17,7 @@ public:
   /**
    * @brief Конструктор класса.
    *        Выполняет инициализацию нового экземпляра класса.
+   *
    * @param[in] connection Экранное соедининение с сервером.
    * @param[in] windowInfo Начальные параметры окна.
    */
@@ -30,7 +31,7 @@ public:
   /**
    * @brief Получает контекст.
    */
-  auto getContext() -> GlxContextRef_t;
+  auto getContext() -> GlxContextRef_t { return _context; }
 
   MTHD_OVERRIDE(void handleCreateNotifyEvent(const XEvent &event));
 
