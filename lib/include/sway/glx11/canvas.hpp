@@ -31,7 +31,7 @@ public:
   /**
    * @brief Получает контекст.
    */
-  auto getContext() -> GlxContextRef_t { return _context; }
+  auto getContext() -> GlxContextRef_t { return context_; }
 
   MTHD_OVERRIDE(void handleCreateNotifyEvent(const XEvent &event));
 
@@ -48,7 +48,7 @@ private:
 
   auto getMultisampleAttributes_(XScreenConnectionRef_t connection, GLXFBConfig config) -> GlxVisualAttributes;
 
-  GlxContextRef_t _context;  // Контекст поверхности холста.
+  GlxContextRef_t context_;  // Контекст поверхности холста.
 };
 
 NAMESPACE_END(glx11)

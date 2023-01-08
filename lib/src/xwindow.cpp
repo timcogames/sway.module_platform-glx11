@@ -4,33 +4,33 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(glx11)
 
 XWindow::XWindow(XScreenConnectionRef_t connection)
-    : _connection(connection) {
+    : connection_(connection) {
 
-  _initializeAtoms();
-  _initializeEventBindings();
+  initializeAtoms_();
+  initializeEventBindings_();
 }
 
 XWindow::~XWindow() {
-  if (_window) {
-    XDestroyWindow(_connection->getDisplay(), _window);
-    XFlush(_connection->getDisplay());
+  if (window_) {
+    XDestroyWindow(connection_->getDisplay(), window_);
+    XFlush(connection_->getDisplay());
   }
 }
 
-void XWindow::_initializeAtoms() {
-  _wmatom[kAtom_WMState] = XInternAtom(_connection->getDisplay(), "WM_STATE", False);
-  _wmatom[kAtom_WMDeleteWindow] = XInternAtom(_connection->getDisplay(), "WM_DELETE_WINDOW", False);
+void XWindow::initializeAtoms_() {
+  wmatom_[kAtom_WMState] = XInternAtom(connection_->getDisplay(), "WM_STATE", False);
+  wmatom_[kAtom_WMDeleteWindow] = XInternAtom(connection_->getDisplay(), "WM_DELETE_WINDOW", False);
 
-  _netatom[kAtom_NetWMState] = XInternAtom(_connection->getDisplay(), "_NET_WM_STATE", False);
-  _netatom[kAtom_NetWMStateMaximizedVert] =
-      XInternAtom(_connection->getDisplay(), "_NET_WM_STATE_MAXIMIZED_VERT", False);
-  _netatom[kAtom_NetWMStateMaximizedHorz] =
-      XInternAtom(_connection->getDisplay(), "_NET_WM_STATE_MAXIMIZED_HORZ", False);
-  _netatom[kAtom_NetWMStateFullscreen] = XInternAtom(_connection->getDisplay(), "_NET_WM_STATE_FULLSCREEN", False);
+  netatom_[kAtom_NetWMState] = XInternAtom(connection_->getDisplay(), "_NET_WM_STATE", False);
+  netatom_[kAtom_NetWMStateMaximizedVert] =
+      XInternAtom(connection_->getDisplay(), "_NET_WM_STATE_MAXIMIZED_VERT", False);
+  netatom_[kAtom_NetWMStateMaximizedHorz] =
+      XInternAtom(connection_->getDisplay(), "_NET_WM_STATE_MAXIMIZED_HORZ", False);
+  netatom_[kAtom_NetWMStateFullscreen] = XInternAtom(connection_->getDisplay(), "_NET_WM_STATE_FULLSCREEN", False);
 }
 
-void XWindow::_initializeEventBindings() {
-  _eventCallbacks.clear();
+void XWindow::initializeEventBindings_() {
+  eventCallbacks_.clear();
 
   addEventBinding(CreateNotify, std::bind(&XWindow::handleCreateNotifyEvent, this, std::placeholders::_1));
   addEventBinding(ConfigureNotify, std::bind(&XWindow::handleConfigureNotifyEvent, this, std::placeholders::_1));
@@ -39,13 +39,13 @@ void XWindow::_initializeEventBindings() {
   addEventBinding(FocusOut, std::bind(&XWindow::handleFocusOutEvent, this, std::placeholders::_1));
 }
 
-void XWindow::addEventBinding(s32_t type, EventCallbackFunc_t callback) { _eventCallbacks[type] = callback; }
+void XWindow::addEventBinding(s32_t type, EventCallbackFunc_t callback) { eventCallbacks_[type] = callback; }
 
 void XWindow::createDummy(XVisualInfo *visualInfo, const WindowInitialInfo &windowInfo) {
   XSetWindowAttributes attrs;
-  attrs.background_pixel = attrs.border_pixel = BlackPixel(_connection->getDisplay(), _connection->getScreenNumber());
+  attrs.background_pixel = attrs.border_pixel = BlackPixel(connection_->getDisplay(), connection_->getScreenNumber());
   attrs.colormap =
-      XCreateColormap(_connection->getDisplay(), _connection->getRootWindow(), visualInfo->visual, AllocNone);
+      XCreateColormap(connection_->getDisplay(), connection_->getRootWindow(), visualInfo->visual, AllocNone);
   attrs.event_mask = 0;
   attrs.event_mask |= EnterWindowMask | LeaveWindowMask;
   attrs.event_mask |= StructureNotifyMask;
@@ -54,30 +54,30 @@ void XWindow::createDummy(XVisualInfo *visualInfo, const WindowInitialInfo &wind
 
   int mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
-  _window = XCreateWindow(_connection->getDisplay(), _connection->getRootWindow(), 0, 0, windowInfo.size.normal.getW(),
+  window_ = XCreateWindow(connection_->getDisplay(), connection_->getRootWindow(), 0, 0, windowInfo.size.normal.getW(),
       windowInfo.size.normal.getH(), 0, visualInfo->depth, InputOutput, visualInfo->visual, mask, &attrs);
-  if (_window == None) {
+  if (window_ == None) {
     throw std::runtime_error("Couldn't create the window.");
   }
 
-  XSelectInput(_connection->getDisplay(), _window,
+  XSelectInput(connection_->getDisplay(), window_,
       SubstructureNotifyMask | ButtonPressMask | ButtonReleaseMask | PointerMotionMask | KeyPressMask | KeyReleaseMask |
           KeymapStateMask);
 
-  XSetWMProtocols(_connection->getDisplay(), _window, &_wmatom[kAtom_WMDeleteWindow], 1);
+  XSetWMProtocols(connection_->getDisplay(), window_, &wmatom_[kAtom_WMDeleteWindow], 1);
 }
 
 auto XWindow::eventLoop(bool keepgoing) -> bool {
   XEvent event = {};
-  XNextEvent(_connection->getDisplay(), &event);
+  XNextEvent(connection_->getDisplay(), &event);
 
-  EventCallbackFuncMap_t::const_iterator i = _eventCallbacks.find(event.type);
-  if (i != _eventCallbacks.end()) {
+  EventCallbackFuncMap_t::const_iterator i = eventCallbacks_.find(event.type);
+  if (i != eventCallbacks_.end()) {
     i->second(event);
   }
 
   if (event.type == ClientMessage) {
-    if (event.xclient.format == 32 && Atom(event.xclient.data.l[0]) == _wmatom[kAtom_WMDeleteWindow]) {
+    if (event.xclient.format == 32 && Atom(event.xclient.data.l[0]) == wmatom_[kAtom_WMDeleteWindow]) {
       keepgoing = false;
     }
   }
@@ -86,42 +86,42 @@ auto XWindow::eventLoop(bool keepgoing) -> bool {
 }
 
 void XWindow::setTitle(lpcstr_t title) {
-  XStoreName(_connection->getDisplay(), _window, title);
-  XFlush(_connection->getDisplay());
+  XStoreName(connection_->getDisplay(), window_, title);
+  XFlush(connection_->getDisplay());
 }
 
 void XWindow::setPosition(s32_t x, s32_t y) {
   if (!visible()) {
     s64_t supplied;
     XSizeHints *hints = XAllocSizeHints();
-    XGetWMNormalHints(_connection->getDisplay(), _window, hints, &supplied);
+    XGetWMNormalHints(connection_->getDisplay(), window_, hints, &supplied);
 
     hints->flags |= PPosition;
     hints->x = hints->y = 0;
 
-    XSetWMNormalHints(_connection->getDisplay(), _window, hints);
+    XSetWMNormalHints(connection_->getDisplay(), window_, hints);
     XFree(hints);
   }
 
-  XMoveWindow(_connection->getDisplay(), _window, x, y);
-  XFlush(_connection->getDisplay());
+  XMoveWindow(connection_->getDisplay(), window_, x, y);
+  XFlush(connection_->getDisplay());
 }
 
 auto XWindow::getPosition() const -> math::point2i_t {
   Window dummy;
   s32_t xpos, ypos;
-  XTranslateCoordinates(_connection->getDisplay(), _window, _connection->getRootWindow(), 0, 0, &xpos, &ypos, &dummy);
+  XTranslateCoordinates(connection_->getDisplay(), window_, connection_->getRootWindow(), 0, 0, &xpos, &ypos, &dummy);
   return math::TPoint<s32_t>(xpos, ypos);
 }
 
 void XWindow::setSize(s32_t w, s32_t h) {
-  XResizeWindow(_connection->getDisplay(), _window, w, h);
-  XFlush(_connection->getDisplay());
+  XResizeWindow(connection_->getDisplay(), window_, w, h);
+  XFlush(connection_->getDisplay());
 }
 
 auto XWindow::getSize() const -> math::size2i_t {
   XWindowAttributes attrs;
-  XGetWindowAttributes(_connection->getDisplay(), _window, &attrs);
+  XGetWindowAttributes(connection_->getDisplay(), window_, &attrs);
   return math::TSize<s32_t>(attrs.width, attrs.height);
 }
 
@@ -167,25 +167,25 @@ void XWindow::setSizeHints(const WindowSize &size, bool resizable) {
   _setMinSize(hints, size, resizable);
   _setMaxSize(hints, size, resizable);
 
-  XSetWMNormalHints(_connection->getDisplay(), _window, hints);
+  XSetWMNormalHints(connection_->getDisplay(), window_, hints);
   XFree(hints);
 }
 
 void XWindow::show() {
   if (!visible()) {
-    XMapRaised(_connection->getDisplay(), _window);
-    XFlush(_connection->getDisplay());
+    XMapRaised(connection_->getDisplay(), window_);
+    XFlush(connection_->getDisplay());
   }
 }
 
 void XWindow::hide() {
-  XUnmapWindow(_connection->getDisplay(), _window);
-  XFlush(_connection->getDisplay());
+  XUnmapWindow(connection_->getDisplay(), window_);
+  XFlush(connection_->getDisplay());
 }
 
 auto XWindow::visible() const -> bool {
   XWindowAttributes attrs;
-  XGetWindowAttributes(_connection->getDisplay(), _window, &attrs);
+  XGetWindowAttributes(connection_->getDisplay(), window_, &attrs);
   return (attrs.map_state == IsViewable);
 }
 
@@ -194,33 +194,33 @@ void XWindow::setFullscreen(bool fullscreen) {
   event.type = ClientMessage;
   event.xclient.serial = 0;
   event.xclient.send_event = True;
-  event.xclient.window = _window;
-  event.xclient.message_type = _netatom[kAtom_NetWMState];
+  event.xclient.window = window_;
+  event.xclient.message_type = netatom_[kAtom_NetWMState];
   event.xclient.format = 32;
   event.xclient.data.l[0] =
       core::detail::toUnderlying(fullscreen ? WindowMode_t::kFullscreen : WindowMode_t::kWindowed);
-  event.xclient.data.l[1] = _netatom[kAtom_NetWMStateFullscreen];
+  event.xclient.data.l[1] = netatom_[kAtom_NetWMStateFullscreen];
   event.xclient.data.l[2] = 0;
 
-  XSendEvent(_connection->getDisplay(), _connection->getRootWindow(), False,
+  XSendEvent(connection_->getDisplay(), connection_->getRootWindow(), False,
       SubstructureNotifyMask | SubstructureRedirectMask, &event);
 }
 
 void XWindow::setMaximize(bool maximized) {
   XEvent event;
   event.xclient.type = ClientMessage;
-  event.xclient.window = _window;
-  event.xclient.message_type = _netatom[kAtom_NetWMState];
+  event.xclient.window = window_;
+  event.xclient.message_type = netatom_[kAtom_NetWMState];
   event.xclient.format = 32;
   event.xclient.data.l[0] = maximized ? 1 : 0;
   event.xclient.data.l[1] = 0;
   event.xclient.data.l[2] = 0;
 
   int i = 1;
-  event.xclient.data.l[i++] = _netatom[kAtom_NetWMStateMaximizedVert];
-  event.xclient.data.l[i++] = _netatom[kAtom_NetWMStateMaximizedHorz];
+  event.xclient.data.l[i++] = netatom_[kAtom_NetWMStateMaximizedVert];
+  event.xclient.data.l[i++] = netatom_[kAtom_NetWMStateMaximizedHorz];
 
-  XSendEvent(_connection->getDisplay(), _connection->getRootWindow(), False, SubstructureRedirectMask, &event);
+  XSendEvent(connection_->getDisplay(), connection_->getRootWindow(), False, SubstructureRedirectMask, &event);
 }
 
 NAMESPACE_END(glx11)

@@ -53,9 +53,9 @@ public:
   void present();
 
 private:
-  GLXContext _context;
-  GLXDrawable _drawable;
-  XScreenConnectionRef_t _connection;  // Экранное соедининение с сервером.
+  GLXContext context_;
+  GLXDrawable drawable_;
+  XScreenConnectionRef_t connection_;  // Экранное соедининение с сервером.
 };
 
 NAMESPACE_END(glx11)

@@ -136,12 +136,12 @@ public:
   /**
    * @brief Получает идентификатор окна.
    */
-  auto getWindowHandle() -> Window { return _window; }
+  auto getWindowHandle() -> Window { return window_; }
 
 private:
-  void _initializeAtoms();
+  void initializeAtoms_();
 
-  void _initializeEventBindings();
+  void initializeEventBindings_();
 
   /**
    * @brief Устанавливает минимальный размер.
@@ -162,10 +162,10 @@ private:
   void _setMaxSize(XSizeHints *hints, const WindowSize &size, bool resizable);
 
 private:
-  XScreenConnectionRef_t _connection;  // Экранное соедининение с сервером.
-  Window _window;  // Идентификатор окна.
-  Atom _wmatom[kAtom_WMLast], _netatom[kAtom_NetLast];
-  EventCallbackFuncMap_t _eventCallbacks;
+  XScreenConnectionRef_t connection_;  // Экранное соедининение с сервером.
+  Window window_;  // Идентификатор окна.
+  Atom wmatom_[kAtom_WMLast], netatom_[kAtom_NetLast];
+  EventCallbackFuncMap_t eventCallbacks_;
 };
 
 NAMESPACE_END(glx11)

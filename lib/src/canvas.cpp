@@ -24,8 +24,8 @@ Canvas::Canvas(XScreenConnectionRef_t connection, const WindowInitialInfo &windo
   setPosition(windowInfo.fullscreen ? 0 : (connection->getDisplaySize().getW() - windowInfo.size.normal.getW()) / 2,
       windowInfo.fullscreen ? 0 : (connection->getDisplaySize().getH() - windowInfo.size.normal.getH()) / 2);
 
-  _context = std::make_shared<GlxContext>(connection, (XWindow *)this);
-  _context->createLegacy(config);
+  context_ = std::make_shared<GlxContext>(connection, (XWindow *)this);
+  context_->createLegacy(config);
 }
 
 Canvas::~Canvas() {
