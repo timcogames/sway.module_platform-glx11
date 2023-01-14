@@ -68,17 +68,19 @@ void XWindow::createDummy(XVisualInfo *visualInfo, const WindowInitialInfo &wind
 }
 
 auto XWindow::eventLoop(bool keepgoing) -> bool {
-  XEvent event = {};
-  XNextEvent(connection_->getDisplay(), &event);
+  if (XPending(connection_->getDisplay())) {
+    XEvent event = {};
+    XNextEvent(connection_->getDisplay(), &event);
 
-  EventCallbackFuncMap_t::const_iterator i = eventCallbacks_.find(event.type);
-  if (i != eventCallbacks_.end()) {
-    i->second(event);
-  }
+    auto iter = eventCallbacks_.find(event.type);
+    if (iter != eventCallbacks_.end()) {
+      iter->second(event);
+    }
 
-  if (event.type == ClientMessage) {
-    if (event.xclient.format == 32 && Atom(event.xclient.data.l[0]) == wmatom_[kAtom_WMDeleteWindow]) {
-      keepgoing = false;
+    if (event.type == ClientMessage) {
+      if (event.xclient.format == 32 && Atom(event.xclient.data.l[0]) == wmatom_[kAtom_WMDeleteWindow]) {
+        keepgoing = false;
+      }
     }
   }
 
