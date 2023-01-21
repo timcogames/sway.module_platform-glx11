@@ -113,7 +113,7 @@ auto XWindow::getPosition() const -> math::point2i_t {
   Window dummy;
   s32_t xpos, ypos;
   XTranslateCoordinates(connection_->getDisplay(), window_, connection_->getRootWindow(), 0, 0, &xpos, &ypos, &dummy);
-  return math::TPoint<s32_t>(xpos, ypos);
+  return math::Point<s32_t>(xpos, ypos);
 }
 
 void XWindow::setSize(s32_t w, s32_t h) {
@@ -124,7 +124,7 @@ void XWindow::setSize(s32_t w, s32_t h) {
 auto XWindow::getSize() const -> math::size2i_t {
   XWindowAttributes attrs;
   XGetWindowAttributes(connection_->getDisplay(), window_, &attrs);
-  return math::TSize<s32_t>(attrs.width, attrs.height);
+  return math::Size<s32_t>(attrs.width, attrs.height);
 }
 
 void XWindow::_setMinSize(XSizeHints *hints, const WindowSize &size, bool resizable) {

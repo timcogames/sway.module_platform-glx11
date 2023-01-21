@@ -24,7 +24,7 @@ auto XScreenConnection::getScreenNumber() const -> s32_t { return _screen; }
 auto XScreenConnection::getRootWindow() const -> Window { return RootWindow(_display, _screen); }
 
 auto XScreenConnection::getDisplaySize() const -> math::size2i_t {
-  return math::TSize<s32_t>(DisplayWidth(_display, _screen), DisplayHeight(_display, _screen));
+  return math::Size<s32_t>(DisplayWidth(_display, _screen), DisplayHeight(_display, _screen));
 }
 
 NAMESPACE_END(glx11)
