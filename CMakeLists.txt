@@ -23,7 +23,9 @@ option(CUSTOM_GTEST_ROOT_DIR "GTest root directory" OFF)
 project(${META_PLATFORM_GLX11_PRJNAME} VERSION ${META_PLATFORM_GLX11_VERSION} LANGUAGES CXX)
 
 # Подмодули
-custom_add_subdirectory("libmodule_core" submodules/sway.module_core)
+if (NOT TARGET libmodule_core)
+  custom_add_subdirectory("libmodule_core" submodules/sway.module_core)
+endif()
 
 # Определяем каталог вывода по умолчанию
 if (CMAKE_BUILD_TYPE MATCHES Debug)
