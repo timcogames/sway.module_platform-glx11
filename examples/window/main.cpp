@@ -7,7 +7,7 @@
 
 using namespace sway;
 
-int main(int argc, char *argv[]) {
+int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]) {
   glx11::WindowInitialInfo windowInitialInfo;
   windowInitialInfo.title = "window";
   windowInitialInfo.size.normal = math::size2i_t(800, 600);

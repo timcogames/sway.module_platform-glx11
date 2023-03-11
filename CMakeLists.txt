@@ -15,8 +15,6 @@ set(META_PLATFORM_GLX11_VERSION ${META_PLATFORM_GLX11_VERSION_MAJOR}.${META_PLAT
 # Опции сборки
 option(MODULE_PLATFORM_GLX11_SHARED_LIB "Build shared library (.so)" OFF)
 option(MODULE_PLATFORM_GLX11_ENABLE_TESTS "Enable test builds" OFF)
-option(MODULE_USE_EMSCRIPTEN "Using emscripten compiler" OFF)
-option(CUSTOM_EMSCRIPTEN_ROOT_DIR "Emscripten root directory" OFF)
 option(CUSTOM_BOOST_ROOT_DIR "Boost root directory" OFF)
 option(CUSTOM_GTEST_ROOT_DIR "GTest root directory" OFF)
 
