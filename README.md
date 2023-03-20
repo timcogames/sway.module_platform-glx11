@@ -1,6 +1,6 @@
 # sway.module_platform-glx11
 
-[![codecov][codecov-svg]][codecov-url] [![BCH compliance][bettercodehub-svg]][bettercodehub-url] [![Documentation][codedocs-svg]][codedocs-url] [![License][license-svg]][license-url]
+[![codecov][codecov-svg]][codecov-url] [![Documentation][codedocs-svg]][codedocs-url] [![License][license-svg]][license-url]
 
 ### Клонирование проекта
 
@@ -36,8 +36,6 @@ cmake --build .
 
 [codecov-svg]: https://codecov.io/gh/timcogames/sway.module_platform-glx11/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/timcogames/sway.module_platform-glx11
-[bettercodehub-svg]: https://bettercodehub.com/edge/badge/timcogames/sway.module_platform-glx11?branch=master
-[bettercodehub-url]: https://bettercodehub.com/
 [codedocs-svg]: https://codedocs.xyz/timcogames/sway.module_platform-glx11.svg
 [codedocs-url]: https://codedocs.xyz/timcogames/sway.module_platform-glx11/
 [license-svg]: https://img.shields.io/github/license/mashape/apistatus.svg
