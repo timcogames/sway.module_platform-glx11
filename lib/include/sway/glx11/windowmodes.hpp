@@ -10,9 +10,9 @@ NAMESPACE_BEGIN(glx11)
 /**
  * @brief Перечисление режимов окна.
  */
-enum class WindowMode_t : s32_t {
-  kWindowed,  // Оконный режим.
-  kFullscreen  // Полноэкранный режим.
+enum class WindowMode : s32_t {
+  WINDOWED,  // Оконный режим.
+  FULLSCREEN  // Полноэкранный режим.
 };
 
 NAMESPACE_END(glx11)

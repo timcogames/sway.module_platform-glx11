@@ -5,7 +5,6 @@ NAMESPACE_BEGIN(glx11)
 
 XWindow::XWindow(XScreenConnectionRef_t connection)
     : connection_(connection) {
-
   initializeAtoms_();
   initializeEventBindings_();
 }
@@ -199,8 +198,7 @@ void XWindow::setFullscreen(bool fullscreen) {
   event.xclient.window = window_;
   event.xclient.message_type = netatom_[kAtom_NetWMState];
   event.xclient.format = 32;
-  event.xclient.data.l[0] =
-      core::detail::toUnderlying(fullscreen ? WindowMode_t::kFullscreen : WindowMode_t::kWindowed);
+  event.xclient.data.l[0] = core::detail::toUnderlying(fullscreen ? WindowMode::FULLSCREEN : WindowMode::WINDOWED);
   event.xclient.data.l[1] = netatom_[kAtom_NetWMStateFullscreen];
   event.xclient.data.l[2] = 0;
 

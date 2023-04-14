@@ -40,8 +40,8 @@ public:
   auto getDisplaySize() const -> math::size2i_t;
 
 private:
-  Display *_display;  // Указатель на структуру дисплея.
-  s32_t _screen;  // Номер экрана.
+  Display *display_;  // Указатель на структуру дисплея.
+  s32_t screen_;  // Номер экрана.
 };
 
 NAMESPACE_END(glx11)
