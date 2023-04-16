@@ -95,4 +95,6 @@ endif ()
 custom_enable_cxx17(${META_PLTF_LIBNAME})
 target_link_libraries(${META_PLTF_LIBNAME} GL X11)
 
-add_subdirectory(examples/window)
+if (MODULE_PLTF_ENABLE_TESTS)
+  add_subdirectory(examples/window)
+endif ()
