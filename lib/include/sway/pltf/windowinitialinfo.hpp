@@ -1,12 +1,12 @@
-#ifndef SWAY_GLX11_WINDOWINITIALINFO_HPP
-#define SWAY_GLX11_WINDOWINITIALINFO_HPP
+#ifndef SWAY_PLTF_WINDOWINITIALINFO_HPP
+#define SWAY_PLTF_WINDOWINITIALINFO_HPP
 
-#include <sway/glx11/windowsize.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/pltf/windowsize.hpp>
 #include <sway/types.hpp>
 
 NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(glx11)
+NAMESPACE_BEGIN(pltf)
 
 struct WindowInitialInfo {
   lpcstr_t title;  // Заголовок окна.
@@ -17,7 +17,7 @@ struct WindowInitialInfo {
   bool vsync;
 };
 
-NAMESPACE_END(glx11)
+NAMESPACE_END(pltf)
 NAMESPACE_END(sway)
 
-#endif  // SWAY_GLX11_WINDOWINITIALINFO_HPP
+#endif  // SWAY_PLTF_WINDOWINITIALINFO_HPP

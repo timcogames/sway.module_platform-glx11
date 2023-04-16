@@ -1,10 +1,10 @@
-#ifndef SWAY_GLX11_XATOM_HPP
-#define SWAY_GLX11_XATOM_HPP
+#ifndef SWAY_PLTF_MAC_DTPATOM_HPP
+#define SWAY_PLTF_MAC_DTPATOM_HPP
 
 #include <sway/namespacemacros.hpp>
 
 NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(glx11)
+NAMESPACE_BEGIN(pltf)
 
 enum { kAtom_WMState, kAtom_WMDeleteWindow, kAtom_WMLast };
 
@@ -16,7 +16,7 @@ enum {
   kAtom_NetLast
 };
 
-NAMESPACE_END(glx11)
+NAMESPACE_END(pltf)
 NAMESPACE_END(sway)
 
-#endif  // SWAY_GLX11_XATOM_HPP
+#endif  // SWAY_PLTF_MAC_DTPATOM_HPP

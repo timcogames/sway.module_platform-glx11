@@ -1,12 +1,32 @@
 {
+
   "configurations": [
     {
       "name": "Mac",
+      "cppStandard": "c++17",
+      "compilerPath": "/usr/bin/clang",
+      "intelliSenseMode": "macos-clang-arm64",
+      "configurationProvider": "ms-vscode.cpptools",
       "includePath": [
         "${workspaceFolder}/lib/include",
         "${workspaceFolder}/submodules/sway.module_core/lib/include",
-        "${workspaceFolder}/submodules/sway.module_math/lib/include"
-      ]
+        "${workspaceFolder}/submodules/sway.module_math/lib/include",
+        "/opt/X11/include",
+        "/Users/apriori85/Documents/Third-party/googletest/googletest/include",
+        "/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten/system/include"
+      ],
+      "browse": {
+        "path": [
+          "${workspaceFolder}/lib/include",
+          "${workspaceFolder}/submodules/sway.module_core/lib/include",
+          "${workspaceFolder}/submodules/sway.module_math/lib/include",
+          "/opt/X11/include",
+          "/Users/apriori85/Documents/Third-party/googletest/googletest/include",
+          "/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten/system/include"
+        ],
+        "limitSymbolsToIncludedHeaders": true,
+        "databaseFilename": ""
+      }
     }
   ],
   "version": 4

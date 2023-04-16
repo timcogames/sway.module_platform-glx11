@@ -1,23 +1,23 @@
-#ifndef SWAY_GLX11_XSCREENCONNECTION_HPP
-#define SWAY_GLX11_XSCREENCONNECTION_HPP
+#ifndef SWAY_PLTF_MAC_DTPSCREENCONNECTION_HPP
+#define SWAY_PLTF_MAC_DTPSCREENCONNECTION_HPP
 
-#include <sway/glx11/prereqs.hpp>
+#include <sway/pltf/prereqs.hpp>
 
 NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(glx11)
+NAMESPACE_BEGIN(pltf)
 
-class XScreenConnection {
+class DTPScreenConnection {
 public:
   /**
    * @brief Конструктор класса.
    *        Выполняет инициализацию нового экземпляра класса.
    */
-  XScreenConnection();
+  DTPScreenConnection();
 
   /**
    * @brief Деструктор класса. Освобождает захваченные ресурсы.
    */
-  ~XScreenConnection();
+  ~DTPScreenConnection();
 
   /**
    * @brief Получает указатель на структуру дисплея.
@@ -44,7 +44,7 @@ private:
   s32_t screen_;  // Номер экрана.
 };
 
-NAMESPACE_END(glx11)
+NAMESPACE_END(pltf)
 NAMESPACE_END(sway)
 
-#endif  // SWAY_GLX11_XSCREENCONNECTION_HPP
+#endif  // SWAY_PLTF_MAC_DTPSCREENCONNECTION_HPP

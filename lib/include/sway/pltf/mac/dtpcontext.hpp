@@ -1,18 +1,21 @@
-#ifndef SWAY_GLX11_GLXCONTEXT_HPP
-#define SWAY_GLX11_GLXCONTEXT_HPP
+#ifndef SWAY_PLTF_MAC_DTPCONTEXT_HPP
+#define SWAY_PLTF_MAC_DTPCONTEXT_HPP
 
-#include <sway/glx11/prereqs.hpp>
-#include <sway/glx11/typedefs.hpp>
-#include <sway/glx11/xscreenconnection.hpp>
-#include <sway/glx11/xwindow.hpp>
+#include <sway/pltf/context.hpp>
+#include <sway/pltf/mac/dtpscreenconnection.hpp>
+#include <sway/pltf/mac/dtpwindow.hpp>
+#include <sway/pltf/prereqs.hpp>
+#include <sway/pltf/typedefs.hpp>
+
+// #include <GL/glx.h>  // GLXContext, GLXDrawable, GLXFBConfig
 
 NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(glx11)
+NAMESPACE_BEGIN(pltf)
 
 /**
  * @brief Контекст поверхности холста.
  */
-class GlxContext {
+class DTPContext : public Context {
 public:
   /**
    * @brief Конструктор класса.
@@ -21,44 +24,46 @@ public:
    * @param[in] connection Экранное соедининение с сервером.
    * @param[in] window Окно графического интерфейса.
    */
-  GlxContext(XScreenConnectionRef_t connection, XWindow *window);
+  DTPContext(DTPScreenConnectionRef_t connection, DTPWindow *window);
 
   /**
    * @brief Деструктор класса. Уничтожает контекст визуализации.
    */
-  ~GlxContext();
+  virtual ~DTPContext();
 
   /**
    * @brief Создает контекст визуализации.
    */
-  void createLegacy(GLXFBConfig fbconfig);
+  void create(void *config);
 
   /**
    * @brief Прикрепляет контекст к окну.
    *
    * @sa doneCurrent()
    */
-  bool makeCurrent();
+  // clang-format off
+  MTHD_OVERRIDE(auto makeCurrent() -> bool);  // clang-format on
 
   /**
    * @brief Освобождаем контекст.
    *
    * @sa makeCurrent()
    */
-  bool doneCurrent();
+  // clang-format off
+  MTHD_OVERRIDE(auto doneCurrent() -> bool);  // clang-format on
 
   /**
    * @brief Обмен буферов.
    */
-  void present();
+  MTHD_OVERRIDE(void present());
 
 private:
   GLXContext context_;
   GLXDrawable drawable_;
-  XScreenConnectionRef_t connection_;  // Экранное соедининение с сервером.
+  DTPScreenConnectionRef_t connection_;  // Экранное соедининение с сервером.
 };
 
-NAMESPACE_END(glx11)
+NAMESPACE_END(pltf)
 NAMESPACE_END(sway)
 
-#endif  // SWAY_GLX11_GLXCONTEXT_HPP
+#endif  // SWAY_PLTF_MAC_DTPCONTEXT_HPP

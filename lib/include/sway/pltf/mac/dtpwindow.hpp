@@ -1,21 +1,23 @@
-#ifndef SWAY_GLX11_XWINDOW_HPP
-#define SWAY_GLX11_XWINDOW_HPP
+#ifndef SWAY_PLTF_MAC_DTPWINDOW_HPP
+#define SWAY_PLTF_MAC_DTPWINDOW_HPP
 
-#include <sway/glx11/prereqs.hpp>
-#include <sway/glx11/typedefs.hpp>
-#include <sway/glx11/windoweventlistener.hpp>
-#include <sway/glx11/windowinitialinfo.hpp>
-#include <sway/glx11/windowmodes.hpp>
-#include <sway/glx11/xatom.hpp>
-#include <sway/glx11/xscreenconnection.hpp>
+#include <sway/pltf/mac/dtpatom.hpp>
+#include <sway/pltf/mac/dtpscreenconnection.hpp>
+#include <sway/pltf/prereqs.hpp>
+#include <sway/pltf/typedefs.hpp>
+#include <sway/pltf/windoweventlistener.hpp>
+#include <sway/pltf/windowinitialinfo.hpp>
+#include <sway/pltf/windowmodes.hpp>
+
+// #include <X11/Xutil.h>  // XVisualInfo, XSizeHints
 
 NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(glx11)
+NAMESPACE_BEGIN(pltf)
 
 typedef std::function<void(const XEvent &)> EventCallbackFunc_t;
 typedef std::map<s32_t, EventCallbackFunc_t> EventCallbackFuncMap_t;
 
-class XWindow : public WindowEventListener {
+class DTPWindow : public WindowEventListener {
 public:
   /**
    * @brief Конструктор класса.
@@ -23,12 +25,12 @@ public:
    *
    * @param[in] connection Экранное соедининение с сервером.
    */
-  XWindow(XScreenConnectionRef_t connection);
+  DTPWindow(DTPScreenConnectionRef_t connection);
 
   /**
    * @brief Деструктор класса. Уничтожает главное окно приложения.
    */
-  ~XWindow();
+  ~DTPWindow();
 
   /**
    * @brief Добавляет привязку функции к оконному событию.
@@ -150,7 +152,7 @@ private:
    * @param[in] size Размер окна.
    * @param[in] resizable Имеется возможность изменения размера?
    */
-  void _setMinSize(XSizeHints *hints, const WindowSize &size, bool resizable);
+  void setMinSize_(XSizeHints *hints, const WindowSize &size, bool resizable);
 
   /**
    * @brief Устанавливает максимальный размер.
@@ -159,16 +161,16 @@ private:
    * @param[in] size Размер окна.
    * @param[in] resizable Имеется возможность изменения размера?
    */
-  void _setMaxSize(XSizeHints *hints, const WindowSize &size, bool resizable);
+  void setMaxSize_(XSizeHints *hints, const WindowSize &size, bool resizable);
 
 private:
-  XScreenConnectionRef_t connection_;  // Экранное соедининение с сервером.
+  DTPScreenConnectionRef_t connection_;  // Экранное соедининение с сервером.
   Window window_;  // Идентификатор окна.
   Atom wmatom_[kAtom_WMLast], netatom_[kAtom_NetLast];
   EventCallbackFuncMap_t eventCallbacks_;
 };
 
-NAMESPACE_END(glx11)
+NAMESPACE_END(pltf)
 NAMESPACE_END(sway)
 
-#endif  // SWAY_GLX11_XWINDOW_HPP
+#endif  // SWAY_PLTF_MAC_DTPWINDOW_HPP

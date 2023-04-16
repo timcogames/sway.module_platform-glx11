@@ -1,11 +1,11 @@
-#ifndef SWAY_GLX11_WINDOWMODES_HPP
-#define SWAY_GLX11_WINDOWMODES_HPP
+#ifndef SWAY_PLTF_WINDOWMODES_HPP
+#define SWAY_PLTF_WINDOWMODES_HPP
 
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
 NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(glx11)
+NAMESPACE_BEGIN(pltf)
 
 /**
  * @brief Перечисление режимов окна.
@@ -15,7 +15,7 @@ enum class WindowMode : s32_t {
   FULLSCREEN  // Полноэкранный режим.
 };
 
-NAMESPACE_END(glx11)
+NAMESPACE_END(pltf)
 NAMESPACE_END(sway)
 
-#endif  // SWAY_GLX11_WINDOWMODES_HPP
+#endif  // SWAY_PLTF_WINDOWMODES_HPP

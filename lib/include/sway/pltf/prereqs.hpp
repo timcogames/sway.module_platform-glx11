@@ -1,5 +1,5 @@
-#ifndef SWAY_GLX11_PREREQS_HPP
-#define SWAY_GLX11_PREREQS_HPP
+#ifndef SWAY_PLTF_PREREQS_HPP
+#define SWAY_PLTF_PREREQS_HPP
 
 #include <sway/core.hpp>
 #include <sway/math.hpp>
@@ -10,4 +10,4 @@
 #include <X11/Xutil.h>
 #include <memory>  // std::shared_ptr, std::make_shared
 
-#endif  // SWAY_GLX11_PREREQS_HPP
+#endif  // SWAY_PLTF_PREREQS_HPP

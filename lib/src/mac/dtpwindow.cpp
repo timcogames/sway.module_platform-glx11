@@ -1,22 +1,22 @@
-#include <sway/glx11/xwindow.hpp>
+#include <sway/pltf/mac/dtpwindow.hpp>
 
 NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(glx11)
+NAMESPACE_BEGIN(pltf)
 
-XWindow::XWindow(XScreenConnectionRef_t connection)
+DTPWindow::DTPWindow(DTPScreenConnectionRef_t connection)
     : connection_(connection) {
   initializeAtoms_();
   initializeEventBindings_();
 }
 
-XWindow::~XWindow() {
+DTPWindow::~DTPWindow() {
   if (window_) {
     XDestroyWindow(connection_->getDisplay(), window_);
     XFlush(connection_->getDisplay());
   }
 }
 
-void XWindow::initializeAtoms_() {
+void DTPWindow::initializeAtoms_() {
   wmatom_[kAtom_WMState] = XInternAtom(connection_->getDisplay(), "WM_STATE", False);
   wmatom_[kAtom_WMDeleteWindow] = XInternAtom(connection_->getDisplay(), "WM_DELETE_WINDOW", False);
 
@@ -28,19 +28,19 @@ void XWindow::initializeAtoms_() {
   netatom_[kAtom_NetWMStateFullscreen] = XInternAtom(connection_->getDisplay(), "_NET_WM_STATE_FULLSCREEN", False);
 }
 
-void XWindow::initializeEventBindings_() {
+void DTPWindow::initializeEventBindings_() {
   eventCallbacks_.clear();
 
-  addEventBinding(CreateNotify, std::bind(&XWindow::handleCreateNotifyEvent, this, std::placeholders::_1));
-  addEventBinding(ConfigureNotify, std::bind(&XWindow::handleConfigureNotifyEvent, this, std::placeholders::_1));
-  addEventBinding(Expose, std::bind(&XWindow::handleExposeEvent, this, std::placeholders::_1));
-  addEventBinding(FocusIn, std::bind(&XWindow::handleFocusInEvent, this, std::placeholders::_1));
-  addEventBinding(FocusOut, std::bind(&XWindow::handleFocusOutEvent, this, std::placeholders::_1));
+  addEventBinding(CreateNotify, std::bind(&DTPWindow::handleCreateNotifyEvent, this, std::placeholders::_1));
+  addEventBinding(ConfigureNotify, std::bind(&DTPWindow::handleConfigureNotifyEvent, this, std::placeholders::_1));
+  addEventBinding(Expose, std::bind(&DTPWindow::handleExposeEvent, this, std::placeholders::_1));
+  addEventBinding(FocusIn, std::bind(&DTPWindow::handleFocusInEvent, this, std::placeholders::_1));
+  addEventBinding(FocusOut, std::bind(&DTPWindow::handleFocusOutEvent, this, std::placeholders::_1));
 }
 
-void XWindow::addEventBinding(s32_t type, EventCallbackFunc_t callback) { eventCallbacks_[type] = callback; }
+void DTPWindow::addEventBinding(s32_t type, EventCallbackFunc_t callback) { eventCallbacks_[type] = callback; }
 
-void XWindow::createDummy(XVisualInfo *visualInfo, const WindowInitialInfo &windowInfo) {
+void DTPWindow::createDummy(XVisualInfo *visualInfo, const WindowInitialInfo &windowInfo) {
   XSetWindowAttributes attrs;
   attrs.background_pixel = attrs.border_pixel = BlackPixel(connection_->getDisplay(), connection_->getScreenNumber());
   attrs.colormap =
@@ -51,7 +51,7 @@ void XWindow::createDummy(XVisualInfo *visualInfo, const WindowInitialInfo &wind
   attrs.event_mask |= ExposureMask;
   attrs.event_mask |= FocusChangeMask;
 
-  int mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
+  int const mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
   window_ = XCreateWindow(connection_->getDisplay(), connection_->getRootWindow(), 0, 0, windowInfo.size.normal.getW(),
       windowInfo.size.normal.getH(), 0, visualInfo->depth, InputOutput, visualInfo->visual, mask, &attrs);
@@ -66,7 +66,7 @@ void XWindow::createDummy(XVisualInfo *visualInfo, const WindowInitialInfo &wind
   XSetWMProtocols(connection_->getDisplay(), window_, &wmatom_[kAtom_WMDeleteWindow], 1);
 }
 
-auto XWindow::eventLoop(bool keepgoing) -> bool {
+auto DTPWindow::eventLoop(bool keepgoing) -> bool {
   if (XPending(connection_->getDisplay())) {
     XEvent event = {};
     XNextEvent(connection_->getDisplay(), &event);
@@ -86,12 +86,12 @@ auto XWindow::eventLoop(bool keepgoing) -> bool {
   return keepgoing;
 }
 
-void XWindow::setTitle(lpcstr_t title) {
+void DTPWindow::setTitle(lpcstr_t title) {
   XStoreName(connection_->getDisplay(), window_, title);
   XFlush(connection_->getDisplay());
 }
 
-void XWindow::setPosition(s32_t x, s32_t y) {
+void DTPWindow::setPosition(s32_t x, s32_t y) {
   if (!visible()) {
     s64_t supplied;
     XSizeHints *hints = XAllocSizeHints();
@@ -108,25 +108,25 @@ void XWindow::setPosition(s32_t x, s32_t y) {
   XFlush(connection_->getDisplay());
 }
 
-auto XWindow::getPosition() const -> math::point2i_t {
+auto DTPWindow::getPosition() const -> math::point2i_t {
   Window dummy;
   s32_t xpos, ypos;
   XTranslateCoordinates(connection_->getDisplay(), window_, connection_->getRootWindow(), 0, 0, &xpos, &ypos, &dummy);
   return math::Point<s32_t>(xpos, ypos);
 }
 
-void XWindow::setSize(s32_t w, s32_t h) {
+void DTPWindow::setSize(s32_t w, s32_t h) {
   XResizeWindow(connection_->getDisplay(), window_, w, h);
   XFlush(connection_->getDisplay());
 }
 
-auto XWindow::getSize() const -> math::size2i_t {
+auto DTPWindow::getSize() const -> math::size2i_t {
   XWindowAttributes attrs;
   XGetWindowAttributes(connection_->getDisplay(), window_, &attrs);
   return math::Size<s32_t>(attrs.width, attrs.height);
 }
 
-void XWindow::_setMinSize(XSizeHints *hints, const WindowSize &size, bool resizable) {
+void DTPWindow::setMinSize_(XSizeHints *hints, const WindowSize &size, bool resizable) {
   if (resizable) {
     if (size.min.getW() != DONT_CARE && size.min.getH() != DONT_CARE) {
       hints->min_width = size.min.getW();
@@ -141,7 +141,7 @@ void XWindow::_setMinSize(XSizeHints *hints, const WindowSize &size, bool resiza
   }
 }
 
-void XWindow::_setMaxSize(XSizeHints *hints, const WindowSize &size, bool resizable) {
+void DTPWindow::setMaxSize_(XSizeHints *hints, const WindowSize &size, bool resizable) {
   if (resizable) {
     if (size.max.getW() != DONT_CARE && size.max.getH() != DONT_CARE) {
       hints->max_width = size.max.getW();
@@ -156,7 +156,7 @@ void XWindow::_setMaxSize(XSizeHints *hints, const WindowSize &size, bool resiza
   }
 }
 
-void XWindow::setSizeHints(const WindowSize &size, bool resizable) {
+void DTPWindow::setSizeHints(const WindowSize &size, bool resizable) {
   XSizeHints *hints = XAllocSizeHints();
   if (!hints) {
     fprintf(stderr, "Could not allocate memory for size hints.\n");
@@ -165,32 +165,32 @@ void XWindow::setSizeHints(const WindowSize &size, bool resizable) {
 
   hints->flags |= (PMinSize | PMaxSize);
 
-  _setMinSize(hints, size, resizable);
-  _setMaxSize(hints, size, resizable);
+  setMinSize_(hints, size, resizable);
+  setMaxSize_(hints, size, resizable);
 
   XSetWMNormalHints(connection_->getDisplay(), window_, hints);
   XFree(hints);
 }
 
-void XWindow::show() {
+void DTPWindow::show() {
   if (!visible()) {
     XMapRaised(connection_->getDisplay(), window_);
     XFlush(connection_->getDisplay());
   }
 }
 
-void XWindow::hide() {
+void DTPWindow::hide() {
   XUnmapWindow(connection_->getDisplay(), window_);
   XFlush(connection_->getDisplay());
 }
 
-auto XWindow::visible() const -> bool {
+auto DTPWindow::visible() const -> bool {
   XWindowAttributes attrs;
   XGetWindowAttributes(connection_->getDisplay(), window_, &attrs);
   return (attrs.map_state == IsViewable);
 }
 
-void XWindow::setFullscreen(bool fullscreen) {
+void DTPWindow::setFullscreen(bool fullscreen) {
   XEvent event;
   event.type = ClientMessage;
   event.xclient.serial = 0;
@@ -206,7 +206,7 @@ void XWindow::setFullscreen(bool fullscreen) {
       SubstructureNotifyMask | SubstructureRedirectMask, &event);
 }
 
-void XWindow::setMaximize(bool maximized) {
+void DTPWindow::setMaximize(bool maximized) {
   XEvent event;
   event.xclient.type = ClientMessage;
   event.xclient.window = window_;
@@ -223,5 +223,5 @@ void XWindow::setMaximize(bool maximized) {
   XSendEvent(connection_->getDisplay(), connection_->getRootWindow(), False, SubstructureRedirectMask, &event);
 }
 
-NAMESPACE_END(glx11)
+NAMESPACE_END(pltf)
 NAMESPACE_END(sway)

@@ -1,15 +1,15 @@
 #include <sway/core.hpp>
-#include <sway/glx11/canvas.hpp>
+#include <sway/pltf/mac/dtpcanvas.hpp>
 
 NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(glx11)
+NAMESPACE_BEGIN(pltf)
 
 static s32_t fbAttributes[] = {GLX_RENDER_TYPE, GLX_RGBA_BIT, GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT, GLX_RED_SIZE, 1,
     GLX_GREEN_SIZE, 1, GLX_BLUE_SIZE, 1, GLX_ALPHA_SIZE, 0, GLX_DEPTH_SIZE, 0, GLX_STENCIL_SIZE, 0, GLX_CONFIG_CAVEAT,
     GLX_NONE, GLX_DOUBLEBUFFER, true, 0};
 
-Canvas::Canvas(XScreenConnectionRef_t connection, const WindowInitialInfo &windowInfo)
-    : XWindow(connection) {
+DTPCanvas::DTPCanvas(DTPScreenConnectionRef_t connection, const WindowInitialInfo &windowInfo)
+    : DTPWindow(connection) {
   s32_t numConfigs;
   GLXFBConfig *configs, config;
   configs = glXChooseFBConfig(connection->getDisplay(), connection->getScreenNumber(), fbAttributes, &numConfigs);
@@ -24,40 +24,16 @@ Canvas::Canvas(XScreenConnectionRef_t connection, const WindowInitialInfo &windo
   setPosition(windowInfo.fullscreen ? 0 : (connection->getDisplaySize().getW() - windowInfo.size.normal.getW()) / 2,
       windowInfo.fullscreen ? 0 : (connection->getDisplaySize().getH() - windowInfo.size.normal.getH()) / 2);
 
-  context_ = std::make_shared<GlxContext>(connection, (XWindow *)this);
-  context_->createLegacy(config);
+  context_ = std::make_shared<DTPContext>(connection, (DTPWindow *)this);
+  context_->create(config);
 }
 
-Canvas::~Canvas() {
-  // Empty
-}
-
-void Canvas::handleCreateNotifyEvent(const XEvent &event) {
-  // Empty
-}
-
-void Canvas::handleConfigureNotifyEvent(const XEvent &event) {
-  // Empty
-}
-
-void Canvas::handleExposeEvent(const XEvent &event) {
-  // Empty
-}
-
-void Canvas::handleFocusInEvent(const XEvent &event) {
-  // Empty
-}
-
-void Canvas::handleFocusOutEvent(const XEvent &event) {
-  // Empty
-}
-
-auto Canvas::chooseBestSuitable_(XScreenConnectionRef_t connection, GLXFBConfig *configs, s32_t numConfigs)
+auto DTPCanvas::chooseBestSuitable_(DTPScreenConnectionRef_t connection, GLXFBConfig *configs, s32_t numConfigs)
     -> GLXFBConfig {
   s32_t bestScore = DONT_CARE, bestNumSamples = DONT_CARE;
 
   for (s32_t i = 0; i < numConfigs; ++i) {
-    GlxVisualAttributes attrs = getMultisampleAttributes_(connection, configs[i]);
+    DTPVisualAttributes attrs = getMultisampleAttributes_(connection, configs[i]);
     if (bestScore < 0 || (attrs.numMultisample && (attrs.numSamples > bestNumSamples))) {
       bestScore = i;
       bestNumSamples = attrs.numSamples;
@@ -67,9 +43,10 @@ auto Canvas::chooseBestSuitable_(XScreenConnectionRef_t connection, GLXFBConfig 
   return configs[bestScore];
 }
 
-auto Canvas::getMultisampleAttributes_(XScreenConnectionRef_t connection, GLXFBConfig config) -> GlxVisualAttributes {
+auto DTPCanvas::getMultisampleAttributes_(DTPScreenConnectionRef_t connection, GLXFBConfig config)
+    -> DTPVisualAttributes {
   lpcstr_t extensions = glXQueryExtensionsString(connection->getDisplay(), connection->getScreenNumber());
-  GlxVisualAttributes attrs;
+  DTPVisualAttributes attrs;
 
   if (extensions && strstr(extensions, "GLX_ARB_multisample")) {
     glXGetFBConfigAttrib(connection->getDisplay(), config, GLX_SAMPLE_BUFFERS_ARB, &attrs.numMultisample);
@@ -82,5 +59,5 @@ auto Canvas::getMultisampleAttributes_(XScreenConnectionRef_t connection, GLXFBC
   return attrs;
 }
 
-NAMESPACE_END(glx11)
+NAMESPACE_END(pltf)
 NAMESPACE_END(sway)
