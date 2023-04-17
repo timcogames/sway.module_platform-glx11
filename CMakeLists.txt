@@ -43,6 +43,8 @@ if (GLOBAL_EMSCRIPTEN_PLATFORM)
   endif ()
 endif ()
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE")
+
 # Определяем каталог вывода по умолчанию
 if (CMAKE_BUILD_TYPE MATCHES Debug)
   set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/dbg)
