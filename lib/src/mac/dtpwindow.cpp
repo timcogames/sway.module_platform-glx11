@@ -67,7 +67,7 @@ void DTPWindow::createDummy(XVisualInfo *visualInfo, const WindowInitialInfo &wi
 }
 
 auto DTPWindow::eventLoop(bool keepgoing) -> bool {
-  if (XPending(connection_->getDisplay())) {
+  if (XPending(connection_->getDisplay()) != 0) {
     XEvent event = {};
     XNextEvent(connection_->getDisplay(), &event);
 
