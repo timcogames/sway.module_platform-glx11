@@ -10,9 +10,9 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(pltf)
 
-typedef std::shared_ptr<class DTPScreenConnection> DTPScreenConnectionRef_t;
-typedef std::shared_ptr<class DTPContext> DTPContextRef_t;
-typedef std::shared_ptr<class DTPCanvas> DTPCanvasRef_t;
+using DTPScreenConnectionRef_t = std::shared_ptr<class DTPScreenConnection>;
+using DTPContextRef_t = std::shared_ptr<class DTPContext>;
+using DTPCanvasRef_t = std::shared_ptr<class DTPCanvas>;
 
 NAMESPACE_END(pltf)
 NAMESPACE_END(sway)

@@ -8,15 +8,15 @@ NAMESPACE_BEGIN(pltf)
 
 class WindowEventListener {
 protected:
-  virtual void handleCreateNotifyEvent(const XEvent &event) {}
+  MTHD_VIRTUAL(void handleCreateNotifyEvent(const XEvent &event){})
 
-  virtual void handleConfigureNotifyEvent(const XEvent &event) {}
+  MTHD_VIRTUAL(void handleConfigureNotifyEvent(const XEvent &event){})
 
-  virtual void handleExposeEvent(const XEvent &event) {}
+  MTHD_VIRTUAL(void handleExposeEvent(const XEvent &event){})
 
-  virtual void handleFocusInEvent(const XEvent &event) {}
+  MTHD_VIRTUAL(void handleFocusInEvent(const XEvent &event){})
 
-  virtual void handleFocusOutEvent(const XEvent &event) {}
+  MTHD_VIRTUAL(void handleFocusOutEvent(const XEvent &event){})
 };
 
 NAMESPACE_END(pltf)
