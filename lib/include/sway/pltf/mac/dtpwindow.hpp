@@ -14,8 +14,8 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(pltf)
 
-typedef std::function<void(const XEvent &)> EventCallbackFunc_t;
-typedef std::map<s32_t, EventCallbackFunc_t> EventCallbackFuncMap_t;
+using EventCallbackFunc_t = std::function<void(const XEvent &)>;
+using EventCallbackFuncMap_t = std::map<s32_t, EventCallbackFunc_t>;
 
 class DTPWindow : public WindowEventListener {
 public:
@@ -72,7 +72,7 @@ public:
   /**
    * @brief Получает позицию окна.
    */
-  auto getPosition() const -> math::point2i_t;
+  [[nodiscard]] auto getPosition() const -> math::point2i_t;
 
   /**
    * @brief Устанавливает размер окна.
@@ -85,7 +85,7 @@ public:
   /**
    * @brief Получает размер окна.
    */
-  auto getSize() const -> math::size2i_t;
+  [[nodiscard]] auto getSize() const -> math::size2i_t;
 
   /**
    * @brief Устанавливает поведение при смене размера.
@@ -119,7 +119,7 @@ public:
    *     hide()
    *
    */
-  bool visible() const;
+  [[nodiscard]] bool visible() const;
 
   /**
    * @brief Переключает в полноэкранный / оконный режим.
@@ -163,7 +163,6 @@ private:
    */
   void setMaxSize_(XSizeHints *hints, const WindowSize &size, bool resizable);
 
-private:
   DTPScreenConnectionRef_t connection_;  // Экранное соедининение с сервером.
   Window window_;  // Идентификатор окна.
   Atom wmatom_[kAtom_WMLast], netatom_[kAtom_NetLast];

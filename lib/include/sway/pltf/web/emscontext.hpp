@@ -12,7 +12,7 @@ NAMESPACE_BEGIN(pltf)
 
 class EMSContext : public Context {
 public:
-  EMSContext() = default;
+  EMSContext();
 
   virtual ~EMSContext();
 
@@ -41,8 +41,11 @@ public:
    */
   MTHD_OVERRIDE(void present()) {}
 
+  auto getTargetId() const -> std::string { return targetId_; }
+
 private:
   EMSCRIPTEN_WEBGL_CONTEXT_HANDLE context_;
+  std::string targetId_;
 };
 
 NAMESPACE_END(pltf)

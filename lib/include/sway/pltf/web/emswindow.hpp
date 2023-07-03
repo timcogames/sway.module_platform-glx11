@@ -6,26 +6,39 @@
 #include <sway/pltf/windowinitialinfo.hpp>
 #include <sway/pltf/windowmodes.hpp>
 
-#include <emscripten.h>
-#include <emscripten/html5.h>
+#include <memory>
+#include <string>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(pltf)
 
-class ENSWindow {
+class EMSContext;
+
+class EMSWindow {
 public:
   using CallbackFunc_t = void (*)(void *);
 
-  ENSWindow() = default;
+  EMSWindow(std::shared_ptr<EMSContext> context);
 
-  ~ENSWindow() = default;
+  ~EMSWindow() = default;
 
-  auto eventLoop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool keepgoing) -> bool {
-    emscripten_set_main_loop_arg(func, arg, 0, 1);
-    return true;
-  }
+  auto eventLoop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool keepgoing) -> bool;
+
+  /**
+   * @brief Устанавливает размер окна.
+   *
+   * @param[in] w Ширина окна.
+   * @param[in] h Высота окна.
+   */
+  void setSize(s32_t w, s32_t h);
+
+  /**
+   * @brief Получает размер окна.
+   */
+  [[nodiscard]] auto getSize() const -> math::size2i_t;
 
 private:
+  std::shared_ptr<EMSContext> context_;
 };
 
 NAMESPACE_END(pltf)
