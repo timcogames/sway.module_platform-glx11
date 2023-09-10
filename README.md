@@ -31,7 +31,7 @@ cmake -DCMAKE_BUILD_TYPE=Release -DCUSTOM_EMSCRIPTEN_ROOT_DIR=/Users/apriori85/D
 Запускаем сборку
 
 ```console
-cmake --build .
+cmake --build ./
 ```
 
 [codecov-svg]: https://codecov.io/gh/timcogames/sway.module_pltf/branch/master/graph/badge.svg

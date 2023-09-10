@@ -1,19 +1,32 @@
 #include <sway/core.hpp>
 #include <sway/pltf/mac/dtpcanvas.hpp>
 
+#include <array>
+
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(pltf)
 
-static s32_t fbAttributes[] = {GLX_RENDER_TYPE, GLX_RGBA_BIT, GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT, GLX_RED_SIZE, 1,
-    GLX_GREEN_SIZE, 1, GLX_BLUE_SIZE, 1, GLX_ALPHA_SIZE, 0, GLX_DEPTH_SIZE, 0, GLX_STENCIL_SIZE, 0, GLX_CONFIG_CAVEAT,
-    GLX_NONE, GLX_DOUBLEBUFFER, true, 0};
+constexpr size_t ATTRIB_LIST_SIZE = 21;
+// clang-format off
+constexpr std::array<s32_t, ATTRIB_LIST_SIZE> attribList = {
+  GLX_RENDER_TYPE, GLX_RGBA_BIT,
+  GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
+  GLX_RED_SIZE, 1,
+  GLX_GREEN_SIZE, 1,
+  GLX_BLUE_SIZE, 1,
+  GLX_ALPHA_SIZE, 0,
+  GLX_DEPTH_SIZE, 0,
+  GLX_STENCIL_SIZE, 0,
+  GLX_CONFIG_CAVEAT, GLX_NONE,
+  GLX_DOUBLEBUFFER, 1,
+  None};  // clang-format on
 
 DTPCanvas::DTPCanvas(DTPScreenConnectionRef_t connection, const WindowInitialInfo &windowInfo)
     : DTPWindow(connection) {
   s32_t numConfigs;
   GLXFBConfig *configs, config;
-  configs = glXChooseFBConfig(connection->getDisplay(), connection->getScreenNumber(), fbAttributes, &numConfigs);
-  if (configs && (numConfigs > 0)) {
+  configs = glXChooseFBConfig(connection->getDisplay(), connection->getScreenNumber(), attribList.data(), &numConfigs);
+  if ((configs != nullptr) && (numConfigs > 0)) {
     config = chooseBestSuitable_(connection, configs, numConfigs);
     XFree(configs);
   }
@@ -32,9 +45,9 @@ auto DTPCanvas::chooseBestSuitable_(DTPScreenConnectionRef_t connection, GLXFBCo
     -> GLXFBConfig {
   s32_t bestScore = DONT_CARE, bestNumSamples = DONT_CARE;
 
-  for (s32_t i = 0; i < numConfigs; ++i) {
-    DTPVisualAttributes attrs = getMultisampleAttributes_(connection, configs[i]);
-    if (bestScore < 0 || (attrs.numMultisample && (attrs.numSamples > bestNumSamples))) {
+  for (auto i = 0; i < numConfigs; ++i) {
+    auto attrs = getMultisampleAttributes_(connection, configs[i]);
+    if (bestScore < 0 || ((attrs.numMultisample != 0) && (attrs.numSamples > bestNumSamples))) {
       bestScore = i;
       bestNumSamples = attrs.numSamples;
     }
@@ -45,7 +58,7 @@ auto DTPCanvas::chooseBestSuitable_(DTPScreenConnectionRef_t connection, GLXFBCo
 
 auto DTPCanvas::getMultisampleAttributes_(DTPScreenConnectionRef_t connection, GLXFBConfig config)
     -> DTPVisualAttributes {
-  lpcstr_t extensions = glXQueryExtensionsString(connection->getDisplay(), connection->getScreenNumber());
+  const auto *extensions = glXQueryExtensionsString(connection->getDisplay(), connection->getScreenNumber());
   DTPVisualAttributes attrs;
 
   if (extensions && strstr(extensions, "GLX_ARB_multisample")) {

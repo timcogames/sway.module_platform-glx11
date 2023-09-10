@@ -43,10 +43,10 @@ public:
   /**
    * @brief Устанавливает размер окна.
    *
-   * @param[in] w Ширина окна.
-   * @param[in] h Высота окна.
+   * @param[in] wdt Ширина окна.
+   * @param[in] hgt Высота окна.
    */
-  void setSize(s32_t w, s32_t h);
+  void setSize(s32_t wdt, s32_t hgt);
 
   /**
    * @brief Получает размер окна.
@@ -65,6 +65,7 @@ public:
     sizeChangeEvent.size = math::size2i_t(0, 0);
     sendEvent(sizeChangeEvent);
   }
+
   // void handleFullscreenChange(bool fullscreen);
 
   class Event final {
@@ -90,7 +91,7 @@ public:
     eventQueueCondition_.notify_all();
   }
 
-  std::queue<EMSWindow::Event> getEvents(bool waitForEvents) {
+  auto getEvents(bool waitForEvents) -> std::queue<EMSWindow::Event> {
     std::unique_lock lock{eventQueueMutex_};
 
     if (waitForEvents) {

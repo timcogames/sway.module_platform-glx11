@@ -15,25 +15,24 @@ auto EMSWindow::eventLoop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool 
   return true;
 }
 
-void EMSWindow::setSize(s32_t w, s32_t h) {
+void EMSWindow::setSize(s32_t wdt, s32_t hgt) {
   auto ctx = std::static_pointer_cast<EMSContext>(context_);
-
-  emscripten_set_canvas_element_size(ctx->getTargetId().c_str(), w, h);
+  emscripten_set_canvas_element_size(ctx->getTargetId().c_str(), wdt, hgt);
 }
 
 auto EMSWindow::getSize() const -> math::size2i_t {
   auto ctx = std::static_pointer_cast<EMSContext>(context_);
 
-  auto elementWt = 0.0;
-  auto elementHt = 0.0;
-  emscripten_get_element_css_size(ctx->getTargetId().c_str(), &elementWt, &elementHt);
+  auto elementWdt = 0.0;
+  auto elementHgt = 0.0;
+  emscripten_get_element_css_size(ctx->getTargetId().c_str(), &elementWdt, &elementHgt);
 
-  return {(s32_t)elementWt, (s32_t)elementHt};
+  return {(s32_t)elementWdt, (s32_t)elementHgt};
 }
 
-EM_BOOL onCanvasResizeCallback(int type, const void *, void *userData) {
-  if (type == EMSCRIPTEN_EVENT_CANVASRESIZED) {
-    const auto nativeWindow = static_cast<EMSWindow *>(userData);
+auto onCanvasResizeCallback(int eventType, [[maybe_unused]] const void *reserved, void *userData) -> EM_BOOL {
+  if (eventType == EMSCRIPTEN_EVENT_CANVASRESIZED) {
+    auto *nativeWindow = static_cast<EMSWindow *>(userData);
     nativeWindow->handleResize();
     return EM_TRUE;
   }
