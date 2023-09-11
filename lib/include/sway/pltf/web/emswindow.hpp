@@ -17,7 +17,20 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(pltf)
 
+struct SizeChangedEventData : public core::foundation::EventData {
+  math::size2i_t size;
+
+  // clang-format off
+  MTHD_OVERRIDE(auto serialize() const -> std::string) {  // clang-format on
+    return "";
+  }
+
+  MTHD_OVERRIDE(void deserialize(const std::string &jdata)) {}
+};
+
 class EMSWindow {
+  DECLARE_EVENT(EVT_SIZE_CHANGED, SizeChanged);
+
 public:
   using CallbackFunc_t = void (*)(void *);
 
@@ -47,55 +60,18 @@ public:
    */
   void setFullscreen(bool fullscreen);
 
-  class Event final {
-  public:
-    Event() = default;
-    explicit Event(WindowEventType initType) noexcept
-        : type{initType} {}
+  void sendEvent(core::foundation::Event *evt);
 
-    WindowEventType type;
-    math::size2i_t size;
+  void handleResize();
 
-    union {
-      bool fullscreen = false;
-      std::uintptr_t displayId;
-      bool focus;
-    };
-  };
-
-  void sendEvent(const EMSWindow::Event &evt) {
-    std::unique_lock lock{eventQueueMutex_};
-    eventQueue_.push(evt);
-    lock.unlock();
-    eventQueueCondition_.notify_all();
-  }
-
-  void handleResize() {
-    EMSWindow::Event sizeChangeEvent{WindowEventType::SIZE_CHANGE};
-    sizeChangeEvent.size = math::size2i_t(0, 0);
-    sendEvent(sizeChangeEvent);
-  }
-
-  // void handleFullscreenChange(bool fullscreen);
-
-  auto getEvents(bool waitForEvents) -> std::queue<EMSWindow::Event> {
-    std::unique_lock lock{eventQueueMutex_};
-
-    if (waitForEvents) {
-      eventQueueCondition_.wait(lock, [this]() noexcept { return !eventQueue_.empty(); });
-    }
-
-    auto result = std::move(eventQueue_);
-    eventQueue_ = {};
-    return result;
-  }
-
-  std::queue<EMSWindow::Event> eventQueue_;
-  std::mutex eventQueueMutex_;
-  std::condition_variable eventQueueCondition_;
+  auto getEvents(bool waitForEvents) -> std::queue<core::foundation::Event *>;
 
 private:
   std::shared_ptr<Context> context_;
+
+  std::queue<core::foundation::Event *> eventQueue_;
+  std::mutex eventQueueMutex_;
+  std::condition_variable eventQueueCondition_;
 };
 
 NAMESPACE_END(pltf)

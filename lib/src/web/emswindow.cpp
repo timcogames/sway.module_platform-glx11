@@ -27,17 +27,16 @@ auto EMSWindow::eventLoop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool 
 
 void EMSWindow::setSize(s32_t wdt, s32_t hgt) {
   auto ctx = std::static_pointer_cast<EMSContext>(context_);
+
   emscripten_set_canvas_element_size(ctx->getTargetId().c_str(), wdt, hgt);
 }
 
 auto EMSWindow::getSize() const -> math::size2i_t {
   auto ctx = std::static_pointer_cast<EMSContext>(context_);
+  auto wdt = 0.0, hgt = 0.0;
 
-  auto elementWdt = 0.0;
-  auto elementHgt = 0.0;
-  emscripten_get_element_css_size(ctx->getTargetId().c_str(), &elementWdt, &elementHgt);
-
-  return {(s32_t)elementWdt, (s32_t)elementHgt};
+  emscripten_get_element_css_size(ctx->getTargetId().c_str(), &wdt, &hgt);
+  return {(s32_t)wdt, (s32_t)hgt};
 }
 
 void EMSWindow::setFullscreen(bool fullscreen) {
@@ -62,6 +61,31 @@ void EMSWindow::setFullscreen(bool fullscreen) {
       result = emscripten_exit_fullscreen();
     }
   }
+}
+
+void EMSWindow::sendEvent(core::foundation::Event *evt) {
+  std::unique_lock lock{eventQueueMutex_};
+  eventQueue_.push(evt);
+  lock.unlock();
+  eventQueueCondition_.notify_all();
+}
+
+void EMSWindow::handleResize() {
+  SizeChangedEventData eventData;
+  eventData.size = getSize();
+  sendEvent(new SizeChangedEvent(0, &eventData));
+}
+
+auto EMSWindow::getEvents(bool waitForEvents) -> std::queue<core::foundation::Event *> {
+  std::unique_lock lock{eventQueueMutex_};
+
+  if (waitForEvents) {
+    eventQueueCondition_.wait(lock, [this]() noexcept { return !eventQueue_.empty(); });
+  }
+
+  auto result = std::move(eventQueue_);
+  eventQueue_ = {};
+  return result;
 }
 
 NAMESPACE_END(pltf)
