@@ -3,6 +3,7 @@
 
 #include <sway/core.hpp>
 #include <sway/pltf/context.hpp>
+#include <sway/pltf/windoweventtypes.hpp>
 #include <sway/pltf/windowinitialinfo.hpp>
 #include <sway/pltf/windowmodes.hpp>
 
@@ -15,20 +16,6 @@
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(pltf)
-
-enum class WindowEventType {
-  SIZE_CHANGE,
-  RESOLUTION_CHANGE,
-  FULLSCREEN_CHANGE,
-  SCREEN_CHANGE,
-  FOCUS_CHANGE,
-  CLOSE,
-  SHOW,
-  HIDE,
-  MINIMIZE,
-  MAXIMIZE,
-  RESTORE
-};
 
 class EMSWindow {
 public:
@@ -60,14 +47,6 @@ public:
    */
   void setFullscreen(bool fullscreen);
 
-  void handleResize() {
-    Event sizeChangeEvent{WindowEventType::SIZE_CHANGE};
-    sizeChangeEvent.size = math::size2i_t(0, 0);
-    sendEvent(sizeChangeEvent);
-  }
-
-  // void handleFullscreenChange(bool fullscreen);
-
   class Event final {
   public:
     Event() = default;
@@ -75,8 +54,8 @@ public:
         : type{initType} {}
 
     WindowEventType type;
-
     math::size2i_t size;
+
     union {
       bool fullscreen = false;
       std::uintptr_t displayId;
@@ -84,12 +63,20 @@ public:
     };
   };
 
-  void sendEvent(const EMSWindow::Event &event) {
+  void sendEvent(const EMSWindow::Event &evt) {
     std::unique_lock lock{eventQueueMutex_};
-    eventQueue_.push(event);
+    eventQueue_.push(evt);
     lock.unlock();
     eventQueueCondition_.notify_all();
   }
+
+  void handleResize() {
+    EMSWindow::Event sizeChangeEvent{WindowEventType::SIZE_CHANGE};
+    sizeChangeEvent.size = math::size2i_t(0, 0);
+    sendEvent(sizeChangeEvent);
+  }
+
+  // void handleFullscreenChange(bool fullscreen);
 
   auto getEvents(bool waitForEvents) -> std::queue<EMSWindow::Event> {
     std::unique_lock lock{eventQueueMutex_};

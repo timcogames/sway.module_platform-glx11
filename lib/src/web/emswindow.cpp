@@ -7,6 +7,16 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(pltf)
 
+auto onCanvasResizeCallback(int eventType, [[maybe_unused]] const void *reserved, void *userData) -> EM_BOOL {
+  if (eventType == EMSCRIPTEN_EVENT_CANVASRESIZED) {
+    auto *nativeWindow = static_cast<EMSWindow *>(userData);
+    nativeWindow->handleResize();
+    return EM_TRUE;
+  }
+
+  return EM_FALSE;
+}
+
 EMSWindow::EMSWindow(std::shared_ptr<Context> context)
     : context_(context) {}
 
@@ -28,16 +38,6 @@ auto EMSWindow::getSize() const -> math::size2i_t {
   emscripten_get_element_css_size(ctx->getTargetId().c_str(), &elementWdt, &elementHgt);
 
   return {(s32_t)elementWdt, (s32_t)elementHgt};
-}
-
-auto onCanvasResizeCallback(int eventType, [[maybe_unused]] const void *reserved, void *userData) -> EM_BOOL {
-  if (eventType == EMSCRIPTEN_EVENT_CANVASRESIZED) {
-    auto *nativeWindow = static_cast<EMSWindow *>(userData);
-    nativeWindow->handleResize();
-    return EM_TRUE;
-  }
-
-  return EM_FALSE;
 }
 
 void EMSWindow::setFullscreen(bool fullscreen) {
