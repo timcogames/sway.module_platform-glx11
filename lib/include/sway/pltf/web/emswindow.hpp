@@ -34,7 +34,7 @@ class EMSWindow {
 public:
   using CallbackFunc_t = void (*)(void *);
 
-  EMSWindow(std::shared_ptr<Context> context);
+  EMSWindow(std::shared_ptr<Context> ctx);
 
   ~EMSWindow() = default;
 

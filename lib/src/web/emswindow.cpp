@@ -17,8 +17,8 @@ auto onCanvasResizeCallback(int eventType, [[maybe_unused]] const void *reserved
   return EM_FALSE;
 }
 
-EMSWindow::EMSWindow(std::shared_ptr<Context> context)
-    : context_(context) {}
+EMSWindow::EMSWindow(std::shared_ptr<Context> ctx)
+    : context_(ctx) {}
 
 auto EMSWindow::eventLoop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool keepgoing) -> bool {
   emscripten_set_main_loop_arg(func, arg, 0, 1);
