@@ -30,8 +30,7 @@ void EMSContext::create([[maybe_unused]] void *config) {
 }
 
 auto EMSContext::makeCurrent() -> bool {
-  emscripten_webgl_make_context_current(context_);
-  return false;
+  return emscripten_webgl_make_context_current(context_) == EMSCRIPTEN_RESULT_SUCCESS;
 }
 
 NAMESPACE_END(pltf)
