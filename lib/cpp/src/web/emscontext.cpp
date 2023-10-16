@@ -24,7 +24,10 @@ void EMSContext::create([[maybe_unused]] void *config) {
   attrs.minorVersion = 0;
   attrs.enableExtensionsByDefault = 1;
   context_ = emscripten_webgl_create_context(targetId_.c_str(), &attrs);
-  if (context_ == 0) {
+  if (context_ <= 0) {
+    if (context_ == EMSCRIPTEN_RESULT_UNKNOWN_TARGET) {
+    }
+
     printf("Webgl ctx could not be created!\n");
   }
 }

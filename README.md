@@ -19,14 +19,15 @@ mkdir build && cd ./build
 Конфигурируем проект для сборки
 
 ```console
-cmake -DCMAKE_BUILD_TYPE=Release -DCUSTOM_EMSCRIPTEN_ROOT_DIR=/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten -DCUSTOM_GTEST_ROOT_DIR=/Users/apriori85/Documents/Third-party/googletest -DMODULE_PLTF_ENABLE_TESTS=ON ../
+cmake -DCMAKE_BUILD_TYPE=Release \
+      -DGLOB_EMSCRIPTEN_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/emsdk/upstream/emscripten \
+      -DGLOB_GTEST_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/googletest \
+      -DMODULE_PLTF_ENABLE_EXAMPLES=ON ../
 ```
 
 Опция сборки | Тип | Описание | По умолчанию
 :---|:---|:---|:---:
-`BOOST_ROOT` | PATH | Путь до корневой директории Boost библиотеки | `-`
-`CMAKE_BUILD_TYPE` | STRING | Тип сборки | `Debug`
-`MODULE_PLTF_BUILD_SHARED` | `BOOL` | Сборка библиотеки общего пользования | `OFF`
+`MODULE_PLTF_SHARED_LIB` | BOOL | Создать общую библиотеку (.dylib/.so) | `OFF`
 
 Запускаем сборку
 

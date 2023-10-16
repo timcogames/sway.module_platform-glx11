@@ -8,18 +8,18 @@
       "intelliSenseMode": "macos-clang-arm64",
       "configurationProvider": "ms-vscode.cpptools",
       "includePath": [
-        "${workspaceFolder}/lib/include",
-        "${workspaceFolder}/submodules/sway.module_core/lib/include",
-        "${workspaceFolder}/submodules/sway.module_math/lib/include",
+        "${workspaceFolder}/lib/cpp/include",
+        "${workspaceFolder}/submodules/sway.module_core/lib/cpp/include",
+        "${workspaceFolder}/submodules/sway.module_math/lib/cpp/include",
         "/opt/X11/include",
         "/Users/apriori85/Documents/Third-party/googletest/googletest/include",
         "/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten/system/include"
       ],
       "browse": {
         "path": [
-          "${workspaceFolder}/lib/include",
-          "${workspaceFolder}/submodules/sway.module_core/lib/include",
-          "${workspaceFolder}/submodules/sway.module_math/lib/include",
+          "${workspaceFolder}/lib/cpp/include",
+          "${workspaceFolder}/submodules/sway.module_core/lib/cpp/include",
+          "${workspaceFolder}/submodules/sway.module_math/lib/cpp/include",
           "/opt/X11/include",
           "/Users/apriori85/Documents/Third-party/googletest/googletest/include",
           "/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten/system/include"
