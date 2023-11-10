@@ -22,12 +22,12 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
 endif()
 
 project_metadata("pltf" 0.7.0)
-project(${MODULE_PLTF_TARGET} VERSION ${MODULE_PLTF_VERSION} LANGUAGES CXX)
+project(${MODULE_PLTF_PROJ_NAME} VERSION ${MODULE_PLTF_VERSION} LANGUAGES CXX)
 
 # set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
 
 # Подмодули
-add_submodule("libmodule_core" submodules/sway.module_core)
+add_submodule("core" submodules/sway.module_core)
 
 if(GLOB_EMSCRIPTEN_PLATFORM)
   set(CMAKE_CXX_COMPILER "${EMSCRIPTEN_COMPILER}")
@@ -50,16 +50,16 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
   include_directories("${GLOB_EMSCRIPTEN_ROOT_DIR}/cache/sysroot/include")
 endif()
 include_directories("${GLUT_INCLUDE_DIRS}")
-include_directories("${MODULE_PLTF_DIR}/lib/cpp/include")
-include_directories("${MODULE_PLTF_DIR}/submodules/sway.module_core/lib/cpp/include")
-include_directories("${MODULE_PLTF_DIR}/submodules/sway.module_math/lib/cpp/include")
+include_directories("${MODULE_PLTF_DIR}/lib/cxx/include")
+include_directories("${MODULE_PLTF_DIR}/submodules/sway.module_core/lib/cxx/include")
+include_directories("${MODULE_PLTF_DIR}/submodules/sway.module_math/lib/cxx/include")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
-file(GLOB_RECURSE MODULE_PLTF_HEADERS ${MODULE_PLTF_DIR}/lib/cpp/include/*.*)
+file(GLOB_RECURSE MODULE_PLTF_HEADERS ${MODULE_PLTF_DIR}/lib/cxx/include/*.*)
 if(GLOB_EMSCRIPTEN_PLATFORM)
-  file(GLOB_RECURSE MODULE_PLTF_SOURCE ${MODULE_PLTF_DIR}/lib/cpp/src/web/*.*)
+  file(GLOB_RECURSE MODULE_PLTF_SOURCE ${MODULE_PLTF_DIR}/lib/cxx/src/web/*.*)
 else()
-  file(GLOB_RECURSE MODULE_PLTF_SOURCE ${MODULE_PLTF_DIR}/lib/cpp/src/mac/*.*)
+  file(GLOB_RECURSE MODULE_PLTF_SOURCE ${MODULE_PLTF_DIR}/lib/cxx/src/mac/*.*)
 endif()
 
 link_directories("${GLUT_LIBRARY_DIRS}")
