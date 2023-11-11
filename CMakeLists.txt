@@ -1,11 +1,16 @@
-# Проверяем версию CMake
+#_________________________________________________________________________________
+#                                                                    CMake version
 cmake_minimum_required(VERSION 3.14.3 FATAL_ERROR)
 
+#_________________________________________________________________________________
+#                                                              Project directories
 set(MODULE_PLTF_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(MODULE_PLTF_CMAKE_DIR ${MODULE_PLTF_ROOT_DIR}/submodules/sway.module_core/cmakehelpers)
 set(MODULE_PLTF_LIB_DIR ${MODULE_PLTF_ROOT_DIR}/lib)
 set(MODULE_PLTF_BIN_DIR ${CMAKE_SOURCE_DIR}/bin)
 
+#_________________________________________________________________________________
+#                                                            Include CMake modules
 include("${MODULE_PLTF_CMAKE_DIR}/options.cmake")
 include("${MODULE_PLTF_CMAKE_DIR}/set_output_dir.cmake")
 include("${MODULE_PLTF_CMAKE_DIR}/project_metadata.cmake")
@@ -21,13 +26,16 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
   emscripten_setup()
 endif()
 
+#_________________________________________________________________________________
+#                                                                          Project
 project_metadata("pltf" 0.7.0)
 project(${MODULE_PLTF_PROJ_NAME} VERSION ${MODULE_PLTF_VERSION} LANGUAGES CXX)
 
 # set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
 
-# Подмодули
-add_submodule("core" submodules/sway.module_core)
+#_________________________________________________________________________________
+#                                                                       Submodules
+add_submodule("module_core" submodules/sway.module_core)
 
 if(GLOB_EMSCRIPTEN_PLATFORM)
   set(CMAKE_CXX_COMPILER "${EMSCRIPTEN_COMPILER}")
