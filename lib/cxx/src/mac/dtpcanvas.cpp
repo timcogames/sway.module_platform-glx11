@@ -2,6 +2,7 @@
 #include <sway/pltf/mac/dtpcanvas.hpp>
 
 #include <array>
+#include <cstring>  // strstr
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(pltf)
@@ -61,7 +62,7 @@ auto DTPCanvas::getMultisampleAttributes_(DTPScreenConnectionRef_t connection, G
   const auto *extensions = glXQueryExtensionsString(connection->getDisplay(), connection->getScreenNumber());
   DTPVisualAttributes attrs;
 
-  if (extensions && strstr(extensions, "GLX_ARB_multisample")) {
+  if (extensions && std::strstr(extensions, "GLX_ARB_multisample")) {
     glXGetFBConfigAttrib(connection->getDisplay(), config, GLX_SAMPLE_BUFFERS_ARB, &attrs.numMultisample);
     glXGetFBConfigAttrib(connection->getDisplay(), config, GLX_SAMPLES_ARB, &attrs.numSamples);
   } else {
