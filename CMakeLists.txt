@@ -4,10 +4,14 @@ cmake_minimum_required(VERSION 3.14.3 FATAL_ERROR)
 
 #_________________________________________________________________________________
 #                                                              Project directories
-set(MODULE_PLTF_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-set(MODULE_PLTF_CMAKE_DIR ${MODULE_PLTF_ROOT_DIR}/submodules/sway.module_core/cmakehelpers)
-set(MODULE_PLTF_LIB_DIR ${MODULE_PLTF_ROOT_DIR}/lib)
-set(MODULE_PLTF_BIN_DIR ${CMAKE_SOURCE_DIR}/bin)
+set(MODULE_PLTF_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+set(MODULE_PLTF_LIST_DIR "${CMAKE_CURRENT_LIST_DIR}")
+set(MODULE_PLTF_CMAKE_DIR "${MODULE_PLTF_ROOT_DIR}/submodules/sway.module_core/cmake_modules")
+set(MODULE_PLTF_LIB_DIR "${MODULE_PLTF_ROOT_DIR}/lib")
+set(MODULE_PLTF_BIN_DIR "${CMAKE_SOURCE_DIR}/bin")
+
+set(X11_INC_DIRS "/opt/X11/include")
+set(X11_LIB_DIRS "/opt/X11/lib")
 
 #_________________________________________________________________________________
 #                                                            Include CMake modules
@@ -17,11 +21,14 @@ include("${MODULE_PLTF_CMAKE_DIR}/project_metadata.cmake")
 include("${MODULE_PLTF_CMAKE_DIR}/enable_cxx17.cmake")
 include("${MODULE_PLTF_CMAKE_DIR}/add_submodule.cmake")
 
-# Опции сборки
+#_________________________________________________________________________________
+#                                                                    Build options
 option(MODULE_PLTF_SHARED_LIB "Build shared library (dylib/.so)" OFF)
 option(MODULE_PLTF_ENABLE_TESTS "Enable test builds" OFF)
 option(MODULE_PLTF_ENABLE_EXAMPLES "Enable test builds" OFF)
 
+#_________________________________________________________________________________
+#                                                              [EMSCRIPTEN]: Setup
 if(GLOB_EMSCRIPTEN_PLATFORM)
   emscripten_setup()
 endif()
@@ -30,8 +37,6 @@ endif()
 #                                                                          Project
 project_metadata("pltf" 0.7.0)
 project(${MODULE_PLTF_PROJ_NAME} VERSION ${MODULE_PLTF_VERSION} LANGUAGES CXX)
-
-# set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
 
 #_________________________________________________________________________________
 #                                                                       Submodules
@@ -46,31 +51,29 @@ endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE")
 
-# Определяем каталог вывода по умолчанию
+#_________________________________________________________________________________
+#                                                           Executable output path
 set_output_dir(${MODULE_PLTF_BIN_DIR})
 
-set(GLUT_INCLUDE_DIRS "/opt/X11/include")
-set(GLUT_LIBRARY_DIRS "/opt/X11/lib")
-set(MODULE_PLTF_DIR ${CMAKE_CURRENT_LIST_DIR})
-
-# Добавляем пути для поиска хедеров
+#_________________________________________________________________________________
+#                                                          Include project headers
 if(GLOB_EMSCRIPTEN_PLATFORM)
   include_directories("${GLOB_EMSCRIPTEN_ROOT_DIR}/cache/sysroot/include")
 endif()
-include_directories("${GLUT_INCLUDE_DIRS}")
-include_directories("${MODULE_PLTF_DIR}/lib/cxx/include")
-include_directories("${MODULE_PLTF_DIR}/submodules/sway.module_core/lib/cxx/include")
-include_directories("${MODULE_PLTF_DIR}/submodules/sway.module_math/lib/cxx/include")
+include_directories("${X11_INC_DIRS}")
+include_directories("${MODULE_PLTF_LIST_DIR}/lib/cxx/include")
+include_directories("${MODULE_PLTF_LIST_DIR}/submodules/sway.module_core/lib/cxx/include")
+include_directories("${MODULE_PLTF_LIST_DIR}/submodules/sway.module_math/lib/cxx/include")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
-file(GLOB_RECURSE MODULE_PLTF_HEADERS ${MODULE_PLTF_DIR}/lib/cxx/include/*.*)
+file(GLOB_RECURSE MODULE_PLTF_HEADERS ${MODULE_PLTF_LIST_DIR}/lib/cxx/include/*.*)
 if(GLOB_EMSCRIPTEN_PLATFORM)
-  file(GLOB_RECURSE MODULE_PLTF_SOURCE ${MODULE_PLTF_DIR}/lib/cxx/src/web/*.*)
+  file(GLOB_RECURSE MODULE_PLTF_SOURCE ${MODULE_PLTF_LIST_DIR}/lib/cxx/src/web/*.*)
 else()
-  file(GLOB_RECURSE MODULE_PLTF_SOURCE ${MODULE_PLTF_DIR}/lib/cxx/src/mac/*.*)
+  file(GLOB_RECURSE MODULE_PLTF_SOURCE ${MODULE_PLTF_LIST_DIR}/lib/cxx/src/mac/*.*)
 endif()
 
-link_directories("${GLUT_LIBRARY_DIRS}")
+link_directories("${X11_LIB_DIRS}")
 
 find_package(OpenGL REQUIRED)
 find_package(X11 QUIET)
@@ -92,6 +95,8 @@ endif()
 enable_cxx17(${MODULE_PLTF_TARGET})
 target_link_libraries(${MODULE_PLTF_TARGET} GL X11)
 
+#_________________________________________________________________________________
+#                                                                         Examples
 if(MODULE_PLTF_ENABLE_EXAMPLES)
   add_subdirectory(examples/window)
 endif()
