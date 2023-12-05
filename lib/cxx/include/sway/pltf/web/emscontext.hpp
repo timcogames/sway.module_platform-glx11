@@ -18,6 +18,8 @@ public:
 
   MTHD_OVERRIDE(void create(void *config));
 
+  void destroy();
+
   /**
    * @brief Прикрепляет контекст к окну.
    *

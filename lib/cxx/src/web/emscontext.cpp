@@ -26,10 +26,21 @@ void EMSContext::create([[maybe_unused]] void *config) {
   context_ = emscripten_webgl_create_context(targetId_.c_str(), &attrs);
   if (context_ <= 0) {
     if (context_ == EMSCRIPTEN_RESULT_UNKNOWN_TARGET) {
+      std::fprintf(stderr, "[EMSContext] Cannot create context, unknown target supplied: %c\n", targetId_.c_str());
+    } else {
+      std::fprintf(stderr, "[EMSContext] WebGL2 context could not be created: %i\n", context_);
     }
-
-    printf("Webgl ctx could not be created!\n");
   }
+}
+
+void EMSContext::destroy() {
+  if (context_ <= 0) {
+    return;
+  }
+
+  emscripten_webgl_make_context_current(0);
+  emscripten_webgl_destroy_context(context_);
+  context_ = 0;
 }
 
 auto EMSContext::makeCurrent() -> bool {
