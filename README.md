@@ -19,10 +19,10 @@ mkdir build && cd ./build
 Конфигурируем проект для сборки
 
 ```console
-cmake -DCMAKE_BUILD_TYPE=Release \
-      -DGLOB_EMSCRIPTEN_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/emsdk/upstream/emscripten \
-      -DGLOB_GTEST_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/googletest \
-      -DMODULE_PLTF_ENABLE_EXAMPLES=ON ../
+cmake -D CMAKE_BUILD_TYPE=Release \
+      -D GLOB_EMSCRIPTEN_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/emsdk/upstream/emscripten \
+      -D GLOB_GTEST_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/googletest \
+      -D MODULE_PLTF_ENABLE_EXAMPLES=ON ../
 ```
 
 Опция сборки | Тип | Описание | По умолчанию

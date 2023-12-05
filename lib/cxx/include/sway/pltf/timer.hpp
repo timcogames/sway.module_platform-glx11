@@ -1,8 +1,7 @@
 #ifndef SWAY_PLTF_TIMER_HPP
 #define SWAY_PLTF_TIMER_HPP
 
-#include <sway/namespacemacros.hpp>
-#include <sway/types.hpp>
+#include <sway/core.hpp>
 
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten.h>

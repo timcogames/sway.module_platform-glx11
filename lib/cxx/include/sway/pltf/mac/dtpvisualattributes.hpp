@@ -1,8 +1,7 @@
 #ifndef SWAY_PLTF_MAC_DTPVISUALATTRIBUTES_HPP
 #define SWAY_PLTF_MAC_DTPVISUALATTRIBUTES_HPP
 
-#include <sway/namespacemacros.hpp>
-#include <sway/types.hpp>
+#include <sway/core.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(pltf)

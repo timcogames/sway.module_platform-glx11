@@ -1,9 +1,13 @@
-#_________________________________________________________________________________
-#                                                                    CMake version
+#---------------------------------------------------------------------------------
+# CMake version
+#---------------------------------------------------------------------------------
+
 cmake_minimum_required(VERSION 3.14.3 FATAL_ERROR)
 
-#_________________________________________________________________________________
-#                                                              Project directories
+#---------------------------------------------------------------------------------
+# Project directories
+#---------------------------------------------------------------------------------
+
 set(MODULE_PLTF_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 set(MODULE_PLTF_LIST_DIR "${CMAKE_CURRENT_LIST_DIR}")
 set(MODULE_PLTF_CMAKE_DIR "${MODULE_PLTF_ROOT_DIR}/submodules/sway.module_core/cmake_modules")
@@ -13,33 +17,43 @@ set(MODULE_PLTF_BIN_DIR "${CMAKE_SOURCE_DIR}/bin")
 set(X11_INC_DIRS "/opt/X11/include")
 set(X11_LIB_DIRS "/opt/X11/lib")
 
-#_________________________________________________________________________________
-#                                                            Include CMake modules
+#---------------------------------------------------------------------------------
+# Include CMake modules
+#---------------------------------------------------------------------------------
+
 include("${MODULE_PLTF_CMAKE_DIR}/options.cmake")
 include("${MODULE_PLTF_CMAKE_DIR}/set_output_dir.cmake")
 include("${MODULE_PLTF_CMAKE_DIR}/project_metadata.cmake")
 include("${MODULE_PLTF_CMAKE_DIR}/enable_cxx17.cmake")
 include("${MODULE_PLTF_CMAKE_DIR}/add_submodule.cmake")
 
-#_________________________________________________________________________________
-#                                                                    Build options
+#---------------------------------------------------------------------------------
+# Build options
+#---------------------------------------------------------------------------------
+
 option(MODULE_PLTF_SHARED_LIB "Build shared library (dylib/.so)" OFF)
 option(MODULE_PLTF_ENABLE_TESTS "Enable test builds" OFF)
 option(MODULE_PLTF_ENABLE_EXAMPLES "Enable test builds" OFF)
 
-#_________________________________________________________________________________
-#                                                              [EMSCRIPTEN]: Setup
+#---------------------------------------------------------------------------------
+# [EMSCRIPTEN]: Setup
+#---------------------------------------------------------------------------------
+
 if(GLOB_EMSCRIPTEN_PLATFORM)
   emscripten_setup()
 endif()
 
-#_________________________________________________________________________________
-#                                                                          Project
+#---------------------------------------------------------------------------------
+# Project
+#---------------------------------------------------------------------------------
+
 project_metadata("pltf" 0.7.0)
 project(${MODULE_PLTF_PROJ_NAME} VERSION ${MODULE_PLTF_VERSION} LANGUAGES CXX)
 
-#_________________________________________________________________________________
-#                                                                       Submodules
+#---------------------------------------------------------------------------------
+# Submodules
+#---------------------------------------------------------------------------------
+
 add_submodule("module_core" submodules/sway.module_core)
 
 if(GLOB_EMSCRIPTEN_PLATFORM)
@@ -51,12 +65,16 @@ endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE")
 
-#_________________________________________________________________________________
-#                                                           Executable output path
+#---------------------------------------------------------------------------------
+# Executable output path
+#---------------------------------------------------------------------------------
+
 set_output_dir(${MODULE_PLTF_BIN_DIR})
 
-#_________________________________________________________________________________
-#                                                          Include project headers
+#---------------------------------------------------------------------------------
+# Include project headers
+#---------------------------------------------------------------------------------
+
 if(GLOB_EMSCRIPTEN_PLATFORM)
   include_directories("${GLOB_EMSCRIPTEN_ROOT_DIR}/cache/sysroot/include")
 endif()
@@ -95,8 +113,10 @@ endif()
 enable_cxx17(${MODULE_PLTF_TARGET})
 target_link_libraries(${MODULE_PLTF_TARGET} GL X11)
 
-#_________________________________________________________________________________
-#                                                                         Examples
+#---------------------------------------------------------------------------------
+# Examples
+#---------------------------------------------------------------------------------
+
 if(MODULE_PLTF_ENABLE_EXAMPLES)
   add_subdirectory(examples/window)
 endif()

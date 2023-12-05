@@ -1,8 +1,8 @@
 #ifndef SWAY_PLTF_WINDOWSIZE_HPP
 #define SWAY_PLTF_WINDOWSIZE_HPP
 
+#include <sway/core.hpp>
 #include <sway/math/size.hpp>
-#include <sway/namespacemacros.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(pltf)

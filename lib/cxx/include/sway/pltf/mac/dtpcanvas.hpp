@@ -1,7 +1,7 @@
 #ifndef SWAY_PLTF_MAC_DTPCANVAS_HPP
 #define SWAY_PLTF_MAC_DTPCANVAS_HPP
 
-#include <sway/keywords.hpp>
+#include <sway/core.hpp>
 #include <sway/pltf/mac/dtpcontext.hpp>
 #include <sway/pltf/mac/dtpscreenconnection.hpp>
 #include <sway/pltf/mac/dtpvisualattributes.hpp>

@@ -1,9 +1,8 @@
 #ifndef SWAY_PLTF_WINDOWINITIALINFO_HPP
 #define SWAY_PLTF_WINDOWINITIALINFO_HPP
 
-#include <sway/namespacemacros.hpp>
+#include <sway/core.hpp>
 #include <sway/pltf/windowsize.hpp>
-#include <sway/types.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(pltf)
