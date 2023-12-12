@@ -34,7 +34,9 @@ public:
   /**
    * @brief Создает контекст визуализации.
    */
-  MTHD_OVERRIDE(void create(void *config));
+  MTHD_OVERRIDE(void create(void *arg));
+
+  MTHD_OVERRIDE(void destroy());
 
   /**
    * @brief Прикрепляет контекст к окну.

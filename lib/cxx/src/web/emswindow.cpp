@@ -20,22 +20,17 @@ auto onCanvasResizeCallback(int eventType, [[maybe_unused]] const void *reserved
 EMSWindow::EMSWindow(std::shared_ptr<Context> ctx)
     : context_(ctx) {}
 
-auto EMSWindow::eventLoop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool keepgoing) -> bool {
-  emscripten_set_main_loop_arg(func, arg, 0, 1);
-  return true;
-}
-
 void EMSWindow::setSize(s32_t wdt, s32_t hgt) {
   auto ctx = std::static_pointer_cast<EMSContext>(context_);
 
-  emscripten_set_canvas_element_size(ctx->getTargetId().c_str(), wdt, hgt);
+  emscripten_set_canvas_element_size(ctx->getCanvasId().c_str(), wdt, hgt);
 }
 
 auto EMSWindow::getSize() const -> math::size2i_t {
   auto ctx = std::static_pointer_cast<EMSContext>(context_);
   auto wdt = 0.0, hgt = 0.0;
 
-  emscripten_get_element_css_size(ctx->getTargetId().c_str(), &wdt, &hgt);
+  emscripten_get_element_css_size(ctx->getCanvasId().c_str(), &wdt, &hgt);
   return {(s32_t)wdt, (s32_t)hgt};
 }
 
@@ -56,7 +51,7 @@ void EMSWindow::setFullscreen(bool fullscreen) {
       fullscreenStrategy.canvasResizedCallback = onCanvasResizeCallback;
       fullscreenStrategy.canvasResizedCallbackUserData = this;
 
-      result = emscripten_request_fullscreen_strategy(ctx->getTargetId().c_str(), EM_TRUE, &fullscreenStrategy);
+      result = emscripten_request_fullscreen_strategy(ctx->getCanvasId().c_str(), EM_TRUE, &fullscreenStrategy);
     } else {
       result = emscripten_exit_fullscreen();
     }

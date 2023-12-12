@@ -16,12 +16,10 @@ DTPContext::~DTPContext() {
   if (!doneCurrent()) {
     printf("Failed to deactivate shared context before sharing.\n");
   }
-
-  glXDestroyContext(connection_->getDisplay(), context_);
 }
 
-void DTPContext::create(void *config) {
-  context_ = glXCreateNewContext(connection_->getDisplay(), (GLXFBConfig)config, GLX_RGBA_TYPE, nullptr, True);
+void DTPContext::create(void *arg) {
+  context_ = glXCreateNewContext(connection_->getDisplay(), (GLXFBConfig)arg, GLX_RGBA_TYPE, nullptr, True);
   if (context_ == nullptr) {
     throw core::runtime::Exception("Couldn't create GLX context.");
   }
@@ -30,6 +28,8 @@ void DTPContext::create(void *config) {
     printf("Unable to create direct rendering context.\n");
   }
 }
+
+void DTPContext::destroy() { glXDestroyContext(connection_->getDisplay(), context_); }
 
 auto DTPContext::makeCurrent() -> bool {
   if (glXGetCurrentContext() != context_) {

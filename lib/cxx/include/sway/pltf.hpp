@@ -2,6 +2,8 @@
 #define SWAY_PLTF_HPP
 
 #include <sway/pltf/context.hpp>
+#include <sway/pltf/loopeable.hpp>
+#include <sway/pltf/looper.hpp>
 #include <sway/pltf/timer.hpp>
 #include <sway/pltf/windoweventlistener.hpp>
 #include <sway/pltf/windoweventtypes.hpp>

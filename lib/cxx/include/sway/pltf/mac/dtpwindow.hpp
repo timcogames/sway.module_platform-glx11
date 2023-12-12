@@ -52,7 +52,7 @@ public:
   /**
    * @brief Обрабатывает события.
    */
-  bool eventLoop(bool keepgoing);
+  auto eventLoop(bool keepgoing) -> bool;
 
   /**
    * @brief Устанавливает заголовок окна.

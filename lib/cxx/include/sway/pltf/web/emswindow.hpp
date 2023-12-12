@@ -38,8 +38,6 @@ public:
 
   ~EMSWindow() = default;
 
-  auto eventLoop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool keepgoing) -> bool;
-
   /**
    * @brief Устанавливает размер окна.
    *

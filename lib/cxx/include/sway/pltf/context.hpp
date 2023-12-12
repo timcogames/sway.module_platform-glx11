@@ -10,7 +10,9 @@ class Context {
 public:
   virtual ~Context() = default;
 
-  PURE_VIRTUAL(void create(void *config));
+  PURE_VIRTUAL(void create(void *arg));
+
+  PURE_VIRTUAL(void destroy());
 
   // clang-format off
   PURE_VIRTUAL(auto makeCurrent() -> bool);  // clang-format on

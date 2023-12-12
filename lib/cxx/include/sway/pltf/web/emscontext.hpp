@@ -6,19 +6,20 @@
 
 #include <emscripten.h>
 #include <emscripten/html5.h>
+#include <string>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(pltf)
 
 class EMSContext : public Context {
 public:
-  EMSContext();
+  EMSContext(const std::string &canvasId);
 
   virtual ~EMSContext();
 
-  MTHD_OVERRIDE(void create(void *config));
+  MTHD_OVERRIDE(void create(void *arg));
 
-  void destroy();
+  MTHD_OVERRIDE(void destroy());
 
   /**
    * @brief Прикрепляет контекст к окну.
@@ -43,11 +44,11 @@ public:
    */
   MTHD_OVERRIDE(void present()) {}
 
-  auto getTargetId() const -> std::string { return targetId_; }
+  [[nodiscard]] auto getCanvasId() const -> std::string { return canvasId_; }
 
 private:
   EMSCRIPTEN_WEBGL_CONTEXT_HANDLE context_;
-  std::string targetId_;
+  std::string canvasId_;
 };
 
 NAMESPACE_END(pltf)

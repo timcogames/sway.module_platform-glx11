@@ -5,8 +5,8 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(pltf)
 
-EMSContext::EMSContext()
-    : targetId_("#canvas") {}
+EMSContext::EMSContext(const std::string &canvasId)
+    : canvasId_(canvasId) {}
 
 EMSContext::~EMSContext() {
   if (!doneCurrent()) {
@@ -14,19 +14,19 @@ EMSContext::~EMSContext() {
   }
 }
 
-void EMSContext::create([[maybe_unused]] void *config) {
+void EMSContext::create([[maybe_unused]] void *arg) {
   EmscriptenWebGLContextAttributes attrs;
   emscripten_webgl_init_context_attributes(&attrs);
-  attrs.depth = 1;
-  attrs.stencil = 1;
-  attrs.antialias = 1;
+  attrs.depth = attrs.stencil = attrs.antialias = 1;
+  attrs.alpha = 0;
+  attrs.explicitSwapControl = 1;
   attrs.majorVersion = 2;  // WebGL 2.0
   attrs.minorVersion = 0;
   attrs.enableExtensionsByDefault = 1;
-  context_ = emscripten_webgl_create_context(targetId_.c_str(), &attrs);
+  context_ = emscripten_webgl_create_context(canvasId_.c_str(), &attrs);
   if (context_ <= 0) {
     if (context_ == EMSCRIPTEN_RESULT_UNKNOWN_TARGET) {
-      std::fprintf(stderr, "[EMSContext] Cannot create context, unknown target supplied: %c\n", targetId_.c_str());
+      std::fprintf(stderr, "[EMSContext] Cannot create context, unknown target supplied: %c\n", canvasId_.c_str());
     } else {
       std::fprintf(stderr, "[EMSContext] WebGL2 context could not be created: %i\n", context_);
     }
