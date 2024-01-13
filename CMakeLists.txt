@@ -31,6 +31,8 @@ include("${MODULE_PLTF_CMAKE_DIR}/add_submodule.cmake")
 # Build options
 #---------------------------------------------------------------------------------
 
+set_glob_options()
+
 option(MODULE_PLTF_SHARED_LIB "Build shared library (dylib/.so)" OFF)
 option(MODULE_PLTF_ENABLE_TESTS "Enable test builds" OFF)
 option(MODULE_PLTF_ENABLE_EXAMPLES "Enable test builds" OFF)
