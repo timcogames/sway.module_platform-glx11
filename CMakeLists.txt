@@ -100,20 +100,20 @@ find_package(X11 QUIET)
 
 if(MODULE_PLTF_SHARED_LIB)
   # Добавляем в проект цель для сборки динамической библиотеки
-  add_library(${MODULE_PLTF_TARGET} SHARED ${MODULE_PLTF_SOURCE})
-  set_target_properties(${MODULE_PLTF_TARGET} PROPERTIES OUTPUT_NAME ${MODULE_PLTF_LIB_NAME})
-  set_target_properties(${MODULE_PLTF_TARGET} PROPERTIES PREFIX "")
-  set_target_properties(${MODULE_PLTF_TARGET} PROPERTIES SUFFIX ".so")
+  add_library(${MODULE_PLTF_LIB_TARGET} SHARED ${MODULE_PLTF_SOURCE})
+  set_target_properties(${MODULE_PLTF_LIB_TARGET} PROPERTIES OUTPUT_NAME ${MODULE_PLTF_OUTPUT_LIB_NAME})
+  set_target_properties(${MODULE_PLTF_LIB_TARGET} PROPERTIES PREFIX "")
+  set_target_properties(${MODULE_PLTF_LIB_TARGET} PROPERTIES SUFFIX ".so")
 else()
   # Добавляем в проект цель для сборки статической библиотеки
-  add_library(${MODULE_PLTF_TARGET} STATIC ${MODULE_PLTF_SOURCE})
-  set_target_properties(${MODULE_PLTF_TARGET} PROPERTIES OUTPUT_NAME ${MODULE_PLTF_LIB_NAME})
-  set_target_properties(${MODULE_PLTF_TARGET} PROPERTIES PREFIX "")
-  set_target_properties(${MODULE_PLTF_TARGET} PROPERTIES SUFFIX ".a")
+  add_library(${MODULE_PLTF_LIB_TARGET} STATIC ${MODULE_PLTF_SOURCE})
+  set_target_properties(${MODULE_PLTF_LIB_TARGET} PROPERTIES OUTPUT_NAME ${MODULE_PLTF_OUTPUT_LIB_NAME})
+  set_target_properties(${MODULE_PLTF_LIB_TARGET} PROPERTIES PREFIX "")
+  set_target_properties(${MODULE_PLTF_LIB_TARGET} PROPERTIES SUFFIX ".a")
 endif()
 
-enable_cxx17(${MODULE_PLTF_TARGET})
-target_link_libraries(${MODULE_PLTF_TARGET} GL X11)
+enable_cxx17(${MODULE_PLTF_LIB_TARGET})
+target_link_libraries(${MODULE_PLTF_LIB_TARGET} GL X11)
 
 #---------------------------------------------------------------------------------
 # Examples
