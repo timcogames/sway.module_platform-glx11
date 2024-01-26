@@ -2,37 +2,27 @@
 
 [![codecov][codecov-svg]][codecov-url] [![Documentation][codedocs-svg]][codedocs-url] [![License][license-svg]][license-url]
 
-### Клонирование проекта
+## Dependencies
+
+<details>
+  <summary>cmake</summary>
+  
+  ```console
+  brew cleanup -n
+  brew reinstall cmake
+  ```
+  
+  I have [cmake v3.27.9](https://cmake.org/files/v3.27) installed
+</details>
+
+<details>
+  <summary>gtest</summary>
+  
+  [GoogleTest](https://google.github.io/googletest/) User’s Guide
+</details>
 
 ```console
 git clone --recursive https://github.com/timcogames/sway.module_pltf.git
-```
-
-### Сборка проекта
-
-Создаем директорию build и переходим в неё
-
-```console
-mkdir build && cd ./build
-```
-
-Конфигурируем проект для сборки
-
-```console
-cmake -D CMAKE_BUILD_TYPE=Release \
-      -D GLOB_EMSCRIPTEN_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/emsdk/upstream/emscripten \
-      -D GLOB_GTEST_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/googletest \
-      -D MODULE_PLTF_ENABLE_EXAMPLES=ON ../
-```
-
-Опция сборки | Тип | Описание | По умолчанию
-:---|:---|:---|:---:
-`MODULE_PLTF_SHARED_LIB` | BOOL | Создать общую библиотеку (.dylib/.so) | `OFF`
-
-Запускаем сборку
-
-```console
-cmake --build ./
 ```
 
 [codecov-svg]: https://codecov.io/gh/timcogames/sway.module_pltf/branch/master/graph/badge.svg

@@ -26,7 +26,7 @@ IncludeCategories:
     Priority:        1
   - Regex:           '^<sway/.*\.hpp>'
     Priority:        2
-  - Regex:           '<(catch2|boost|gtest)\/'
+  - Regex:           '<(catch2|boost|gtest|gmock)\/'
     Priority:        3
   - Regex:           '^<.*'
     Priority:        4
@@ -40,4 +40,8 @@ TypenameMacros:
   - PURE_VIRTUAL
   - MTHD_OVERRIDE
   - DECLARE_EVENT
+  - DECLARE_EMSCRIPTEN
+  - DECLARE_EMSCRIPTEN_BINDING
+  - EMSCRIPTEN_BINDING_BEGIN
+  - EMSCRIPTEN_BINDING_END
 AlwaysBreakTemplateDeclarations: true
