@@ -37,24 +37,27 @@ auto EMSWindow::getSize() const -> math::size2i_t {
 void EMSWindow::setFullscreen(bool fullscreen) {
   auto ctx = std::static_pointer_cast<EMSContext>(context_);
   auto highDpi = true;
+  auto useSoft = false;
 
   EmscriptenFullscreenChangeEvent status = {0};
   EMSCRIPTEN_RESULT result = emscripten_get_fullscreen_status(&status);
-  if (result == EMSCRIPTEN_RESULT_SUCCESS) {
-    if (fullscreen) {
-      EmscriptenFullscreenStrategy fullscreenStrategy;
-      fullscreenStrategy.scaleMode = EMSCRIPTEN_FULLSCREEN_SCALE_STRETCH;
-      fullscreenStrategy.canvasResolutionScaleMode =
-          highDpi ? EMSCRIPTEN_FULLSCREEN_CANVAS_SCALE_HIDEF : EMSCRIPTEN_FULLSCREEN_CANVAS_SCALE_STDDEF;
-      fullscreenStrategy.filteringMode =
-          EMSCRIPTEN_FULLSCREEN_FILTERING_DEFAULT;  // EMSCRIPTEN_FULLSCREEN_FILTERING_NEAREST;
-      fullscreenStrategy.canvasResizedCallback = onCanvasResizeCallback;
-      fullscreenStrategy.canvasResizedCallbackUserData = this;
+  if (result != EMSCRIPTEN_RESULT_SUCCESS) {
+    return;
+  }
 
-      result = emscripten_request_fullscreen_strategy(ctx->getCanvasId().c_str(), EM_TRUE, &fullscreenStrategy);
-    } else {
-      result = emscripten_exit_fullscreen();
-    }
+  if (fullscreen) {
+    EmscriptenFullscreenStrategy strat;
+    strat.scaleMode = EMSCRIPTEN_FULLSCREEN_SCALE_STRETCH;  // EMSCRIPTEN_FULLSCREEN_SCALE_DEFAULT
+    strat.canvasResolutionScaleMode =
+        highDpi ? EMSCRIPTEN_FULLSCREEN_CANVAS_SCALE_HIDEF : EMSCRIPTEN_FULLSCREEN_CANVAS_SCALE_STDDEF;
+    strat.filteringMode = EMSCRIPTEN_FULLSCREEN_FILTERING_DEFAULT;  // EMSCRIPTEN_FULLSCREEN_FILTERING_NEAREST;
+    strat.canvasResizedCallback = onCanvasResizeCallback;
+    strat.canvasResizedCallbackUserData = this;
+
+    result = useSoft ? emscripten_enter_soft_fullscreen(ctx->getCanvasId().c_str(), &strat)
+                     : emscripten_request_fullscreen_strategy(ctx->getCanvasId().c_str(), EM_TRUE, &strat);
+  } else {
+    result = useSoft ? emscripten_exit_soft_fullscreen() : emscripten_exit_fullscreen();
   }
 }
 
