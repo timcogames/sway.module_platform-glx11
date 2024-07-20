@@ -42,7 +42,7 @@ public:
    * @param[in] wdt Ширина окна.
    * @param[in] hgt Высота окна.
    */
-  void setSize(s32_t wdt, s32_t hgt);
+  void setSize(i32_t wdt, i32_t hgt);
 
   /**
    * @brief Получает размер окна.

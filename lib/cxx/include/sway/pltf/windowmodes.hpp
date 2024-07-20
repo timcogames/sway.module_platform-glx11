@@ -9,7 +9,7 @@ NAMESPACE_BEGIN(pltf)
 /**
  * @brief Перечисление режимов окна.
  */
-enum class WindowMode : s32_t { NONE = 0, WINDOWED, FULLSCREEN, Latest };
+enum class WindowMode : i32_t { NONE = 0, WINDOWED, FULLSCREEN, Latest };
 
 NAMESPACE_END(pltf)
 NAMESPACE_END(sway)

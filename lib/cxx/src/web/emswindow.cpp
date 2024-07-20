@@ -20,7 +20,7 @@ auto onCanvasResizeCallback(int eventType, [[maybe_unused]] const void *reserved
 EMSWindow::EMSWindow(std::shared_ptr<Context> ctx)
     : context_(ctx) {}
 
-void EMSWindow::setSize(s32_t wdt, s32_t hgt) {
+void EMSWindow::setSize(i32_t wdt, i32_t hgt) {
   auto ctx = std::static_pointer_cast<EMSContext>(context_);
 
   emscripten_set_canvas_element_size(ctx->getCanvasId().c_str(), wdt, hgt);
@@ -31,7 +31,7 @@ auto EMSWindow::getSize() const -> math::size2i_t {
   auto wdt = 0.0, hgt = 0.0;
 
   emscripten_get_element_css_size(ctx->getCanvasId().c_str(), &wdt, &hgt);
-  return {(s32_t)wdt, (s32_t)hgt};
+  return {(i32_t)wdt, (i32_t)hgt};
 }
 
 void EMSWindow::setFullscreen(bool fullscreen) {

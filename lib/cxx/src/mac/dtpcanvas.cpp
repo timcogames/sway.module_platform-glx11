@@ -9,7 +9,7 @@ NAMESPACE_BEGIN(pltf)
 
 constexpr size_t ATTRIB_LIST_SIZE = 21;
 // clang-format off
-constexpr std::array<s32_t, ATTRIB_LIST_SIZE> attribList = {
+constexpr std::array<i32_t, ATTRIB_LIST_SIZE> attribList = {
   GLX_RENDER_TYPE, GLX_RGBA_BIT,
   GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
   GLX_RED_SIZE, 1,
@@ -24,7 +24,7 @@ constexpr std::array<s32_t, ATTRIB_LIST_SIZE> attribList = {
 
 DTPCanvas::DTPCanvas(DTPScreenConnectionRef_t connection, const WindowInitialInfo &windowInfo)
     : DTPWindow(connection) {
-  s32_t numConfigs;
+  i32_t numConfigs;
   GLXFBConfig *configs, config;
   configs = glXChooseFBConfig(connection->getDisplay(), connection->getScreenNumber(), attribList.data(), &numConfigs);
   if ((configs != nullptr) && (numConfigs > 0)) {
@@ -42,9 +42,9 @@ DTPCanvas::DTPCanvas(DTPScreenConnectionRef_t connection, const WindowInitialInf
   context_->create(config);
 }
 
-auto DTPCanvas::chooseBestSuitable_(DTPScreenConnectionRef_t connection, GLXFBConfig *configs, s32_t numConfigs)
-    -> GLXFBConfig {
-  s32_t bestScore = DONT_CARE, bestNumSamples = DONT_CARE;
+auto DTPCanvas::chooseBestSuitable_(
+    DTPScreenConnectionRef_t connection, GLXFBConfig *configs, i32_t numConfigs) -> GLXFBConfig {
+  i32_t bestScore = DONT_CARE, bestNumSamples = DONT_CARE;
 
   for (auto i = 0; i < numConfigs; ++i) {
     auto attrs = getMultisampleAttributes_(connection, configs[i]);
@@ -57,8 +57,8 @@ auto DTPCanvas::chooseBestSuitable_(DTPScreenConnectionRef_t connection, GLXFBCo
   return configs[bestScore];
 }
 
-auto DTPCanvas::getMultisampleAttributes_(DTPScreenConnectionRef_t connection, GLXFBConfig config)
-    -> DTPVisualAttributes {
+auto DTPCanvas::getMultisampleAttributes_(
+    DTPScreenConnectionRef_t connection, GLXFBConfig config) -> DTPVisualAttributes {
   const auto *extensions = glXQueryExtensionsString(connection->getDisplay(), connection->getScreenNumber());
   DTPVisualAttributes attrs;
 

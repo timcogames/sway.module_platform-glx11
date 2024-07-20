@@ -38,7 +38,7 @@ void DTPWindow::initializeEventBindings_() {
   addEventBinding(FocusOut, std::bind(&DTPWindow::handleFocusOutEvent, this, std::placeholders::_1));
 }
 
-void DTPWindow::addEventBinding(s32_t type, EventCallbackFunc_t callback) { eventCallbacks_[type] = callback; }
+void DTPWindow::addEventBinding(i32_t type, EventCallbackFunc_t callback) { eventCallbacks_[type] = callback; }
 
 void DTPWindow::createDummy(XVisualInfo *visualInfo, const WindowInitialInfo &windowInfo) {
   XSetWindowAttributes attrs;
@@ -91,9 +91,9 @@ void DTPWindow::setTitle(lpcstr_t title) {
   XFlush(connection_->getDisplay());
 }
 
-void DTPWindow::setPosition(s32_t x, s32_t y) {
+void DTPWindow::setPosition(i32_t x, i32_t y) {
   if (!visible()) {
-    s64_t supplied;
+    i64_t supplied;
     XSizeHints *hints = XAllocSizeHints();
     XGetWMNormalHints(connection_->getDisplay(), window_, hints, &supplied);
 
@@ -110,12 +110,12 @@ void DTPWindow::setPosition(s32_t x, s32_t y) {
 
 auto DTPWindow::getPosition() const -> math::point2i_t {
   Window dummy;
-  s32_t xpos, ypos;
+  i32_t xpos, ypos;
   XTranslateCoordinates(connection_->getDisplay(), window_, connection_->getRootWindow(), 0, 0, &xpos, &ypos, &dummy);
-  return math::Point<s32_t>(xpos, ypos);
+  return math::Point<i32_t>(xpos, ypos);
 }
 
-void DTPWindow::setSize(s32_t w, s32_t h) {
+void DTPWindow::setSize(i32_t w, i32_t h) {
   XResizeWindow(connection_->getDisplay(), window_, w, h);
   XFlush(connection_->getDisplay());
 }
@@ -123,7 +123,7 @@ void DTPWindow::setSize(s32_t w, s32_t h) {
 auto DTPWindow::getSize() const -> math::size2i_t {
   XWindowAttributes attrs;
   XGetWindowAttributes(connection_->getDisplay(), window_, &attrs);
-  return math::Size<s32_t>(attrs.width, attrs.height);
+  return math::Size<i32_t>(attrs.width, attrs.height);
 }
 
 void DTPWindow::setMinSize_(XSizeHints *hints, const WindowSize &size, bool resizable) {
@@ -198,7 +198,7 @@ void DTPWindow::setFullscreen(bool fullscreen) {
   event.xclient.window = window_;
   event.xclient.message_type = netatom_[kAtom_NetWMState];
   event.xclient.format = 32;
-  event.xclient.data.l[0] = core::detail::toUnderlying(fullscreen ? WindowMode::FULLSCREEN : WindowMode::WINDOWED);
+  event.xclient.data.l[0] = core::detail::toBase(fullscreen ? WindowMode::FULLSCREEN : WindowMode::WINDOWED);
   event.xclient.data.l[1] = netatom_[kAtom_NetWMStateFullscreen];
   event.xclient.data.l[2] = 0;
 

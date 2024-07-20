@@ -22,26 +22,30 @@ public:
   /**
    * @brief Получает указатель на структуру дисплея.
    */
+  [[nodiscard]]
   auto getDisplay() const -> Display *;
 
   /**
    * @brief Получает номер экрана.
    */
-  auto getScreenNumber() const -> s32_t;
+  [[nodiscard]]
+  auto getScreenNumber() const -> i32_t;
 
   /**
    * @brief Получает корневое окно.
    */
+  [[nodiscard]]
   auto getRootWindow() const -> Window;
 
   /**
    * @brief Получает размер дисплея.
    */
+  [[nodiscard]]
   auto getDisplaySize() const -> math::size2i_t;
 
 private:
   Display *display_;  // Указатель на структуру дисплея.
-  s32_t screen_;  // Номер экрана.
+  i32_t screen_;  // Номер экрана.
 };
 
 NAMESPACE_END(pltf)

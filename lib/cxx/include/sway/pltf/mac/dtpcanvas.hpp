@@ -44,7 +44,7 @@ public:
   MTHD_OVERRIDE(void handleFocusOutEvent(const XEvent &event)) {}
 
 private:
-  auto chooseBestSuitable_(DTPScreenConnectionRef_t connection, GLXFBConfig *configs, s32_t numConfigs) -> GLXFBConfig;
+  auto chooseBestSuitable_(DTPScreenConnectionRef_t connection, GLXFBConfig *configs, i32_t numConfigs) -> GLXFBConfig;
 
   auto getMultisampleAttributes_(DTPScreenConnectionRef_t connection, GLXFBConfig config) -> DTPVisualAttributes;
 

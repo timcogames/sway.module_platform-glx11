@@ -7,8 +7,8 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(pltf)
 
 struct DTPVisualAttributes {
-  s32_t numMultisample;
-  s32_t numSamples;
+  i32_t numMultisample;
+  i32_t numSamples;
 };
 
 NAMESPACE_END(pltf)
