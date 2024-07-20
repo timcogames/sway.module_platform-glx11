@@ -93,7 +93,7 @@ void DTPWindow::setTitle(lpcstr_t title) {
 
 void DTPWindow::setPosition(i32_t x, i32_t y) {
   if (!visible()) {
-    i64_t supplied;
+    long supplied;
     XSizeHints *hints = XAllocSizeHints();
     XGetWMNormalHints(connection_->getDisplay(), window_, hints, &supplied);
 
