@@ -15,8 +15,8 @@
 
 // #include <X11/Xutil.h>  // XVisualInfo, XSizeHints
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 using EventCallbackFunc_t = std::function<void(const XEvent &)>;
 using EventCallbackFuncMap_t = std::map<i32_t, EventCallbackFunc_t>;
@@ -29,7 +29,7 @@ public:
    *
    * @param[in] connection Экранное соедининение с сервером.
    */
-  DTPWindow(DTPScreenConnectionRef_t connection);
+  DTPWindow(DTPScreenConnection::SharedPtr_t connection);
 
   /**
    * @brief Деструктор класса. Уничтожает главное окно приложения.
@@ -170,13 +170,13 @@ private:
    */
   void setMaxSize_(XSizeHints *hints, const WindowSize &size, bool resizable);
 
-  DTPScreenConnectionRef_t connection_;  // Экранное соедининение с сервером.
+  DTPScreenConnection::SharedPtr_t connection_;  // Экранное соедининение с сервером.
   Window window_;  // Идентификатор окна.
   Atom wmatom_[kAtom_WMLast], netatom_[kAtom_NetLast];
   EventCallbackFuncMap_t eventCallbacks_;
 };
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway
 
 #endif  // SWAY_PLTF_MAC_DTPWINDOW_HPP

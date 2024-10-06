@@ -4,8 +4,8 @@
 #include <sway/core.hpp>
 #include <sway/pltf/windowsize.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 struct WindowInitialInfo {
   lpcstr_t title;  // Заголовок окна.
@@ -16,7 +16,7 @@ struct WindowInitialInfo {
   bool vsync;
 };
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway
 
 #endif  // SWAY_PLTF_WINDOWINITIALINFO_HPP

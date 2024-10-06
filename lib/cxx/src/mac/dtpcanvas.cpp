@@ -4,8 +4,8 @@
 #include <array>
 #include <cstring>  // strstr
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 constexpr size_t ATTRIB_LIST_SIZE = 21;
 // clang-format off
@@ -22,7 +22,7 @@ constexpr std::array<i32_t, ATTRIB_LIST_SIZE> attribList = {
   GLX_DOUBLEBUFFER, 1,
   None};  // clang-format on
 
-DTPCanvas::DTPCanvas(DTPScreenConnectionRef_t connection, const WindowInitialInfo &windowInfo)
+DTPCanvas::DTPCanvas(DTPScreenConnection::SharedPtr_t connection, const WindowInitialInfo &windowInfo)
     : DTPWindow(connection) {
   i32_t numConfigs;
   GLXFBConfig *configs, config;
@@ -43,7 +43,7 @@ DTPCanvas::DTPCanvas(DTPScreenConnectionRef_t connection, const WindowInitialInf
 }
 
 auto DTPCanvas::chooseBestSuitable_(
-    DTPScreenConnectionRef_t connection, GLXFBConfig *configs, i32_t numConfigs) -> GLXFBConfig {
+    DTPScreenConnection::SharedPtr_t connection, GLXFBConfig *configs, i32_t numConfigs) -> GLXFBConfig {
   i32_t bestScore = DONT_CARE, bestNumSamples = DONT_CARE;
 
   for (auto i = 0; i < numConfigs; ++i) {
@@ -58,7 +58,7 @@ auto DTPCanvas::chooseBestSuitable_(
 }
 
 auto DTPCanvas::getMultisampleAttributes_(
-    DTPScreenConnectionRef_t connection, GLXFBConfig config) -> DTPVisualAttributes {
+    DTPScreenConnection::SharedPtr_t connection, GLXFBConfig config) -> DTPVisualAttributes {
   const auto *extensions = glXQueryExtensionsString(connection->getDisplay(), connection->getScreenNumber());
   DTPVisualAttributes attrs;
 
@@ -73,5 +73,5 @@ auto DTPCanvas::getMultisampleAttributes_(
   return attrs;
 }
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway

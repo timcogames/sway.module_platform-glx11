@@ -1,9 +1,9 @@
 #include <sway/pltf/mac/dtpwindow.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
-DTPWindow::DTPWindow(DTPScreenConnectionRef_t connection)
+DTPWindow::DTPWindow(DTPScreenConnection::SharedPtr_t connection)
     : connection_(connection) {
   initializeAtoms_();
   initializeEventBindings_();
@@ -223,5 +223,5 @@ void DTPWindow::setMaximize(bool maximized) {
   XSendEvent(connection_->getDisplay(), connection_->getRootWindow(), False, SubstructureRedirectMask, &event);
 }
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway

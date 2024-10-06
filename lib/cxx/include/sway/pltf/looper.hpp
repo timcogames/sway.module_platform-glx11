@@ -3,20 +3,20 @@
 
 #include <sway/core.hpp>
 #include <sway/pltf/loopeable.hpp>
+#include <sway/pltf/typedefs.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 class Looper {
 public:
   using CallbackFunc_t = void (*)(void *);
 
-  DFLT_DTOR_VIRTUAL(Looper);
+  DTOR_VIRTUAL_DEFAULT(Looper);
 
-  PURE_VIRTUAL(void setLoopeable(std::shared_ptr<Loopeable> loopeable));
+  PURE_VIRTUAL(void setLoopeable(Loopeable::SharedPtr_t loopeable));
 
-  // clang-format off
-  PURE_VIRTUAL(auto loop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool keepgoing) -> bool);  // clang-format on
+  PURE_VIRTUAL(auto loop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool keepgoing) -> bool);
 
   PURE_VIRTUAL(void stop());
 
@@ -25,7 +25,7 @@ public:
   PURE_VIRTUAL(void resume());
 };
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway
 
 #endif  // SWAY_PLTF_LOOPER_HPP

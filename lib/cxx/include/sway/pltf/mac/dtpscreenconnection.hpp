@@ -2,11 +2,14 @@
 #define SWAY_PLTF_MAC_DTPSCREENCONNECTION_HPP
 
 #include <sway/pltf/prereqs.hpp>
+#include <sway/pltf/typedefs.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 class DTPScreenConnection {
+  DECLARE_CLASS_POINTER_ALIASES(DTPScreenConnection)
+
 public:
   /**
    * @brief Конструктор класса.
@@ -48,7 +51,7 @@ private:
   i32_t screen_;  // Номер экрана.
 };
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway
 
 #endif  // SWAY_PLTF_MAC_DTPSCREENCONNECTION_HPP

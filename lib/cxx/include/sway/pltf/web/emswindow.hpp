@@ -3,19 +3,19 @@
 
 #include <sway/core.hpp>
 #include <sway/pltf/context.hpp>
+#include <sway/pltf/typedefs.hpp>
 #include <sway/pltf/windoweventtypes.hpp>
 #include <sway/pltf/windowinitialinfo.hpp>
 #include <sway/pltf/windowmodes.hpp>
 
 #include <condition_variable>
 #include <functional>
-#include <memory>
 #include <mutex>
 #include <queue>
 #include <string>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 struct SizeChangedEventData : public core::foundation::EventData {
   math::size2i_t size;
@@ -32,7 +32,7 @@ class EMSWindow {
 public:
   using CallbackFunc_t = void (*)(void *);
 
-  EMSWindow(std::shared_ptr<Context> ctx);
+  EMSWindow(Context::SharedPtr_t ctx);
 
   ~EMSWindow() = default;
 
@@ -56,21 +56,21 @@ public:
    */
   void setFullscreen(bool fullscreen);
 
-  void sendEvent(core::foundation::Event *evt);
+  void sendEvent(core::foundation::Event::Ptr_t evt);
 
   void handleResize();
 
-  auto getEvents(bool waitForEvents) -> std::queue<core::foundation::Event *>;
+  auto getEvents(bool waitForEvents) -> std::queue<core::foundation::Event::Ptr_t>;
 
 private:
-  std::shared_ptr<Context> context_;
+  Context::SharedPtr_t context_;
 
   std::queue<core::foundation::Event *> eventQueue_;
   std::mutex eventQueueMutex_;
   std::condition_variable eventQueueCondition_;
 };
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway
 
 #endif  // SWAY_PLTF_WEB_EMSWINDOW_HPP

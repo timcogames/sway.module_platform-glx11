@@ -1,7 +1,7 @@
 #include <sway/pltf/mac/dtpscreenconnection.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 DTPScreenConnection::DTPScreenConnection() {
   display_ = XOpenDisplay(NULL);
@@ -28,5 +28,5 @@ auto DTPScreenConnection::getDisplaySize() const -> math::size2i_t {
   return math::Size<i32_t>(DisplayWidth(display_, screen_), DisplayHeight(display_, screen_));
 }
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway

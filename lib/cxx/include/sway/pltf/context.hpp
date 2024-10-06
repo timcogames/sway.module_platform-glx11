@@ -2,11 +2,14 @@
 #define SWAY_PLTF_CONTEXT_HPP
 
 #include <sway/core.hpp>
+#include <sway/pltf/typedefs.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 class Context {
+  DECLARE_CLASS_POINTER_ALIASES(Context)
+
 public:
   virtual ~Context() = default;
 
@@ -14,16 +17,14 @@ public:
 
   PURE_VIRTUAL(void destroy());
 
-  // clang-format off
-  PURE_VIRTUAL(auto makeCurrent() -> bool);  // clang-format on
+  PURE_VIRTUAL(auto makeCurrent() -> bool);
 
-  // clang-format off
-  PURE_VIRTUAL(auto doneCurrent() -> bool);  // clang-format on
+  PURE_VIRTUAL(auto doneCurrent() -> bool);
 
   PURE_VIRTUAL(void present());
 };
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway
 
 #endif  // SWAY_PLTF_CONTEXT_HPP

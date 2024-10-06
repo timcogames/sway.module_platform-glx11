@@ -10,8 +10,8 @@
 using namespace std::chrono;
 #endif
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 class Timer {
 public:
@@ -47,7 +47,7 @@ private:
 #endif
 };
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway
 
 #endif  // SWAY_PLTF_TIMER_HPP

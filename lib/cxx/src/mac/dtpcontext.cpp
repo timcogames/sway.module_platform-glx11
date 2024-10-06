@@ -5,10 +5,10 @@
 #include <stdio.h>
 #include <string.h>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
-DTPContext::DTPContext(DTPScreenConnectionRef_t connection, DTPWindow *window)
+DTPContext::DTPContext(DTPScreenConnection::SharedPtr_t connection, DTPWindow *window)
     : connection_(connection)
     , drawable_(window->getWindowHandle()) {}
 
@@ -43,5 +43,5 @@ auto DTPContext::doneCurrent() -> bool { return glXMakeCurrent(connection_->getD
 
 void DTPContext::present() { glXSwapBuffers(connection_->getDisplay(), drawable_); }
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway

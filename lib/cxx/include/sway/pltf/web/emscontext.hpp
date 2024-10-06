@@ -8,8 +8,8 @@
 #include <emscripten/html5.h>
 #include <string>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 class EMSContext : public Context {
 public:
@@ -51,7 +51,7 @@ private:
   std::string canvasId_;
 };
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway
 
 #endif  // SWAY_PLTF_WEB_EMSCONTEXT_HPP

@@ -3,8 +3,8 @@
 
 #include <sway/core.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 enum { kAtom_WMState, kAtom_WMDeleteWindow, kAtom_WMLast };
 
@@ -16,7 +16,7 @@ enum {
   kAtom_NetLast
 };
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway
 
 #endif  // SWAY_PLTF_MAC_DTPATOM_HPP

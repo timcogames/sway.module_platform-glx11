@@ -13,4 +13,4 @@ file(GLOB MODULE_GAPI_SOURCE_EXAMPLES "${PROJECT_SOURCE_DIR}/*.cpp")
 
 add_executable(${META_EXENAME_EXAMPLES} ${MODULE_GAPI_SOURCE_EXAMPLES})
 
-target_link_libraries(${META_EXENAME_EXAMPLES} GLU module_pltf module_core)
+target_link_libraries(${META_EXENAME_EXAMPLES} GLU module_pltf)

@@ -4,8 +4,8 @@
 #include <emscripten.h>
 #include <emscripten/html5.h>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 auto onCanvasResizeCallback(int eventType, [[maybe_unused]] const void *reserved, void *userData) -> EM_BOOL {
   if (eventType == EMSCRIPTEN_EVENT_CANVASRESIZED) {
@@ -86,5 +86,5 @@ auto EMSWindow::getEvents(bool waitForEvents) -> std::queue<core::foundation::Ev
   return result;
 }
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway

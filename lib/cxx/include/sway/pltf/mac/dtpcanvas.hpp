@@ -9,10 +9,12 @@
 #include <sway/pltf/prereqs.hpp>
 #include <sway/pltf/typedefs.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 class DTPCanvas : public DTPWindow {
+  DECLARE_CLASS_POINTER_ALIASES(DTPCanvas)
+
 public:
   /**
    * @brief Конструктор класса.
@@ -21,7 +23,7 @@ public:
    * @param[in] connection Экранное соедининение с сервером.
    * @param[in] windowInfo Начальные параметры окна.
    */
-  DTPCanvas(DTPScreenConnectionRef_t connection, const WindowInitialInfo &windowInfo);
+  DTPCanvas(DTPScreenConnection::SharedPtr_t connection, const WindowInitialInfo &windowInfo);
 
   /**
    * @brief Деструктор класса. Освобождает захваченные ресурсы.
@@ -31,7 +33,7 @@ public:
   /**
    * @brief Получает контекст.
    */
-  auto getContext() -> std::shared_ptr<Context> { return context_; }
+  auto getContext() -> Context::SharedPtr_t { return context_; }
 
   MTHD_OVERRIDE(void handleCreateNotifyEvent(const XEvent &event)) {}
 
@@ -44,14 +46,16 @@ public:
   MTHD_OVERRIDE(void handleFocusOutEvent(const XEvent &event)) {}
 
 private:
-  auto chooseBestSuitable_(DTPScreenConnectionRef_t connection, GLXFBConfig *configs, i32_t numConfigs) -> GLXFBConfig;
+  auto chooseBestSuitable_(
+      DTPScreenConnection::SharedPtr_t connection, GLXFBConfig *configs, i32_t numConfigs) -> GLXFBConfig;
 
-  auto getMultisampleAttributes_(DTPScreenConnectionRef_t connection, GLXFBConfig config) -> DTPVisualAttributes;
+  auto getMultisampleAttributes_(
+      DTPScreenConnection::SharedPtr_t connection, GLXFBConfig config) -> DTPVisualAttributes;
 
-  std::shared_ptr<Context> context_;  // Контекст поверхности холста.
+  Context::SharedPtr_t context_;  // Контекст поверхности холста.
 };
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway
 
 #endif  // SWAY_PLTF_MAC_DTPCANVAS_HPP

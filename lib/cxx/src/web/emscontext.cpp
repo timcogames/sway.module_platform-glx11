@@ -2,8 +2,8 @@
 
 #include <cassert>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 EMSContext::EMSContext(const std::string &canvasId)
     : canvasId_(canvasId) {}
@@ -47,5 +47,5 @@ auto EMSContext::makeCurrent() -> bool {
   return emscripten_webgl_make_context_current(context_) == EMSCRIPTEN_RESULT_SUCCESS;
 }
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway

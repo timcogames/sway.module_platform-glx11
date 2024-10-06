@@ -5,8 +5,8 @@
 #  include <emscripten/html5.h>
 #endif
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 EMSLooper::EMSLooper()
     : running_(false) {}
@@ -41,5 +41,5 @@ void EMSLooper::resume() {
 #endif
 }
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway

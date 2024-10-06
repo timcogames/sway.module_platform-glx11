@@ -9,13 +9,15 @@
 
 // #include <GL/glx.h>  // GLXContext, GLXDrawable, GLXFBConfig
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 /**
  * @brief Контекст поверхности холста.
  */
 class DTPContext : public Context {
+  DECLARE_CLASS_POINTER_ALIASES(DTPContext)
+
 public:
   /**
    * @brief Конструктор класса.
@@ -24,7 +26,7 @@ public:
    * @param[in] connection Экранное соедининение с сервером.
    * @param[in] window Окно графического интерфейса.
    */
-  DTPContext(DTPScreenConnectionRef_t connection, DTPWindow *window);
+  DTPContext(DTPScreenConnection::SharedPtr_t connection, DTPWindow *window);
 
   /**
    * @brief Деструктор класса. Уничтожает контекст визуализации.
@@ -62,10 +64,10 @@ public:
 private:
   GLXContext context_;
   GLXDrawable drawable_;
-  DTPScreenConnectionRef_t connection_;  // Экранное соедининение с сервером.
+  DTPScreenConnection::SharedPtr_t connection_;  // Экранное соедининение с сервером.
 };
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway
 
 #endif  // SWAY_PLTF_MAC_DTPCONTEXT_HPP

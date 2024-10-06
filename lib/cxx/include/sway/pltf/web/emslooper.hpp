@@ -4,22 +4,20 @@
 #include <sway/core.hpp>
 #include <sway/pltf/loopeable.hpp>
 #include <sway/pltf/looper.hpp>
+#include <sway/pltf/typedefs.hpp>
 
-#include <memory>
-
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 class EMSLooper : public Looper {
 public:
   EMSLooper();
 
-  DFLT_DTOR_VIRTUAL(EMSLooper);
+  DTOR_VIRTUAL_DEFAULT(EMSLooper);
 
-  MTHD_OVERRIDE(void setLoopeable(std::shared_ptr<Loopeable> loopeable)) { loopeable_ = loopeable; }
+  MTHD_OVERRIDE(void setLoopeable(Loopeable::SharedPtr_t loopeable)) { loopeable_ = loopeable; }
 
-  // clang-format off
-  MTHD_OVERRIDE(auto loop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool keepgoing) -> bool);  // clang-format on
+  MTHD_OVERRIDE(auto loop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool keepgoing) -> bool);
 
   MTHD_OVERRIDE(void stop());
 
@@ -28,11 +26,11 @@ public:
   MTHD_OVERRIDE(void resume());
 
 private:
-  std::shared_ptr<Loopeable> loopeable_;
+  Loopeable::SharedPtr_t loopeable_;
   bool running_;
 };
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway
 
 #endif  // SWAY_PLTF_WEB_EMSLOOPER_HPP

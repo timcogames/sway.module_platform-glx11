@@ -3,8 +3,8 @@
 
 #include <sway/pltf/prereqs.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(pltf)
+NS_BEGIN_SWAY()
+NS_BEGIN(pltf)
 
 class WindowEventListener {
 protected:
@@ -19,7 +19,7 @@ protected:
   MTHD_VIRTUAL(void handleFocusOutEvent(const XEvent &event){})
 };
 
-NAMESPACE_END(pltf)
-NAMESPACE_END(sway)
+NS_END()  // namespace pltf
+NS_END()  // namespace sway
 
 #endif  // SWAY_PLTF_WINDOWEVENTLISTENER_HPP
