@@ -2,6 +2,7 @@
 #define SWAY_PLTF_LOOPEABLE_HPP
 
 #include <sway/core.hpp>
+#include <sway/pltf/typedefs.hpp>
 
 NS_BEGIN_SWAY()
 NS_BEGIN(pltf)
