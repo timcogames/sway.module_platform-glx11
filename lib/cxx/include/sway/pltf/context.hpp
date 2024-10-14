@@ -8,10 +8,16 @@ NS_BEGIN_SWAY()
 NS_BEGIN(pltf)
 
 class Context {
-  DECLARE_CLASS_POINTER_ALIASES(Context)
+  DECLARE_PTR_ALIASES(Context)
 
 public:
-  virtual ~Context() = default;
+#pragma region "Ctors/Dtor"
+
+  DTOR_VIRTUAL_DEFAULT(Context);
+
+#pragma endregion
+
+#pragma region "Pure virtual methods"
 
   PURE_VIRTUAL(void create(void *arg));
 
@@ -22,6 +28,8 @@ public:
   PURE_VIRTUAL(auto doneCurrent() -> bool);
 
   PURE_VIRTUAL(void present());
+
+#pragma endregion
 };
 
 NS_END()  // namespace pltf

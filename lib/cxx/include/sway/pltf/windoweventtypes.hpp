@@ -6,7 +6,8 @@
 NS_BEGIN_SWAY()
 NS_BEGIN(pltf)
 
-enum class WindowEventType : u32_t {
+// clang-format off
+DECLARE_ENUM(WindowEventType, 
   SIZE_CHANGE,
   RESOLUTION_CHANGE,
   FULLSCREEN_CHANGE,
@@ -18,7 +19,8 @@ enum class WindowEventType : u32_t {
   MINIMIZE,
   MAXIMIZE,
   RESTORE
-};
+);
+// clang-format on
 
 NS_END()  // namespace pltf
 NS_END()  // namespace sway

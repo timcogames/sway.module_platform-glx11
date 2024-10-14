@@ -16,7 +16,7 @@ NS_BEGIN(pltf)
  * @brief Контекст поверхности холста.
  */
 class DTPContext : public Context {
-  DECLARE_CLASS_POINTER_ALIASES(DTPContext)
+  DECLARE_PTR_ALIASES(DTPContext)
 
 public:
   /**
@@ -45,16 +45,14 @@ public:
    *
    * @sa doneCurrent()
    */
-  // clang-format off
-  MTHD_OVERRIDE(auto makeCurrent() -> bool);  // clang-format on
+  MTHD_OVERRIDE(auto makeCurrent() -> bool);
 
   /**
    * @brief Освобождаем контекст.
    *
    * @sa makeCurrent()
    */
-  // clang-format off
-  MTHD_OVERRIDE(auto doneCurrent() -> bool);  // clang-format on
+  MTHD_OVERRIDE(auto doneCurrent() -> bool);
 
   /**
    * @brief Обмен буферов.

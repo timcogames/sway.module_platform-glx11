@@ -13,7 +13,7 @@ NS_BEGIN_SWAY()
 NS_BEGIN(pltf)
 
 class DTPCanvas : public DTPWindow {
-  DECLARE_CLASS_POINTER_ALIASES(DTPCanvas)
+  DECLARE_PTR_ALIASES(DTPCanvas)
 
 public:
   /**

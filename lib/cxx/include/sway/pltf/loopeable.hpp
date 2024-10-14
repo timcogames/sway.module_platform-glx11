@@ -8,14 +8,22 @@ NS_BEGIN_SWAY()
 NS_BEGIN(pltf)
 
 class Loopeable {
-  DECLARE_CLASS_POINTER_ALIASES(Loopeable)
+  DECLARE_PTR_ALIASES(Loopeable)
 
 public:
+#pragma region "Ctors/Dtor"
+
   Loopeable() = default;
 
-  virtual ~Loopeable() {}
+  DTOR_VIRTUAL_DEFAULT(Loopeable);
+
+#pragma endregion
+
+#pragma region "Pure virtual methods"
 
   PURE_VIRTUAL(void render());
+
+#pragma endregion
 
   MTHD_VIRTUAL(void update(f32_t dt)) {}
 };
