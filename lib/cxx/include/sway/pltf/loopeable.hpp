@@ -4,12 +4,9 @@
 #include <sway/core.hpp>
 #include <sway/pltf/typedefs.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
 class Loopeable {
-  DECLARE_PTR_ALIASES(Loopeable)
-
 public:
 #pragma region "Ctors/Dtor"
 
@@ -28,7 +25,6 @@ public:
   MTHD_VIRTUAL(void update(f32_t dt)) {}
 };
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf
 
 #endif  // SWAY_PLTF_LOOPEABLE_HPP

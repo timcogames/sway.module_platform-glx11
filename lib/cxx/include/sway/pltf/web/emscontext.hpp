@@ -8,8 +8,7 @@
 #include <emscripten/html5.h>
 #include <string>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
 class EMSContext : public Context {
 public:
@@ -26,16 +25,15 @@ public:
    *
    * @sa doneCurrent()
    */
-  // clang-format off
-  MTHD_OVERRIDE(auto makeCurrent() -> bool);  // clang-format on
+
+  MTHD_OVERRIDE(auto makeCurrent() -> bool);
 
   /**
    * @brief Освобождаем контекст.
    *
    * @sa makeCurrent()
    */
-  // clang-format off
-  MTHD_OVERRIDE(auto doneCurrent() -> bool) {  // clang-format on
+  MTHD_OVERRIDE(auto doneCurrent() -> bool) {
     return true;
   }
 
@@ -51,7 +49,6 @@ private:
   std::string canvasId_;
 };
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf
 
 #endif  // SWAY_PLTF_WEB_EMSCONTEXT_HPP

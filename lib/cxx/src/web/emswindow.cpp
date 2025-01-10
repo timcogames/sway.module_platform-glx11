@@ -4,8 +4,7 @@
 #include <emscripten.h>
 #include <emscripten/html5.h>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
 auto onCanvasResizeCallback(int eventType, [[maybe_unused]] const void *reserved, void *userData) -> EM_BOOL {
   if (eventType == EMSCRIPTEN_EVENT_CANVASRESIZED) {
@@ -61,7 +60,7 @@ void EMSWindow::setFullscreen(bool fullscreen) {
   }
 }
 
-void EMSWindow::sendEvent(core::foundation::Event *evt) {
+void EMSWindow::sendEvent(core::Event *evt) {
   std::unique_lock lock{eventQueueMutex_};
   eventQueue_.push(evt);
   lock.unlock();
@@ -74,7 +73,7 @@ void EMSWindow::handleResize() {
   sendEvent(new SizeChangedEvent(0, &eventData));
 }
 
-auto EMSWindow::getEvents(bool waitForEvents) -> std::queue<core::foundation::Event *> {
+auto EMSWindow::getEvents(bool waitForEvents) -> std::queue<core::Event *> {
   std::unique_lock lock{eventQueueMutex_};
 
   if (waitForEvents) {
@@ -86,5 +85,4 @@ auto EMSWindow::getEvents(bool waitForEvents) -> std::queue<core::foundation::Ev
   return result;
 }
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf

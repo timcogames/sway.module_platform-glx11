@@ -1,12 +1,11 @@
 #include <sway/pltf/mac/dtpscreenconnection.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
 DTPScreenConnection::DTPScreenConnection() {
   display_ = XOpenDisplay(NULL);
   if (display_ == NULL) {
-    throw core::runtime::Exception("Cannot connect to X server");
+    throw core::Exception("Cannot connect to X server");
   }
 
   screen_ = DefaultScreen(display_);
@@ -28,5 +27,4 @@ auto DTPScreenConnection::getDisplaySize() const -> math::size2i_t {
   return math::Size<i32_t>(DisplayWidth(display_, screen_), DisplayHeight(display_, screen_));
 }
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf

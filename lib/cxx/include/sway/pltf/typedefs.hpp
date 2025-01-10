@@ -3,17 +3,24 @@
 
 #include <sway/core.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
-DECLARE_PTR_TYPES(Context)
-DECLARE_PTR_TYPES(Loopeable)
+class Context;
 
-DECLARE_PTR_TYPES(DTPScreenConnection)
-DECLARE_PTR_TYPES(DTPContext)
-DECLARE_PTR_TYPES(DTPCanvas)
+class Loopeable;
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+class DTPScreenConnection;
+
+namespace typedefs {
+
+using ContextSharedPtr_t = std::shared_ptr<Context>;
+
+using LoopeableSharedPtr_t = std::shared_ptr<Loopeable>;
+
+using DTPScreenConnectionSharedPtr_t = std::shared_ptr<DTPScreenConnection>;
+
+}  // namespace typedefs
+
+}  // namespace sway::pltf
 
 #endif  // SWAY_PLTF_TYPEDEFS_HPP

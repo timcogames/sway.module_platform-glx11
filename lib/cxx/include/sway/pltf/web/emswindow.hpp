@@ -14,10 +14,9 @@
 #include <queue>
 #include <string>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
-struct SizeChangedEventData : public core::foundation::EventData {
+struct SizeChangedEventData : public core::EventData {
   math::size2i_t size;
 
   // clang-format off
@@ -32,7 +31,7 @@ class EMSWindow {
 public:
   using CallbackFunc_t = void (*)(void *);
 
-  EMSWindow(Context::SharedPtr_t ctx);
+  EMSWindow(typedefs::ContextSharedPtr_t ctx);
 
   ~EMSWindow() = default;
 
@@ -56,21 +55,20 @@ public:
    */
   void setFullscreen(bool fullscreen);
 
-  void sendEvent(core::foundation::Event::Ptr_t evt);
+  void sendEvent(core::Event::Ptr_t evt);
 
   void handleResize();
 
-  auto getEvents(bool waitForEvents) -> std::queue<core::foundation::Event::Ptr_t>;
+  auto getEvents(bool waitForEvents) -> std::queue<core::Event::Ptr_t>;
 
 private:
-  Context::SharedPtr_t context_;
+  typedefs::ContextSharedPtr_t context_;
 
-  std::queue<core::foundation::Event *> eventQueue_;
+  std::queue<core::Event *> eventQueue_;
   std::mutex eventQueueMutex_;
   std::condition_variable eventQueueCondition_;
 };
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf
 
 #endif  // SWAY_PLTF_WEB_EMSWINDOW_HPP

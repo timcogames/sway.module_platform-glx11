@@ -5,27 +5,36 @@
 #include <sway/pltf/loopeable.hpp>
 #include <sway/pltf/typedefs.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
 class Looper {
 public:
   using CallbackFunc_t = void (*)(void *);
 
-  DTOR_VIRTUAL_DEFAULT(Looper);
+#pragma region "Ctors/Dtor"
+  /** \~english @name Constructor & Destructor */ /** \~russian @name Конструктор и Деструктор */
+  /** @{ */
 
-  PURE_VIRTUAL(void setLoopeable(Loopeable::SharedPtr_t loopeable));
+  virtual ~Looper() = default;
 
-  PURE_VIRTUAL(auto loop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool keepgoing) -> bool);
+  /** @} */
+#pragma endregion
 
-  PURE_VIRTUAL(void stop());
+#pragma region "Pure virtual methods"
 
-  PURE_VIRTUAL(void pause());
+  virtual void setLoopeable(typedefs::LoopeableSharedPtr_t loopeable) = 0;
 
-  PURE_VIRTUAL(void resume());
+  virtual auto loop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool keepgoing) -> bool = 0;
+
+  virtual void stop() = 0;
+
+  virtual void pause() = 0;
+
+  virtual void resume() = 0;
+
+#pragma endregion
 };
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf
 
 #endif  // SWAY_PLTF_LOOPER_HPP

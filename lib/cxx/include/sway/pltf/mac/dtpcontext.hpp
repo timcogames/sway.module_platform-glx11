@@ -7,65 +7,70 @@
 #include <sway/pltf/prereqs.hpp>
 #include <sway/pltf/typedefs.hpp>
 
-// #include <GL/glx.h>  // GLXContext, GLXDrawable, GLXFBConfig
-
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
 /**
- * @brief Контекст поверхности холста.
+ * @brief \~english Context of surface canvas. \~russian Контекст поверхности холста.
  */
 class DTPContext : public Context {
-  DECLARE_PTR_ALIASES(DTPContext)
-
 public:
+#pragma region "Ctors/Dtors"
+  /** \~english @name Constructor & Destructor */ /** \~russian @name Конструктор и Деструктор */
+  /** @{ */
+
   /**
-   * @brief Конструктор класса.
-   *        Выполняет инициализацию нового экземпляра класса.
+   * \~english
+   * @brief Constructor class. Performs initialization of a new instance of the class.
+   * @param[in] connection Screen connection to the server.
+   * @param[in] window Graphics interface window.
    *
+   * \~russian
+   * @brief Конструктор класса. Выполняет инициализацию нового экземпляра класса.
    * @param[in] connection Экранное соедининение с сервером.
    * @param[in] window Окно графического интерфейса.
    */
-  DTPContext(DTPScreenConnection::SharedPtr_t connection, DTPWindow *window);
+  DTPContext(typedefs::DTPScreenConnectionSharedPtr_t connection, DTPWindow *window);
 
   /**
-   * @brief Деструктор класса. Уничтожает контекст визуализации.
+   * @brief \~english Destructor. Destroys visualization context. \~russian Деструктор класса. Уничтожает контекст
+   * визуализации.
    */
   virtual ~DTPContext();
 
+  /** @} */
+#pragma endregion
+
   /**
-   * @brief Создает контекст визуализации.
+   * @brief \~english Creates visualization context. \~russian Создает контекст визуализации.
    */
   MTHD_OVERRIDE(void create(void *arg));
 
   MTHD_OVERRIDE(void destroy());
 
   /**
-   * @brief Прикрепляет контекст к окну.
-   *
+   * @brief \~english Attaches context to the window. \~russian Прикрепляет контекст к окну.
    * @sa doneCurrent()
    */
   MTHD_OVERRIDE(auto makeCurrent() -> bool);
 
   /**
-   * @brief Освобождаем контекст.
-   *
+   * @brief \~english Releases context. \~russian Освобождаем контекст.
    * @sa makeCurrent()
    */
   MTHD_OVERRIDE(auto doneCurrent() -> bool);
 
   /**
-   * @brief Обмен буферов.
+   * @brief \~english Exchanges buffers. \~russian Обмен буферов.
    */
   MTHD_OVERRIDE(void present());
 
 private:
   GLXContext context_;
   GLXDrawable drawable_;
-  DTPScreenConnection::SharedPtr_t connection_;  // Экранное соедининение с сервером.
+  typedefs::DTPScreenConnectionSharedPtr_t connection_; /*!< \~english Screen connection to the server.
+    \~russian Экранное соедининение с сервером. */
 };
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf
 
 #endif  // SWAY_PLTF_MAC_DTPCONTEXT_HPP

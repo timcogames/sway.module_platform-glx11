@@ -5,10 +5,9 @@
 #include <stdio.h>
 #include <string.h>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
-DTPContext::DTPContext(DTPScreenConnection::SharedPtr_t connection, DTPWindow *window)
+DTPContext::DTPContext(typedefs::DTPScreenConnectionSharedPtr_t connection, DTPWindow *window)
     : connection_(connection)
     , drawable_(window->getWindowHandle()) {}
 
@@ -21,7 +20,7 @@ DTPContext::~DTPContext() {
 void DTPContext::create(void *arg) {
   context_ = glXCreateNewContext(connection_->getDisplay(), (GLXFBConfig)arg, GLX_RGBA_TYPE, nullptr, True);
   if (context_ == nullptr) {
-    throw core::runtime::Exception("Couldn't create GLX context.");
+    throw core::Exception("Couldn't create GLX context.");
   }
 
   if (glXIsDirect(connection_->getDisplay(), context_) == 0) {
@@ -43,5 +42,4 @@ auto DTPContext::doneCurrent() -> bool { return glXMakeCurrent(connection_->getD
 
 void DTPContext::present() { glXSwapBuffers(connection_->getDisplay(), drawable_); }
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf

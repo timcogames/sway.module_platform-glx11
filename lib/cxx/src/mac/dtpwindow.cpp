@@ -1,9 +1,8 @@
 #include <sway/pltf/mac/dtpwindow.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
-DTPWindow::DTPWindow(DTPScreenConnection::SharedPtr_t connection)
+DTPWindow::DTPWindow(typedefs::DTPScreenConnectionSharedPtr_t connection)
     : connection_(connection) {
   initializeAtoms_();
   initializeEventBindings_();
@@ -198,7 +197,7 @@ void DTPWindow::setFullscreen(bool fullscreen) {
   event.xclient.window = window_;
   event.xclient.message_type = netatom_[kAtom_NetWMState];
   event.xclient.format = 32;
-  event.xclient.data.l[0] = core::detail::toBase(fullscreen ? WindowMode::FULLSCREEN : WindowMode::WINDOWED);
+  event.xclient.data.l[0] = core::toBase(fullscreen ? WindowMode::FULLSCREEN : WindowMode::WINDOWED);
   event.xclient.data.l[1] = netatom_[kAtom_NetWMStateFullscreen];
   event.xclient.data.l[2] = 0;
 
@@ -223,5 +222,4 @@ void DTPWindow::setMaximize(bool maximized) {
   XSendEvent(connection_->getDisplay(), connection_->getRootWindow(), False, SubstructureRedirectMask, &event);
 }
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf

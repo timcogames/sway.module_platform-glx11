@@ -3,8 +3,7 @@
 
 #include <sway/core.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
 // clang-format off
 DECLARE_ENUM(WindowEventType, 
@@ -22,7 +21,6 @@ DECLARE_ENUM(WindowEventType,
 );
 // clang-format on
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf
 
 #endif  // SWAY_PLTF_WINDOWEVENTTYPES_HPP

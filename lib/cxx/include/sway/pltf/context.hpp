@@ -4,16 +4,13 @@
 #include <sway/core.hpp>
 #include <sway/pltf/typedefs.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
 class Context {
-  DECLARE_PTR_ALIASES(Context)
-
 public:
 #pragma region "Ctors/Dtor"
 
-  DTOR_VIRTUAL_DEFAULT(Context);
+  virtual ~Context() = default;
 
 #pragma endregion
 
@@ -32,7 +29,6 @@ public:
 #pragma endregion
 };
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf
 
 #endif  // SWAY_PLTF_CONTEXT_HPP

@@ -4,8 +4,7 @@
 #include <sway/core.hpp>
 #include <sway/math/size.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
 struct WindowSize {
   math::size2i_t normal;  // Нормальный размер окна.
@@ -13,7 +12,6 @@ struct WindowSize {
   math::size2i_t max;  // Максимальный размер окна.
 };
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf
 
 #endif  // SWAY_PLTF_WINDOWSIZE_HPP

@@ -4,8 +4,7 @@
 #include <array>
 #include <cstring>  // strstr
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
 constexpr size_t ATTRIB_LIST_SIZE = 21;
 // clang-format off
@@ -22,7 +21,7 @@ constexpr std::array<i32_t, ATTRIB_LIST_SIZE> attribList = {
   GLX_DOUBLEBUFFER, 1,
   None};  // clang-format on
 
-DTPCanvas::DTPCanvas(DTPScreenConnection::SharedPtr_t connection, const WindowInitialInfo &windowInfo)
+DTPCanvas::DTPCanvas(typedefs::DTPScreenConnectionSharedPtr_t connection, const WindowInitialInfo &windowInfo)
     : DTPWindow(connection) {
   i32_t numConfigs;
   GLXFBConfig *configs, config;
@@ -34,7 +33,7 @@ DTPCanvas::DTPCanvas(DTPScreenConnection::SharedPtr_t connection, const WindowIn
 
   createDummy(glXGetVisualFromFBConfig(connection->getDisplay(), config), windowInfo);
   setSizeHints(windowInfo.size, windowInfo.resizable);
-  setTitle(core::misc::format("Sway // %s", windowInfo.title).c_str());
+  setTitle(core::format("Sway // %s", windowInfo.title).c_str());
   setPosition(windowInfo.fullscreen ? 0 : (connection->getDisplaySize().getW() - windowInfo.size.normal.getW()) / 2,
       windowInfo.fullscreen ? 0 : (connection->getDisplaySize().getH() - windowInfo.size.normal.getH()) / 2);
 
@@ -43,7 +42,7 @@ DTPCanvas::DTPCanvas(DTPScreenConnection::SharedPtr_t connection, const WindowIn
 }
 
 auto DTPCanvas::chooseBestSuitable_(
-    DTPScreenConnection::SharedPtr_t connection, GLXFBConfig *configs, i32_t numConfigs) -> GLXFBConfig {
+    typedefs::DTPScreenConnectionSharedPtr_t connection, GLXFBConfig *configs, i32_t numConfigs) -> GLXFBConfig {
   i32_t bestScore = DONT_CARE, bestNumSamples = DONT_CARE;
 
   for (auto i = 0; i < numConfigs; ++i) {
@@ -57,8 +56,8 @@ auto DTPCanvas::chooseBestSuitable_(
   return configs[bestScore];
 }
 
-auto DTPCanvas::getMultisampleAttributes_(
-    DTPScreenConnection::SharedPtr_t connection, GLXFBConfig config) -> DTPVisualAttributes {
+auto DTPCanvas::getMultisampleAttributes_(typedefs::DTPScreenConnectionSharedPtr_t connection, GLXFBConfig config)
+    -> DTPVisualAttributes {
   const auto *extensions = glXQueryExtensionsString(connection->getDisplay(), connection->getScreenNumber());
   DTPVisualAttributes attrs;
 
@@ -73,5 +72,4 @@ auto DTPCanvas::getMultisampleAttributes_(
   return attrs;
 }
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf

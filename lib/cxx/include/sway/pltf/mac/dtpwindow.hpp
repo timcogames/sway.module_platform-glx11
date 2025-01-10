@@ -10,31 +10,29 @@
 #include <sway/pltf/windowinitialinfo.hpp>
 #include <sway/pltf/windowmodes.hpp>
 
-#include <functional>
-#include <map>
-
-// #include <X11/Xutil.h>  // XVisualInfo, XSizeHints
-
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
 using EventCallbackFunc_t = std::function<void(const XEvent &)>;
 using EventCallbackFuncMap_t = std::map<i32_t, EventCallbackFunc_t>;
 
 class DTPWindow : public WindowEventListener {
 public:
+#pragma region "Ctors/Dtor"
+
   /**
    * @brief Конструктор класса.
    *        Выполняет инициализацию нового экземпляра класса.
    *
    * @param[in] connection Экранное соедининение с сервером.
    */
-  DTPWindow(DTPScreenConnection::SharedPtr_t connection);
+  DTPWindow(typedefs::DTPScreenConnectionSharedPtr_t connection);
 
   /**
    * @brief Деструктор класса. Уничтожает главное окно приложения.
    */
   ~DTPWindow();
+
+#pragma endregion
 
   /**
    * @brief Добавляет привязку функции к оконному событию.
@@ -76,8 +74,7 @@ public:
   /**
    * @brief Получает позицию окна.
    */
-  [[nodiscard]]
-  auto getPosition() const -> math::point2i_t;
+  [[nodiscard]] auto getPosition() const -> math::point2i_t;
 
   /**
    * @brief Устанавливает размер окна.
@@ -90,8 +87,7 @@ public:
   /**
    * @brief Получает размер окна.
    */
-  [[nodiscard]]
-  auto getSize() const -> math::size2i_t;
+  [[nodiscard]] auto getSize() const -> math::size2i_t;
 
   /**
    * @brief Устанавливает поведение при смене размера.
@@ -125,8 +121,7 @@ public:
    *     hide()
    *
    */
-  [[nodiscard]]
-  bool visible() const;
+  [[nodiscard]] bool visible() const;
 
   /**
    * @brief Переключает в полноэкранный / оконный режим.
@@ -148,6 +143,8 @@ public:
   auto getWindowHandle() -> Window { return window_; }
 
 private:
+#pragma mark - Private methods
+
   void initializeAtoms_();
 
   void initializeEventBindings_();
@@ -170,13 +167,14 @@ private:
    */
   void setMaxSize_(XSizeHints *hints, const WindowSize &size, bool resizable);
 
-  DTPScreenConnection::SharedPtr_t connection_;  // Экранное соедининение с сервером.
+#pragma mark - Private variables
+
+  typedefs::DTPScreenConnectionSharedPtr_t connection_;  // Экранное соедининение с сервером.
   Window window_;  // Идентификатор окна.
   Atom wmatom_[kAtom_WMLast], netatom_[kAtom_NetLast];
   EventCallbackFuncMap_t eventCallbacks_;
 };
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf
 
 #endif  // SWAY_PLTF_MAC_DTPWINDOW_HPP

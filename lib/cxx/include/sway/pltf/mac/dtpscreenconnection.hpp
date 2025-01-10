@@ -4,13 +4,12 @@
 #include <sway/pltf/prereqs.hpp>
 #include <sway/pltf/typedefs.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
 class DTPScreenConnection {
-  DECLARE_PTR_ALIASES(DTPScreenConnection)
-
 public:
+#pragma region "Ctors/Dtor"
+
   /**
    * @brief Конструктор класса.
    *        Выполняет инициализацию нового экземпляра класса.
@@ -22,36 +21,33 @@ public:
    */
   ~DTPScreenConnection();
 
+#pragma endregion
+
   /**
    * @brief Получает указатель на структуру дисплея.
    */
-  [[nodiscard]]
-  auto getDisplay() const -> Display *;
+  [[nodiscard]] auto getDisplay() const -> Display *;
 
   /**
    * @brief Получает номер экрана.
    */
-  [[nodiscard]]
-  auto getScreenNumber() const -> i32_t;
+  [[nodiscard]] auto getScreenNumber() const -> i32_t;
 
   /**
    * @brief Получает корневое окно.
    */
-  [[nodiscard]]
-  auto getRootWindow() const -> Window;
+  [[nodiscard]] auto getRootWindow() const -> Window;
 
   /**
    * @brief Получает размер дисплея.
    */
-  [[nodiscard]]
-  auto getDisplaySize() const -> math::size2i_t;
+  [[nodiscard]] auto getDisplaySize() const -> math::size2i_t;
 
 private:
   Display *display_;  // Указатель на структуру дисплея.
   i32_t screen_;  // Номер экрана.
 };
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf
 
 #endif  // SWAY_PLTF_MAC_DTPSCREENCONNECTION_HPP

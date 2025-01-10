@@ -3,15 +3,13 @@
 
 #include <sway/core.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(pltf)
+namespace sway::pltf {
 
 /**
  * @brief Перечисление режимов окна.
  */
 enum class WindowMode : i32_t { NONE = 0, WINDOWED, FULLSCREEN, Latest };
 
-NS_END()  // namespace pltf
-NS_END()  // namespace sway
+}  // namespace sway::pltf
 
 #endif  // SWAY_PLTF_WINDOWMODES_HPP
