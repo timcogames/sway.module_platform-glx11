@@ -18,11 +18,6 @@ namespace sway::pltf {
 
 struct SizeChangedEventData : public core::EventData {
   math::size2i_t size;
-
-  // clang-format off
-  MTHD_OVERRIDE(auto serialize() const -> std::string) { return ""; }  // clang-format on
-
-  MTHD_OVERRIDE(void deserialize(const std::string &jdata)) {}
 };
 
 class EMSWindow {
@@ -55,11 +50,11 @@ public:
    */
   void setFullscreen(bool fullscreen);
 
-  void sendEvent(core::Event::Ptr_t evt);
+  void sendEvent(core::EventTypedefs::Ptr_t evt);
 
   void handleResize();
 
-  auto getEvents(bool waitForEvents) -> std::queue<core::Event::Ptr_t>;
+  auto getEvents(bool waitForEvents) -> std::queue<core::EventTypedefs::Ptr_t>;
 
 private:
   typedefs::ContextSharedPtr_t context_;
