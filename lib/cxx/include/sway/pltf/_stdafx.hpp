@@ -1,5 +1,5 @@
-#ifndef SWAY_PLTF_PREREQS_HPP
-#define SWAY_PLTF_PREREQS_HPP
+#ifndef SWAY_PLTF_STDAFX_HPP
+#define SWAY_PLTF_STDAFX_HPP
 
 #include <sway/core.hpp>
 #include <sway/math.hpp>
@@ -12,4 +12,4 @@
 #include <map>
 #include <memory>  // shared_ptr, make_shared
 
-#endif  // SWAY_PLTF_PREREQS_HPP
+#endif  // SWAY_PLTF_STDAFX_HPP

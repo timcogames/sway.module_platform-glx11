@@ -12,13 +12,13 @@ public:
 
   Loopeable() = default;
 
-  DTOR_VIRTUAL_DEFAULT(Loopeable);
+  virtual ~Loopeable() = default;
 
 #pragma endregion
 
 #pragma region "Pure virtual methods"
 
-  PURE_VIRTUAL(void render());
+  virtual void render() = 0;
 
 #pragma endregion
 

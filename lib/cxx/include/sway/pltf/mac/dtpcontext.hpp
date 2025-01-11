@@ -1,10 +1,10 @@
 #ifndef SWAY_PLTF_MAC_DTPCONTEXT_HPP
 #define SWAY_PLTF_MAC_DTPCONTEXT_HPP
 
+#include <sway/pltf/_stdafx.hpp>
 #include <sway/pltf/context.hpp>
 #include <sway/pltf/mac/dtpscreenconnection.hpp>
 #include <sway/pltf/mac/dtpwindow.hpp>
-#include <sway/pltf/prereqs.hpp>
 #include <sway/pltf/typedefs.hpp>
 
 namespace sway::pltf {

@@ -2,11 +2,11 @@
 #define SWAY_PLTF_MAC_DTPCANVAS_HPP
 
 #include <sway/core.hpp>
+#include <sway/pltf/_stdafx.hpp>
 #include <sway/pltf/mac/dtpcontext.hpp>
 #include <sway/pltf/mac/dtpscreenconnection.hpp>
 #include <sway/pltf/mac/dtpvisualattributes.hpp>
 #include <sway/pltf/mac/dtpwindow.hpp>
-#include <sway/pltf/prereqs.hpp>
 #include <sway/pltf/typedefs.hpp>
 
 namespace sway::pltf {

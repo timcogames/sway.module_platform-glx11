@@ -1,7 +1,7 @@
 #ifndef SWAY_PLTF_MAC_DTPSCREENCONNECTION_HPP
 #define SWAY_PLTF_MAC_DTPSCREENCONNECTION_HPP
 
-#include <sway/pltf/prereqs.hpp>
+#include <sway/pltf/_stdafx.hpp>
 #include <sway/pltf/typedefs.hpp>
 
 namespace sway::pltf {

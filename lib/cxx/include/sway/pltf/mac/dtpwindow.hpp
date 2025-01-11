@@ -2,9 +2,9 @@
 #define SWAY_PLTF_MAC_DTPWINDOW_HPP
 
 #include <sway/core.hpp>
+#include <sway/pltf/_stdafx.hpp>
 #include <sway/pltf/mac/dtpatom.hpp>
 #include <sway/pltf/mac/dtpscreenconnection.hpp>
-#include <sway/pltf/prereqs.hpp>
 #include <sway/pltf/typedefs.hpp>
 #include <sway/pltf/windoweventlistener.hpp>
 #include <sway/pltf/windowinitialinfo.hpp>
@@ -18,33 +18,51 @@ using EventCallbackFuncMap_t = std::map<i32_t, EventCallbackFunc_t>;
 class DTPWindow : public WindowEventListener {
 public:
 #pragma region "Ctors/Dtor"
+  /** \~english @name Constructor & Destructor */ /** \~russian @name Конструктор и Деструктор */
+  /** @{ */
 
   /**
-   * @brief Конструктор класса.
-   *        Выполняет инициализацию нового экземпляра класса.
+   * \~english
+   * @brief Constructor class. Performs initialization of a new instance of the class.
+   * @param[in] connection Screen connection to the server.
    *
+   * \~russian
+   * @brief Конструктор класса. Выполняет инициализацию нового экземпляра класса.
    * @param[in] connection Экранное соедининение с сервером.
    */
   DTPWindow(typedefs::DTPScreenConnectionSharedPtr_t connection);
 
   /**
-   * @brief Деструктор класса. Уничтожает главное окно приложения.
+   * @brief \~english Destructor. Destroys main application window. \~russian Деструктор класса. Уничтожает главное окно
+   * приложения.
    */
   ~DTPWindow();
 
+  /** @} */
 #pragma endregion
 
   /**
-   * @brief Добавляет привязку функции к оконному событию.
+   * \~english
+   * @brief Adds a function binding to a window event.
+   * @param[in] type Event type.
+   * @param[in] callback Callback function.
    *
+   * \~russian
+   * @brief Добавляет привязку функции к оконному событию.
    * @param[in] type Тип события.
    * @param[in] callback Функция вызываемая при возникновении события.
    */
   void addEventBinding(i32_t type, EventCallbackFunc_t callback);
 
   /**
-   * @brief Создает главное окно приложения.
+   * \~english
+   * @brief Creates the main application window.
+   * @param[in] visualInfo Display information.
+   * @param[in] windowInfo Initial window parameters.
+   * @exception std::runtime_error Window creation failure.
    *
+   * \~russian
+   * @brief Создает главное окно приложения.
    * @param[in] visualInfo Информация о дисплее.
    * @param[in] windowInfo Начальные параметры окна.
    * @exception std::runtime_error Неудачное создание окна.
@@ -52,53 +70,72 @@ public:
   void createDummy(XVisualInfo *visualInfo, const WindowInitialInfo &windowInfo);
 
   /**
-   * @brief Обрабатывает события.
+   * @brief \~english Handles events. \~russian Обрабатывает события.
    */
   auto eventLoop(bool keepgoing) -> bool;
 
   /**
-   * @brief Устанавливает заголовок окна.
+   * \~english
+   * @brief Sets the title of the window.
+   * @param[in] title Window title.
    *
+   * \~russian
+   * @brief Устанавливает заголовок окна.
    * @param[in] title Заголовок окна.
    */
   void setTitle(lpcstr_t title);
 
   /**
-   * @brief Устанавливает позицию окна.
+   * \~english
+   * @brief Sets the position of the window.
+   * @param[in] x Coordinate of the window position on the X axis.
+   * @param[in] y Coordinate of the window position on the Y axis.
    *
+   * \~russian
+   * @brief Устанавливает позицию окна.
    * @param[in] x Координата позиции окна по оси X.
    * @param[in] y Координата позиции окна по оси Y.
    */
   void setPosition(i32_t x, i32_t y);
 
   /**
-   * @brief Получает позицию окна.
+   * @brief \~english Gets the position of the window. \~russian Получает позицию окна.
    */
   [[nodiscard]] auto getPosition() const -> math::point2i_t;
 
   /**
-   * @brief Устанавливает размер окна.
+   * \~english
+   * @brief Sets the size of the window.
+   * @param[in] w Width of the window.
+   * @param[in] h Height of the window.
    *
+   * \~russian
+   * @brief Устанавливает размер окна.
    * @param[in] w Ширина окна.
    * @param[in] h Высота окна.
    */
   void setSize(i32_t w, i32_t h);
 
   /**
-   * @brief Получает размер окна.
+   * @brief \~english Gets the size of the window. \~russian Получает размер окна.
    */
   [[nodiscard]] auto getSize() const -> math::size2i_t;
 
   /**
-   * @brief Устанавливает поведение при смене размера.
+   * \~english
+   * @brief Sets behavior when the size of the window changes.
+   * @param[in] size Size of the window.
+   * @param[in] resizable Does the window support resizing?
    *
+   * \~russian
+   * @brief Устанавливает поведение при смене размера.
    * @param[in] size Размер окна.
    * @param[in] resizable Имеется возможность изменения размера?
    */
   void setSizeHints(const WindowSize &size, bool resizable);
 
   /**
-   * @brief Показывает окно.
+   * @brief \~english Shows the window. \~russian Показывает окно.
    *
    * @sa hide(),
    *     visible()
@@ -106,7 +143,7 @@ public:
   void show();
 
   /**
-   * @brief Скрывает окно.
+   * @brief \~english Hides the window. \~russian Скрывает окно.
    *
    * @sa show(),
    *     visible()
@@ -115,7 +152,7 @@ public:
   void hide();
 
   /**
-   * @brief Получает значение видимости окна.
+   * @brief \~english Gets the visibility of the window. \~russian Получает значение видимости окна.
    *
    * @sa show(),
    *     hide()
@@ -124,21 +161,29 @@ public:
   [[nodiscard]] bool visible() const;
 
   /**
-   * @brief Переключает в полноэкранный / оконный режим.
+   * \~english
+   * @brief Switches to fullscreen / windowed mode.
+   * @param[in] fullscreen Enable fullscreen mode?
    *
+   * \~russian
+   * @brief Переключает в полноэкранный / оконный режим.
    * @param[in] fullscreen Включить полноэкранный режим?
    */
   void setFullscreen(bool fullscreen);
 
   /**
-   * @brief Устанавливает максимальный размер окна.
+   * \~english
+   * @brief Sets the maximum size of the window.
+   * @param[in] maximized Should the window be maximized?
    *
+   * \~russian
+   * @brief Устанавливает максимальный размер окна.
    * @param[in] maximized Растянуть окно до максимальных размеров?
    */
   void setMaximize(bool maximized);
 
   /**
-   * @brief Получает идентификатор окна.
+   * @brief \~english Gets the window handle. \~russian Получает идентификатор окна.
    */
   auto getWindowHandle() -> Window { return window_; }
 
@@ -150,8 +195,14 @@ private:
   void initializeEventBindings_();
 
   /**
-   * @brief Устанавливает минимальный размер.
+   * \~english
+   * @brief Sets the minimum size.
+   * @param[out] hints Structure of recommendations.
+   * @param[in] size Window size.
+   * @param[in] resizable Is there a possibility of changing the size?
    *
+   * \~russian
+   * @brief Устанавливает минимальный размер.
    * @param[out] hints Cтруктура рекомендаций.
    * @param[in] size Размер окна.
    * @param[in] resizable Имеется возможность изменения размера?
@@ -159,8 +210,14 @@ private:
   void setMinSize_(XSizeHints *hints, const WindowSize &size, bool resizable);
 
   /**
-   * @brief Устанавливает максимальный размер.
+   * \~english
+   * @brief Sets the maximum size.
+   * @param[out] hints Structure of recommendations.
+   * @param[in] size Window size.
+   * @param[in] resizable Is there a possibility of changing the size?
    *
+   * \~russian
+   * @brief Устанавливает максимальный размер.
    * @param[out] hints Cтруктура рекомендаций.
    * @param[in] size Размер окна.
    * @param[in] resizable Имеется возможность изменения размера?
@@ -169,8 +226,9 @@ private:
 
 #pragma mark - Private variables
 
-  typedefs::DTPScreenConnectionSharedPtr_t connection_;  // Экранное соедининение с сервером.
-  Window window_;  // Идентификатор окна.
+  typedefs::DTPScreenConnectionSharedPtr_t connection_; /*!< \~english Screen connection to the server.
+    \~russian Экранное соедининение с сервером. */
+  Window window_;  //!< \~english Identifier of the window. \~russian Идентификатор окна.
   Atom wmatom_[kAtom_WMLast], netatom_[kAtom_NetLast];
   EventCallbackFuncMap_t eventCallbacks_;
 };

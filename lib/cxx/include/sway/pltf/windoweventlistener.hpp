@@ -1,7 +1,7 @@
 #ifndef SWAY_PLTF_WINDOWEVENTLISTENER_HPP
 #define SWAY_PLTF_WINDOWEVENTLISTENER_HPP
 
-#include <sway/pltf/prereqs.hpp>
+#include <sway/pltf/_stdafx.hpp>
 
 namespace sway::pltf {
 
