@@ -116,6 +116,15 @@ enable_cxx17(${MODULE_PLTF_LIB_TARGET})
 target_link_libraries(${MODULE_PLTF_LIB_TARGET} GL X11)
 
 #---------------------------------------------------------------------------------
+# Tests
+#---------------------------------------------------------------------------------
+
+if(MODULE_PLTF_ENABLE_TESTS)
+  message(STATUS "Tests have been enabled")
+  add_subdirectory("lib/cxx/tests/google")
+endif()
+
+#---------------------------------------------------------------------------------
 # Examples
 #---------------------------------------------------------------------------------
 

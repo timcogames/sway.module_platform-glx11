@@ -43,7 +43,7 @@ DTPCanvas::DTPCanvas(typedefs::DTPScreenConnectionSharedPtr_t connection, const 
 
 auto DTPCanvas::chooseBestSuitable_(
     typedefs::DTPScreenConnectionSharedPtr_t connection, GLXFBConfig *configs, i32_t numConfigs) -> GLXFBConfig {
-  i32_t bestScore = DONT_CARE, bestNumSamples = DONT_CARE;
+  i32_t bestScore = GLOB_DONT_CARE, bestNumSamples = GLOB_DONT_CARE;
 
   for (auto i = 0; i < numConfigs; ++i) {
     auto attrs = getMultisampleAttributes_(connection, configs[i]);

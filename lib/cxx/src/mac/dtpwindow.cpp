@@ -127,7 +127,7 @@ auto DTPWindow::getSize() const -> math::size2i_t {
 
 void DTPWindow::setMinSize_(XSizeHints *hints, const WindowSize &size, bool resizable) {
   if (resizable) {
-    if (size.min.getW() != DONT_CARE && size.min.getH() != DONT_CARE) {
+    if (size.min.getW() != GLOB_DONT_CARE && size.min.getH() != GLOB_DONT_CARE) {
       hints->min_width = size.min.getW();
       hints->min_height = size.min.getH();
     } else {
@@ -142,7 +142,7 @@ void DTPWindow::setMinSize_(XSizeHints *hints, const WindowSize &size, bool resi
 
 void DTPWindow::setMaxSize_(XSizeHints *hints, const WindowSize &size, bool resizable) {
   if (resizable) {
-    if (size.max.getW() != DONT_CARE && size.max.getH() != DONT_CARE) {
+    if (size.max.getW() != GLOB_DONT_CARE && size.max.getH() != GLOB_DONT_CARE) {
       hints->max_width = size.max.getW();
       hints->max_height = size.max.getH();
     } else {
