@@ -2,17 +2,12 @@
 #define SWAY_PLTF_WEB_EMSWINDOW_HPP
 
 #include <sway/core.hpp>
+#include <sway/pltf/_stdafx.hpp>
 #include <sway/pltf/context.hpp>
 #include <sway/pltf/typedefs.hpp>
 #include <sway/pltf/windoweventtypes.hpp>
 #include <sway/pltf/windowinitialinfo.hpp>
 #include <sway/pltf/windowmodes.hpp>
-
-#include <condition_variable>
-#include <functional>
-#include <mutex>
-#include <queue>
-#include <string>
 
 namespace sway::pltf {
 
@@ -26,13 +21,19 @@ class EMSWindow {
 public:
   using CallbackFunc_t = void (*)(void *);
 
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
+
   EMSWindow(typedefs::ContextSharedPtr_t ctx);
 
   ~EMSWindow() = default;
 
+  /** @} */
+#pragma endregion
+
   /**
    * @brief Устанавливает размер окна.
-   *
    * @param[in] wdt Ширина окна.
    * @param[in] hgt Высота окна.
    */
@@ -45,7 +46,6 @@ public:
 
   /**
    * @brief Переключает в полноэкранный / оконный режим.
-   *
    * @param[in] fullscreen Включить полноэкранный режим?
    */
   void setFullscreen(bool fullscreen);

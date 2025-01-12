@@ -10,9 +10,16 @@ namespace sway::pltf {
 
 class EMSLooper : public Looper {
 public:
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
+
   EMSLooper();
 
   virtual ~EMSLooper() = default;
+
+  /** @} */
+#pragma endregion
 
   MTHD_OVERRIDE(void setLoopeable(typedefs::LoopeableSharedPtr_t loopeable)) { loopeable_ = loopeable; }
 

@@ -2,18 +2,16 @@
 #define SWAY_PLTF_TIMER_HPP
 
 #include <sway/core.hpp>
-
-#ifdef EMSCRIPTEN_PLATFORM
-#  include <emscripten.h>
-#else
-#  include <chrono>  // std::chrono
-using namespace std::chrono;
-#endif
+#include <sway/pltf/_stdafx.hpp>
 
 namespace sway::pltf {
 
 class Timer {
 public:
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
+
   Timer() {
 #ifdef EMSCRIPTEN_PLATFORM
     prev_ = emscripten_get_now();
@@ -23,6 +21,9 @@ public:
   }
 
   ~Timer() = default;
+
+  /** @} */
+#pragma endregion
 
   auto started() -> f32_t {
 #ifdef EMSCRIPTEN_PLATFORM

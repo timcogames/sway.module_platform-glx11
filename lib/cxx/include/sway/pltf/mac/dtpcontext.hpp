@@ -14,8 +14,8 @@ namespace sway::pltf {
  */
 class DTPContext : public Context {
 public:
-#pragma region "Ctors/Dtors"
-  /** \~english @name Constructor & Destructor */ /** \~russian @name Конструктор и Деструктор */
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
   /** @{ */
 
   /**

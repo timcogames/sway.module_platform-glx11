@@ -8,12 +8,15 @@ namespace sway::pltf {
 
 class Loopeable {
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   Loopeable() = default;
 
   virtual ~Loopeable() = default;
 
+  /** @} */
 #pragma endregion
 
 #pragma region "Pure virtual methods"

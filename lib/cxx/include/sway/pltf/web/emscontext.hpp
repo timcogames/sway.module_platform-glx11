@@ -2,19 +2,23 @@
 #define SWAY_PLTF_WEB_EMSCONTEXT_HPP
 
 #include <sway/core.hpp>
+#include <sway/pltf/_stdafx.hpp>
 #include <sway/pltf/context.hpp>
-
-#include <emscripten.h>
-#include <emscripten/html5.h>
-#include <string>
 
 namespace sway::pltf {
 
 class EMSContext : public Context {
 public:
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
+
   EMSContext(const std::string &canvasId);
 
   virtual ~EMSContext();
+
+  /** @} */
+#pragma endregion
 
   MTHD_OVERRIDE(void create(void *arg));
 
