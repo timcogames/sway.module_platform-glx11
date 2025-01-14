@@ -7,9 +7,9 @@
 namespace sway::pltf {
 
 struct WindowSize {
-  math::size2i_t normal;  // Нормальный размер окна.
-  math::size2i_t min;  // Минимальный размер окна.
-  math::size2i_t max;  // Максимальный размер окна.
+  math::size2i_t normal;  //!< \~russian Нормальный размер окна.
+  math::size2i_t min;  //!< \~russian Минимальный размер окна.
+  math::size2i_t max;  //!< \~russian Максимальный размер окна.
 };
 
 }  // namespace sway::pltf

@@ -25,7 +25,7 @@ public:
   /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
   /** @{ */
 
-  EMSWindow(typedefs::ContextSharedPtr_t ctx);
+  EMSWindow(ContextSharedPtr_t ctx);
 
   ~EMSWindow() = default;
 
@@ -33,6 +33,7 @@ public:
 #pragma endregion
 
   /**
+   * \~russian
    * @brief Устанавливает размер окна.
    * @param[in] wdt Ширина окна.
    * @param[in] hgt Высота окна.
@@ -40,11 +41,12 @@ public:
   void setSize(i32_t wdt, i32_t hgt);
 
   /**
-   * @brief Получает размер окна.
+   * @brief \~russian Получает размер окна.
    */
   [[nodiscard]] auto getSize() const -> math::size2i_t;
 
   /**
+   * \~russian
    * @brief Переключает в полноэкранный / оконный режим.
    * @param[in] fullscreen Включить полноэкранный режим?
    */
@@ -57,7 +59,7 @@ public:
   auto getEvents(bool waitForEvents) -> std::queue<core::EventTypedefs::Ptr_t>;
 
 private:
-  typedefs::ContextSharedPtr_t context_;
+  ContextSharedPtr_t context_;
 
   std::queue<core::Event *> eventQueue_;
   std::mutex eventQueueMutex_;

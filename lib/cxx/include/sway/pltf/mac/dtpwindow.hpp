@@ -30,7 +30,7 @@ public:
    * @brief Конструктор класса. Выполняет инициализацию нового экземпляра класса.
    * @param[in] connection Экранное соедининение с сервером.
    */
-  DTPWindow(typedefs::DTPScreenConnectionSharedPtr_t connection);
+  DTPWindow(DTPScreenConnectionSharedPtr_t connection);
 
   /**
    * @brief \~english Destructor. Destroys main application window. \~russian Деструктор класса. Уничтожает главное окно
@@ -226,7 +226,7 @@ private:
 
 #pragma mark - Private variables
 
-  typedefs::DTPScreenConnectionSharedPtr_t connection_; /*!< \~english Screen connection to the server.
+  DTPScreenConnectionSharedPtr_t connection_; /*!< \~english Screen connection to the server.
     \~russian Экранное соедининение с сервером. */
   Window window_;  //!< \~english Identifier of the window. \~russian Идентификатор окна.
   Atom wmatom_[kAtom_WMLast], netatom_[kAtom_NetLast];

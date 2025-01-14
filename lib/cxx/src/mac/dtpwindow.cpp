@@ -2,7 +2,7 @@
 
 namespace sway::pltf {
 
-DTPWindow::DTPWindow(typedefs::DTPScreenConnectionSharedPtr_t connection)
+DTPWindow::DTPWindow(DTPScreenConnectionSharedPtr_t connection)
     : connection_(connection) {
   initializeAtoms_();
   initializeEventBindings_();

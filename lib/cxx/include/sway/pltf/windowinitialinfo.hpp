@@ -7,10 +7,10 @@
 namespace sway::pltf {
 
 struct WindowInitialInfo {
-  lpcstr_t title;  // Заголовок окна.
-  WindowSize size;  // Размер окна.
-  bool resizable;  // Возможность изменения размера.
-  bool fullscreen;  // Полноэкранный / Оконный режим.
+  lpcstr_t title;  //!< \~russian Заголовок окна.
+  WindowSize size;  //!< \~russian Размер окна.
+  bool resizable;  //!< \~russian Возможность изменения размера.
+  bool fullscreen;  //!< \~russian Полноэкранный / Оконный режим.
   bool maximized;
   bool vsync;
 };

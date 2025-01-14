@@ -8,13 +8,13 @@
 #  include <emscripten.h>
 #  include <emscripten/html5.h>
 #else
+#  include <GL/gl.h>
+#  include <GL/glx.h>  // GLXContext, GLXDrawable, GLXFBConfig
 #  include <X11/Xlib.h>
 #  include <X11/Xutil.h>  // XVisualInfo, XSizeHints
 #  include <chrono>
 #endif
 
-#include <GL/gl.h>
-#include <GL/glx.h>  // GLXContext, GLXDrawable, GLXFBConfig
 #include <condition_variable>
 #include <functional>
 #include <map>

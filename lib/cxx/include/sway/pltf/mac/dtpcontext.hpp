@@ -29,7 +29,7 @@ public:
    * @param[in] connection Экранное соедининение с сервером.
    * @param[in] window Окно графического интерфейса.
    */
-  DTPContext(typedefs::DTPScreenConnectionSharedPtr_t connection, DTPWindow *window);
+  DTPContext(DTPScreenConnectionSharedPtr_t connection, DTPWindow *window);
 
   /**
    * @brief \~english Destructor. Destroys visualization context. \~russian Деструктор класса. Уничтожает контекст
@@ -67,7 +67,7 @@ public:
 private:
   GLXContext context_;
   GLXDrawable drawable_;
-  typedefs::DTPScreenConnectionSharedPtr_t connection_; /*!< \~english Screen connection to the server.
+  DTPScreenConnectionSharedPtr_t connection_; /*!< \~english Screen connection to the server.
     \~russian Экранное соедининение с сервером. */
 };
 

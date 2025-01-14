@@ -7,7 +7,7 @@
 
 namespace sway::pltf {
 
-DTPContext::DTPContext(typedefs::DTPScreenConnectionSharedPtr_t connection, DTPWindow *window)
+DTPContext::DTPContext(DTPScreenConnectionSharedPtr_t connection, DTPWindow *window)
     : connection_(connection)
     , drawable_(window->getWindowHandle()) {}
 

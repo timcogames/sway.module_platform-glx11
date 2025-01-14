@@ -6,7 +6,7 @@
 namespace sway::pltf {
 
 /**
- * @brief Перечисление режимов окна.
+ * @brief \~russian Перечисление режимов окна.
  */
 enum class WindowMode : i32_t { NONE = 0, WINDOWED, FULLSCREEN, Latest };
 

@@ -21,7 +21,7 @@ constexpr std::array<i32_t, ATTRIB_LIST_SIZE> attribList = {
   GLX_DOUBLEBUFFER, 1,
   None};  // clang-format on
 
-DTPCanvas::DTPCanvas(typedefs::DTPScreenConnectionSharedPtr_t connection, const WindowInitialInfo &windowInfo)
+DTPCanvas::DTPCanvas(DTPScreenConnectionSharedPtr_t connection, const WindowInitialInfo &windowInfo)
     : DTPWindow(connection) {
   i32_t numConfigs;
   GLXFBConfig *configs, config;
@@ -41,8 +41,8 @@ DTPCanvas::DTPCanvas(typedefs::DTPScreenConnectionSharedPtr_t connection, const 
   context_->create(config);
 }
 
-auto DTPCanvas::chooseBestSuitable_(
-    typedefs::DTPScreenConnectionSharedPtr_t connection, GLXFBConfig *configs, i32_t numConfigs) -> GLXFBConfig {
+auto DTPCanvas::chooseBestSuitable_(DTPScreenConnectionSharedPtr_t connection, GLXFBConfig *configs, i32_t numConfigs)
+    -> GLXFBConfig {
   i32_t bestScore = GLOB_DONT_CARE, bestNumSamples = GLOB_DONT_CARE;
 
   for (auto i = 0; i < numConfigs; ++i) {
@@ -56,7 +56,7 @@ auto DTPCanvas::chooseBestSuitable_(
   return configs[bestScore];
 }
 
-auto DTPCanvas::getMultisampleAttributes_(typedefs::DTPScreenConnectionSharedPtr_t connection, GLXFBConfig config)
+auto DTPCanvas::getMultisampleAttributes_(DTPScreenConnectionSharedPtr_t connection, GLXFBConfig config)
     -> DTPVisualAttributes {
   const auto *extensions = glXQueryExtensionsString(connection->getDisplay(), connection->getScreenNumber());
   DTPVisualAttributes attrs;

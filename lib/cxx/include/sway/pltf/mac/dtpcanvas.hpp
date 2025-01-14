@@ -18,16 +18,15 @@ public:
   /** @{ */
 
   /**
-   * @brief Конструктор класса.
-   *        Выполняет инициализацию нового экземпляра класса.
-   *
+   * \~russian
+   * @brief Конструктор класса. Выполняет инициализацию нового экземпляра класса.
    * @param[in] connection Экранное соедининение с сервером.
    * @param[in] windowInfo Начальные параметры окна.
    */
-  DTPCanvas(typedefs::DTPScreenConnectionSharedPtr_t connection, const WindowInitialInfo &windowInfo);
+  DTPCanvas(DTPScreenConnectionSharedPtr_t connection, const WindowInitialInfo &windowInfo);
 
   /**
-   * @brief Деструктор класса. Освобождает захваченные ресурсы.
+   * @brief \~russian Деструктор класса. Освобождает захваченные ресурсы.
    */
   ~DTPCanvas() = default;
 
@@ -35,9 +34,9 @@ public:
 #pragma endregion
 
   /**
-   * @brief Получает контекст.
+   * @brief \~russian Получает контекст.
    */
-  auto getContext() -> typedefs::ContextSharedPtr_t { return context_; }
+  auto getContext() -> ContextSharedPtr_t { return context_; }
 
   MTHD_OVERRIDE(void handleCreateNotifyEvent(const XEvent &event)) {}
 
@@ -50,13 +49,12 @@ public:
   MTHD_OVERRIDE(void handleFocusOutEvent(const XEvent &event)) {}
 
 private:
-  auto chooseBestSuitable_(typedefs::DTPScreenConnectionSharedPtr_t connection, GLXFBConfig *configs, i32_t numConfigs)
+  auto chooseBestSuitable_(DTPScreenConnectionSharedPtr_t connection, GLXFBConfig *configs, i32_t numConfigs)
       -> GLXFBConfig;
 
-  auto getMultisampleAttributes_(typedefs::DTPScreenConnectionSharedPtr_t connection, GLXFBConfig config)
-      -> DTPVisualAttributes;
+  auto getMultisampleAttributes_(DTPScreenConnectionSharedPtr_t connection, GLXFBConfig config) -> DTPVisualAttributes;
 
-  typedefs::ContextSharedPtr_t context_;  // Контекст поверхности холста.
+  ContextSharedPtr_t context_;  //!< \~russian Контекст поверхности холста.
 };
 
 }  // namespace sway::pltf

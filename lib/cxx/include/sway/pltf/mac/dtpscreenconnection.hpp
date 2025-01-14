@@ -13,13 +13,12 @@ public:
   /** @{ */
 
   /**
-   * @brief Конструктор класса.
-   *        Выполняет инициализацию нового экземпляра класса.
+   * @brief \~russian Конструктор класса. Выполняет инициализацию нового экземпляра класса.
    */
   DTPScreenConnection();
 
   /**
-   * @brief Деструктор класса. Освобождает захваченные ресурсы.
+   * @brief \~russian Деструктор класса. Освобождает захваченные ресурсы.
    */
   ~DTPScreenConnection();
 
@@ -27,28 +26,28 @@ public:
 #pragma endregion
 
   /**
-   * @brief Получает указатель на структуру дисплея.
+   * @brief \~russian Получает указатель на структуру дисплея.
    */
   [[nodiscard]] auto getDisplay() const -> Display *;
 
   /**
-   * @brief Получает номер экрана.
+   * @brief \~russian Получает номер экрана.
    */
   [[nodiscard]] auto getScreenNumber() const -> i32_t;
 
   /**
-   * @brief Получает корневое окно.
+   * @brief \~russian Получает корневое окно.
    */
   [[nodiscard]] auto getRootWindow() const -> Window;
 
   /**
-   * @brief Получает размер дисплея.
+   * @brief \~russian Получает размер дисплея.
    */
   [[nodiscard]] auto getDisplaySize() const -> math::size2i_t;
 
 private:
-  Display *display_;  // Указатель на структуру дисплея.
-  i32_t screen_;  // Номер экрана.
+  Display *display_;  //!< \~russian Указатель на структуру дисплея.
+  i32_t screen_;  //!< \~russian Номер экрана.
 };
 
 }  // namespace sway::pltf

@@ -21,7 +21,7 @@ public:
   /** @} */
 #pragma endregion
 
-  MTHD_OVERRIDE(void setLoopeable(typedefs::LoopeableSharedPtr_t loopeable)) { loopeable_ = loopeable; }
+  MTHD_OVERRIDE(void setLoopeable(LoopeableSharedPtr_t loopeable)) { loopeable_ = loopeable; }
 
   MTHD_OVERRIDE(auto loop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool keepgoing) -> bool);
 
@@ -32,7 +32,7 @@ public:
   MTHD_OVERRIDE(void resume());
 
 private:
-  typedefs::LoopeableSharedPtr_t loopeable_;
+  LoopeableSharedPtr_t loopeable_;
   bool running_;
 };
 

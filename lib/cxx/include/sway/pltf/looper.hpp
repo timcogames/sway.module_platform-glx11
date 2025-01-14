@@ -22,7 +22,7 @@ public:
 
 #pragma region "Pure virtual methods"
 
-  virtual void setLoopeable(typedefs::LoopeableSharedPtr_t loopeable) = 0;
+  virtual void setLoopeable(LoopeableSharedPtr_t loopeable) = 0;
 
   virtual auto loop(CallbackFunc_t func, void *arg, [[maybe_unused]] bool keepgoing) -> bool = 0;
 

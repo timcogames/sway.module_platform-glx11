@@ -25,7 +25,7 @@ public:
   MTHD_OVERRIDE(void destroy());
 
   /**
-   * @brief Прикрепляет контекст к окну.
+   * @brief \~russian Прикрепляет контекст к окну.
    *
    * @sa doneCurrent()
    */
@@ -33,7 +33,7 @@ public:
   MTHD_OVERRIDE(auto makeCurrent() -> bool);
 
   /**
-   * @brief Освобождаем контекст.
+   * @brief \~russian Освобождаем контекст.
    *
    * @sa makeCurrent()
    */
@@ -42,7 +42,7 @@ public:
   }
 
   /**
-   * @brief Обмен буферов.
+   * @brief \~russian Обмен буферов.
    */
   MTHD_OVERRIDE(void present()) {}
 
