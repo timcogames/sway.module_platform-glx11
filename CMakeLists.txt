@@ -83,7 +83,7 @@ endif()
 include_directories("${X11_INC_DIRS}")
 include_directories("${MODULE_PLTF_LIST_DIR}/lib/cxx/include")
 include_directories("${MODULE_PLTF_LIST_DIR}/submodules/sway.module_core/lib/cxx/include")
-include_directories("${MODULE_PLTF_LIST_DIR}/submodules/sway.module_math/lib/cxx/include")
+include_directories("${MODULE_PLTF_LIST_DIR}/submodules/sway.module_math/lib/cpp/include")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
 file(GLOB_RECURSE MODULE_PLTF_HEADERS ${MODULE_PLTF_LIST_DIR}/lib/cxx/include/*.*)
