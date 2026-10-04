@@ -3,10 +3,10 @@
 
 #include <sway/core.hpp>
 #include <sway/pltf/_stdafx.hpp>
+#include <sway/pltf/dtpwindoweventlistener.hpp>
 #include <sway/pltf/mac/dtpatom.hpp>
 #include <sway/pltf/mac/dtpscreenconnection.hpp>
 #include <sway/pltf/typedefs.hpp>
-#include <sway/pltf/windoweventlistener.hpp>
 #include <sway/pltf/windowinitialinfo.hpp>
 #include <sway/pltf/windowmodes.hpp>
 
@@ -15,7 +15,7 @@ namespace sway::pltf {
 using EventCallbackFunc_t = std::function<void(const XEvent &)>;
 using EventCallbackFuncMap_t = std::map<i32_t, EventCallbackFunc_t>;
 
-class DTPWindow : public WindowEventListener {
+class DTPWindow : public DTPWindowEventListener {
 public:
 #pragma region "Constructor(s) & Destructor"
   /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */

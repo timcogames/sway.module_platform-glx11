@@ -5,7 +5,6 @@
 #include <sway/pltf/loopeable.hpp>
 #include <sway/pltf/looper.hpp>
 #include <sway/pltf/timer.hpp>
-#include <sway/pltf/windoweventlistener.hpp>
 #include <sway/pltf/windoweventtypes.hpp>
 #include <sway/pltf/windowinitialinfo.hpp>
 #include <sway/pltf/windowmodes.hpp>

@@ -1,11 +1,11 @@
-#ifndef SWAY_PLTF_WINDOWEVENTLISTENER_HPP
-#define SWAY_PLTF_WINDOWEVENTLISTENER_HPP
+#ifndef SWAY_PLTF_DTPWINDOWEVENTLISTENER_HPP
+#define SWAY_PLTF_DTPWINDOWEVENTLISTENER_HPP
 
 #include <sway/pltf/_stdafx.hpp>
 
 namespace sway::pltf {
 
-class WindowEventListener {
+class DTPWindowEventListener {
 protected:
   MTHD_VIRTUAL(
       void handleCreateNotifyEvent(const XEvent &event) {})
@@ -25,4 +25,4 @@ protected:
 
 }  // namespace sway::pltf
 
-#endif  // SWAY_PLTF_WINDOWEVENTLISTENER_HPP
+#endif  // SWAY_PLTF_DTPWINDOWEVENTLISTENER_HPP
