@@ -3,9 +3,9 @@
 
 #include <sway/core.hpp>
 #include <sway/pltf/_stdafx.hpp>
-#include <sway/pltf/dtpwindoweventlistener.hpp>
 #include <sway/pltf/mac/dtpatom.hpp>
 #include <sway/pltf/mac/dtpscreenconnection.hpp>
+#include <sway/pltf/mac/dtpwindoweventlistener.hpp>
 #include <sway/pltf/typedefs.hpp>
 #include <sway/pltf/windowinitialinfo.hpp>
 #include <sway/pltf/windowmodes.hpp>
