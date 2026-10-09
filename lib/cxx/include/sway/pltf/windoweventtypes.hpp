@@ -6,20 +6,21 @@
 namespace sway::pltf {
 
 // clang-format off
-DECLARE_ENUM(WindowEventType, 
-  SIZE_CHANGE,
-  RESOLUTION_CHANGE,
-  FULLSCREEN_CHANGE,
-  SCREEN_CHANGE,
-  FOCUS_CHANGE,
-  CLOSE,
-  SHOW,
-  HIDE,
-  MINIMIZE,
-  MAXIMIZE,
-  RESTORE
-);
+#define WINDOW_EVENT_TYPE_LIST(ITEM) \
+  ITEM(SIZE_CHANGE, 1) \
+  ITEM(RESOLUTION_CHANGE, 2) \
+  ITEM(FULLSCREEN_CHANGE, 3) \
+  ITEM(SCREEN_CHANGE, 4) \
+  ITEM(FOCUS_CHANGE, 5) \
+  ITEM(CLOSE, 6) \
+  ITEM(SHOW, 7) \
+  ITEM(HIDE, 8) \
+  ITEM(MINIMIZE, 9) \
+  ITEM(MAXIMIZE, 10) \
+  ITEM(RESTORE, 11)
 // clang-format on
+
+DECLARE_ENUM_U32(WindowEventType, WINDOW_EVENT_TYPE_LIST)
 
 }  // namespace sway::pltf
 
