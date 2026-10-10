@@ -14,9 +14,6 @@ set(MODULE_PLTF_CMAKE_DIR "${MODULE_PLTF_ROOT_DIR}/submodules/sway.module_core/c
 set(MODULE_PLTF_LIB_DIR "${MODULE_PLTF_ROOT_DIR}/lib")
 set(MODULE_PLTF_BIN_DIR "${CMAKE_SOURCE_DIR}/bin")
 
-set(X11_INC_DIRS "/opt/X11/include")
-set(X11_LIB_DIRS "/opt/X11/lib")
-
 #---------------------------------------------------------------------------------
 # Include CMake modules
 #---------------------------------------------------------------------------------
@@ -79,8 +76,13 @@ set_output_dir(${MODULE_PLTF_BIN_DIR})
 
 if(GLOB_EMSCRIPTEN_PLATFORM)
   include_directories("${GLOB_EMSCRIPTEN_ROOT_DIR}/cache/sysroot/include")
+else()
+  set(X11_INC_DIRS "/opt/X11/include")
+  set(X11_LIB_DIRS "/opt/X11/lib")
+
+  include_directories("${X11_INC_DIRS}")
 endif()
-include_directories("${X11_INC_DIRS}")
+
 include_directories("${MODULE_PLTF_LIST_DIR}/lib/cxx/include")
 include_directories("${MODULE_PLTF_LIST_DIR}/submodules/sway.module_core/lib/cxx/include")
 include_directories("${MODULE_PLTF_LIST_DIR}/submodules/sway.module_math/lib/cpp/include")
@@ -93,10 +95,12 @@ else()
   file(GLOB_RECURSE MODULE_PLTF_SOURCE ${MODULE_PLTF_LIST_DIR}/lib/cxx/src/mac/*.*)
 endif()
 
-link_directories("${X11_LIB_DIRS}")
+if(NOT GLOB_EMSCRIPTEN_PLATFORM)
+  link_directories("${X11_LIB_DIRS}")
 
-find_package(OpenGL REQUIRED)
-find_package(X11 QUIET)
+  find_package(X11 QUIET)
+  find_package(OpenGL REQUIRED)
+endif()
 
 if(MODULE_PLTF_SHARED_LIB)
   # Добавляем в проект цель для сборки динамической библиотеки
@@ -113,7 +117,10 @@ else()
 endif()
 
 enable_cxx17(${MODULE_PLTF_LIB_TARGET})
-target_link_libraries(${MODULE_PLTF_LIB_TARGET} GL X11)
+
+if(NOT GLOB_EMSCRIPTEN_PLATFORM)
+  target_link_libraries(${MODULE_PLTF_LIB_TARGET} GL X11)
+endif()
 
 #---------------------------------------------------------------------------------
 # Tests
