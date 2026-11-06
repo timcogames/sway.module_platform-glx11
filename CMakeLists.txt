@@ -34,8 +34,9 @@ option(MODULE_PLTF_ENABLE_EXAMPLES "Enable test builds" OFF)
 # ---------------------------------------------------------------------------------
 # [EMSCRIPTEN]: Setup
 # ---------------------------------------------------------------------------------
-if(GLOB_EMSCRIPTEN_PLATFORM)
+if(GLOB_PLATFORM IN_LIST GLOB_WEB_PLATFORM_VALUES)
   emscripten_setup()
+  set(CMAKE_CXX_COMPILER "${EMSCRIPTEN_COMPILER}")
 endif()
 
 # ---------------------------------------------------------------------------------
@@ -50,8 +51,6 @@ project(${MODULE_PLTF_PROJ_NAME} VERSION ${MODULE_PLTF_VERSION} LANGUAGES CXX)
 add_submodule("module_core" submodules/sway.module_core)
 
 if(GLOB_EMSCRIPTEN_PLATFORM)
-  set(CMAKE_CXX_COMPILER "${EMSCRIPTEN_COMPILER}")
-
   # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--whole-archive")
   # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas -Wno-unicode-whitespace \
   # -Wno-unused-local-typedef -Wno-invalid-noreturn -Wno-unused-command-line-argument")
@@ -67,13 +66,15 @@ set_output_dir(${MODULE_PLTF_BIN_DIR})
 # ---------------------------------------------------------------------------------
 # Include project headers
 # ---------------------------------------------------------------------------------
-if(GLOB_EMSCRIPTEN_PLATFORM)
-  include_directories("${GLOB_EMSCRIPTEN_ROOT_DIR}/cache/sysroot/include")
-else()
+if(GLOB_PLATFORM STREQUAL "native")
   set(X11_INC_DIRS "/opt/X11/include")
   set(X11_LIB_DIRS "/opt/X11/lib")
 
   include_directories("${X11_INC_DIRS}")
+  link_directories("${X11_LIB_DIRS}")
+
+  find_package(X11 QUIET)
+  find_package(OpenGL REQUIRED)
 endif()
 
 include_directories("${MODULE_PLTF_LIST_DIR}/lib/cxx/include")
@@ -87,13 +88,6 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
   file(GLOB_RECURSE MODULE_PLTF_SOURCE ${MODULE_PLTF_LIST_DIR}/lib/cxx/src/web/*.*)
 else()
   file(GLOB_RECURSE MODULE_PLTF_SOURCE ${MODULE_PLTF_LIST_DIR}/lib/cxx/src/mac/*.*)
-endif()
-
-if(NOT GLOB_EMSCRIPTEN_PLATFORM)
-  link_directories("${X11_LIB_DIRS}")
-
-  find_package(X11 QUIET)
-  find_package(OpenGL REQUIRED)
 endif()
 
 if(MODULE_PLTF_SHARED_LIB)
@@ -112,7 +106,7 @@ endif()
 
 enable_cxx17(${MODULE_PLTF_LIB_TARGET})
 
-if(NOT GLOB_EMSCRIPTEN_PLATFORM)
+if(GLOB_PLATFORM STREQUAL "native")
   target_link_libraries(${MODULE_PLTF_LIB_TARGET} GL X11)
 endif()
 
