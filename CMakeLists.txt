@@ -96,6 +96,8 @@ else()
   set_target_properties(${MODULE_PLTF_LIB_TARGET} PROPERTIES SUFFIX ".a")
 endif()
 
+emscripten_configure_target(${MODULE_PLTF_LIB_TARGET} PUBLIC)
+
 enable_cxx17(${MODULE_PLTF_LIB_TARGET})
 
 if(GLOB_PLATFORM STREQUAL "native")
