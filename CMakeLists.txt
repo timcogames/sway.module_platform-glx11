@@ -32,14 +32,6 @@ option(MODULE_PLTF_ENABLE_TESTS "Enable test builds" OFF)
 option(MODULE_PLTF_ENABLE_EXAMPLES "Enable test builds" OFF)
 
 # ---------------------------------------------------------------------------------
-# [EMSCRIPTEN]: Setup
-# ---------------------------------------------------------------------------------
-if(GLOB_PLATFORM IN_LIST GLOB_WEB_PLATFORM_VALUES)
-  emscripten_setup()
-  set(CMAKE_CXX_COMPILER "${EMSCRIPTEN_COMPILER}")
-endif()
-
-# ---------------------------------------------------------------------------------
 # Project
 # ---------------------------------------------------------------------------------
 project_metadata("pltf" 0.7.0)
